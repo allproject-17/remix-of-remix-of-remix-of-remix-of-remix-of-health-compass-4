@@ -155,3 +155,34 @@ const History = () => {
 };
 
 export default History;
+import { useEffect, useState } from "react";
+import { Card } from "@/components/ui/card";
+
+const History = () => {
+  const [records, setRecords] = useState([]);
+
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('health_history') || '[]');
+    setRecords(data);
+  }, []);
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">ประวัติการวิเคราะห์</h1>
+      {records.length === 0 ? (
+        <p>ยังไม่มีประวัติการประเมิน</p>
+      ) : (
+        <div className="grid gap-4">
+          {records.map((item: any) => (
+            <Card key={item.id} className="p-4">
+              <p className="text-sm text-gray-500">{item.date}</p>
+              <p className="mt-2">{item.result}</p>
+            </Card>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default History;
