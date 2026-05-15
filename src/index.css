@@ -4,26 +4,26 @@
 
 @layer base {
   :root {
-    --background: 180 30% 97%;
-    --foreground: 200 30% 12%;
+    --background: 0 0% 100%;
+    --foreground: 234 61% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 200 30% 12%;
+    --card-foreground: 234 61% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 200 30% 12%;
+    --popover-foreground: 234 61% 20%;
 
-    --primary: 175 70% 38%;
+    --primary: 234 61% 43%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 165 75% 55%;
+    --primary-glow: 234 61% 55%;
 
-    --secondary: 195 40% 94%;
-    --secondary-foreground: 200 40% 18%;
+    --secondary: 234 20% 94%;
+    --secondary-foreground: 234 61% 30%;
 
-    --muted: 195 25% 92%;
-    --muted-foreground: 200 15% 42%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 42%;
 
-    --accent: 280 70% 60%;
+    --accent: 31 100% 48%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 75% 55%;
@@ -35,44 +35,44 @@
     --success: 145 65% 42%;
     --success-foreground: 0 0% 100%;
 
-    --border: 195 25% 88%;
-    --input: 195 25% 90%;
-    --ring: 175 70% 38%;
+    --border: 0 0% 88%;
+    --input: 0 0% 90%;
+    --ring: 234 61% 43%;
 
     --radius: 1rem;
 
-    --gradient-hero: linear-gradient(135deg, hsl(175 70% 38%) 0%, hsl(200 75% 50%) 50%, hsl(265 70% 60%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(195 40% 97%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(234 61% 43%) 0%, hsl(234 61% 55%) 50%, hsl(234 61% 50%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
     --gradient-low: linear-gradient(135deg, hsl(145 65% 42%), hsl(165 70% 50%));
     --gradient-moderate: linear-gradient(135deg, hsl(35 95% 55%), hsl(20 90% 58%));
     --gradient-high: linear-gradient(135deg, hsl(10 85% 55%), hsl(340 80% 50%));
     --gradient-severe: linear-gradient(135deg, hsl(0 75% 45%), hsl(320 70% 35%));
 
-    --shadow-soft: 0 4px 20px -4px hsl(200 50% 30% / 0.08);
-    --shadow-elegant: 0 20px 50px -12px hsl(200 60% 25% / 0.18);
-    --shadow-glow: 0 0 40px hsl(175 70% 50% / 0.35);
+    --shadow-soft: 0 4px 20px -4px hsl(234 61% 30% / 0.08);
+    --shadow-elegant: 0 20px 50px -12px hsl(234 61% 25% / 0.18);
+    --shadow-glow: 0 0 40px hsl(234 61% 50% / 0.35);
 
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 200 40% 6%;
-    --foreground: 180 20% 95%;
-    --card: 200 35% 9%;
-    --card-foreground: 180 20% 95%;
-    --popover: 200 35% 9%;
-    --popover-foreground: 180 20% 95%;
-    --primary: 175 70% 48%;
-    --primary-foreground: 200 40% 8%;
-    --secondary: 200 30% 14%;
-    --secondary-foreground: 180 20% 95%;
-    --muted: 200 25% 14%;
-    --muted-foreground: 195 15% 65%;
-    --accent: 280 70% 65%;
+    --background: 234 40% 8%;
+    --foreground: 0 0% 95%;
+    --card: 234 35% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 234 35% 12%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 234 61% 55%;
+    --primary-foreground: 234 40% 8%;
+    --secondary: 234 30% 18%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 234 25% 18%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 31 100% 60%;
     --accent-foreground: 0 0% 100%;
-    --border: 200 25% 18%;
-    --input: 200 25% 18%;
-    --ring: 175 70% 48%;
+    --border: 234 25% 22%;
+    --input: 234 25% 22%;
+    --ring: 234 61% 55%;
   }
 }
 
@@ -82,9 +82,9 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "ss01", "cv11";
     background-image:
-      radial-gradient(at 0% 0%, hsl(175 70% 90% / 0.5) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsl(265 70% 92% / 0.4) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, hsl(195 70% 92% / 0.35) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, hsl(234 61% 92% / 0.5) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsl(234 61% 90% / 0.4) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, hsl(31 100% 92% / 0.25) 0px, transparent 50%);
     background-attachment: fixed;
   }
   h1, h2, h3, h4 { @apply font-display tracking-tight; }
