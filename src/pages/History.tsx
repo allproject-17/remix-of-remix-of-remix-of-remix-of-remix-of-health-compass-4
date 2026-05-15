@@ -3,185 +3,120 @@ import { Link } from "react-router-dom";
 import { AppShell } from "@/components/AppShell";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
-import { riskLevel, riskLevelLabel } from "@/lib/risk";
-import { ArrowRight, History as HistoryIcon, Loader2, Trash2, Activity, TrendingUp } from "lucide-react";
+import { History as HistoryIcon, ArrowRight, Trash2, Activity, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 import {
-  ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, ReferenceArea, CartesianGrid, Dot,
+  ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, ReferenceArea, CartesianGrid,
 } from "recharts";
 
+// ฟังก์ชันกำหนดสีจุดบนกราฟ
 const RiskDot = (props: any) => {
   const { cx, cy, payload } = props;
   if (cx == null || cy == null) return null;
-  const high = payload.score > 55;
-  const color = payload.score <= 25 ? "hsl(142 70% 45%)"
-    : payload.score <= 55 ? "hsl(40 95% 55%)"
-    : "hsl(0 80% 55%)";
+  const color = payload.risk_level === "High" ? "hsl(0 80% 55%)" : payload.risk_level === "Medium" ? "hsl(40 95% 55%)" : "hsl(142 70% 45%)";
   return (
-    <g>
-      {high && (
-        <circle cx={cx} cy={cy} r={10} fill={color} opacity={0.35}>
-          <animate attributeName="r" values="6;14;6" dur="1.4s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.6;0;0.6" dur="1.4s" repeatCount="indefinite" />
-        </circle>
-      )}
-      <circle cx={cx} cy={cy} r={5} fill={color} stroke="white" strokeWidth={2} />
-    </g>
+    <circle cx={cx} cy={cy} r={5} fill={color} stroke="white" strokeWidth={2} />
   );
 };
 
 const History = () => {
-  const { user } = useAuth();
-  const [rows, setRows] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [records, setRecords] = useState<any[]>([]);
 
-  const load = () => {
-    if (!user) return;
-    setLoading(true);
-    supabase.from("assessments").select("*").eq("user_id", user.id)
-      .order("created_at", { ascending: false }).limit(50)
-      .then(({ data }) => { setRows(data ?? []); setLoading(false); });
-  };
-  useEffect(load, [user]);
-
-  const remove = async (id: string) => {
-    const { error } = await supabase.from("assessments").delete().eq("id", id);
-    if (error) toast.error(error.message); else { toast.success("ลบเรียบร้อย"); load(); }
+  const loadData = () => {
+    // ดึงข้อมูลจาก LocalStorage ที่เราบันทึกไว้จากหน้า HealthAnalysis
+    const data = JSON.parse(localStorage.getItem('health_records_local') || '[]');
+    setRecords(data);
   };
 
-  // chart needs oldest -> newest
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const removeRecord = (id: string) => {
+    const updated = records.filter(r => r.id !== id);
+    localStorage.setItem('health_records_local', JSON.stringify(updated));
+    setRecords(updated);
+    toast.success("ลบประวัติเรียบร้อย");
+  };
+
+  // เตรียมข้อมูลสำหรับกราฟ (เรียงจากเก่าไปใหม่)
   const chartData = useMemo(() => {
-    return [...rows].reverse().map((r, i) => ({
-      idx: i + 1,
-      score: r.score as number,
-      label: new Date(r.created_at).toLocaleDateString("th-TH", { day: "2-digit", month: "short" }),
+    return [...records].reverse().map((r) => ({
+      date: new Date(r.created_at).toLocaleDateString("th-TH", { day: "2-digit", month: "short" }),
+      score: r.risk_level === "High" ? 80 : r.risk_level === "Medium" ? 50 : 20,
+      risk_level: r.risk_level
     }));
-  }, [rows]);
+  }, [records]);
 
   return (
     <AppShell>
-      <div className="max-w-4xl mx-auto animate-fade-up">
+      <div className="max-w-4xl mx-auto animate-fade-up p-4">
         <div className="flex items-center gap-3 mb-6">
-          <div className="h-12 w-12 rounded-2xl gradient-low grid place-items-center shadow-glow">
+          <div className="h-12 w-12 rounded-2xl bg-primary grid place-items-center shadow-lg">
             <HistoryIcon className="h-6 w-6 text-white" />
           </div>
           <div className="flex-1">
-            <h1 className="font-display text-3xl font-bold">ข้อมูลสุขภาพของฉัน</h1>
-            <p className="text-muted-foreground text-sm">ผลการประเมินย้อนหลังและแนวโน้ม</p>
+            <h1 className="font-display text-3xl font-bold">ประวัติสุขภาพ</h1>
+            <p className="text-muted-foreground text-sm">ติดตามผลการวิเคราะห์ AI ของคุณ</p>
           </div>
-          <Link to="/assessment"><Button className="h-10 gradient-hero text-white border-0">เริ่มใหม่</Button></Link>
         </div>
 
-        {loading ? (
-          <div className="grid place-items-center py-20"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div>
-        ) : rows.length === 0 ? (
-          <Card className="p-12 text-center gradient-card border-border/50 shadow-soft">
-            <Activity className="h-10 w-10 mx-auto text-muted-foreground" />
-            <h3 className="font-display text-xl font-bold mt-3">ยังไม่มีข้อมูลการประเมิน</h3>
-            <p className="text-sm text-muted-foreground mt-1">เริ่มประเมินครั้งแรกเพื่อเริ่มติดตาม</p>
-            <Link to="/assessment" className="inline-block mt-5">
-              <Button className="gradient-hero text-white border-0 shadow-glow">เริ่มประเมิน</Button>
+        {records.length === 0 ? (
+          <Card className="p-12 text-center border-dashed border-2">
+            <Activity className="h-10 w-10 mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-xl font-bold">ยังไม่มีข้อมูลการประเมิน</h3>
+            <Link to="/health-analysis" className="mt-4 inline-block">
+              <Button>เริ่มประเมินตอนนี้</Button>
             </Link>
           </Card>
         ) : (
-          <>
-            <Card className="p-4 sm:p-6 gradient-card border-border/50 shadow-soft mb-5">
-              <div className="flex items-center gap-2 mb-3">
+          <div className="space-y-6">
+            {/* ส่วนของกราฟแนวโน้ม */}
+            <Card className="p-6 shadow-md">
+              <div className="flex items-center gap-2 mb-4">
                 <TrendingUp className="h-5 w-5 text-primary" />
-                <h2 className="font-display text-lg font-bold">แนวโน้มความเสี่ยงมะเร็งปอด</h2>
+                <h2 className="text-lg font-bold">แนวโน้มความเสี่ยง</h2>
               </div>
-              <p className="text-xs text-muted-foreground mb-3">
-                เส้นกราฟแสดงคะแนนรวมจากการประเมินครั้งแรกจนถึงล่าสุด · พื้นเขียว = ต่ำ, เหลือง = ปานกลาง, แดง = สูง
-              </p>
               <div className="h-64 w-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData} margin={{ top: 8, right: 12, bottom: 4, left: -16 }}>
-                    <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                    <ReferenceArea y1={0} y2={25} fill="hsl(142 70% 45%)" fillOpacity={0.12} />
-                    <ReferenceArea y1={25} y2={55} fill="hsl(40 95% 55%)" fillOpacity={0.12} />
-                    <ReferenceArea y1={55} y2={100} fill="hsl(0 80% 55%)" fillOpacity={0.14} />
-                    <XAxis dataKey="label" tick={{ fontSize: 11 }} />
-                    <YAxis domain={[0, 100]} tick={{ fontSize: 11 }} />
-                    <Tooltip
-                      contentStyle={{ borderRadius: 8, fontSize: 12 }}
-                      formatter={(v: any) => [`${v} / 100`, "คะแนนเสี่ยง"]}
-                    />
-                    <Line
-                      type="monotone" dataKey="score"
-                      stroke="hsl(var(--primary))" strokeWidth={3}
-                      dot={<RiskDot />} activeDot={{ r: 7 }}
-                      isAnimationActive
-                    />
+                  <LineChart data={chartData}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.3} />
+                    <ReferenceArea y1={0} y2={35} fill="hsl(142 70% 45%)" fillOpacity={0.1} />
+                    <ReferenceArea y1={35} y2={65} fill="hsl(40 95% 55%)" fillOpacity={0.1} />
+                    <ReferenceArea y1={65} y2={100} fill="hsl(0 80% 55%)" fillOpacity={0.1} />
+                    <XAxis dataKey="date" />
+                    <YAxis hide domain={[0, 100]} />
+                    <Tooltip />
+                    <Line type="monotone" dataKey="score" stroke="hsl(var(--primary))" strokeWidth={3} dot={<RiskDot />} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
-              <div className="mt-3 flex flex-wrap gap-3 text-xs">
-                <span className="inline-flex items-center gap-1.5"><span className="h-3 w-3 rounded-full" style={{ background: "hsl(142 70% 45%)" }} /> ต่ำ (0–25)</span>
-                <span className="inline-flex items-center gap-1.5"><span className="h-3 w-3 rounded-full" style={{ background: "hsl(40 95% 55%)" }} /> ปานกลาง (26–55)</span>
-                <span className="inline-flex items-center gap-1.5"><span className="h-3 w-3 rounded-full" style={{ background: "hsl(0 80% 55%)" }} /> สูง (56–100)</span>
-              </div>
             </Card>
-          </>
-        )}
-        {!loading && rows.length > 0 && (
-          <div className="space-y-3">
-            {rows.map((r) => {
-              const s = riskLevel(r.score);
-              return (
-                <Card key={r.id} className="p-4 sm:p-5 gradient-card border-border/50 shadow-soft flex items-center gap-4 hover:shadow-elegant transition-smooth">
-                  <div className={`h-14 w-14 rounded-2xl grid place-items-center text-white font-display font-bold text-lg ${
-                    s === "Low" ? "gradient-low" : s === "Medium" ? "gradient-moderate" : "gradient-high"
-                  }`}>{r.score}</div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-semibold">{riskLevelLabel(s)}</div>
-                    <div className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString("th-TH")}</div>
+
+            {/* รายการประวัติแบบการ์ด */}
+            <div className="grid gap-3">
+              {records.map((item) => (
+                <Card key={item.id} className="p-4 flex items-center gap-4 hover:bg-accent/5 transition-colors">
+                  <div className={`h-12 w-12 rounded-xl flex items-center justify-center text-white font-bold ${
+                    item.risk_level === "High" ? "bg-red-500" : item.risk_level === "Medium" ? "bg-yellow-500" : "bg-green-500"
+                  }`}>
+                    {item.risk_level === "High" ? "H" : item.risk_level === "Medium" ? "M" : "L"}
                   </div>
-                  <Button variant="ghost" size="icon" onClick={() => remove(r.id)} className="text-muted-foreground hover:text-destructive">
+                  <div className="flex-1">
+                    <div className="font-bold">{item.risk_level === "High" ? "ความเสี่ยงสูง" : item.risk_level === "Medium" ? "ความเสี่ยงปานกลาง" : "ความเสี่ยงต่ำ"}</div>
+                    <div className="text-xs text-muted-foreground">{new Date(item.created_at).toLocaleString("th-TH")}</div>
+                    <p className="text-sm mt-1 line-clamp-1">{item.ai_analysis}</p>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => removeRecord(item.id)} className="text-muted-foreground hover:text-red-500">
                     <Trash2 className="h-4 w-4" />
                   </Button>
-                  <Link to={`/result/${r.id}`}>
-                    <Button variant="ghost" size="sm">ดู <ArrowRight className="h-4 w-4 ml-1" /></Button>
-                  </Link>
                 </Card>
-              );
-            })}
+              ))}
+            </div>
           </div>
         )}
       </div>
     </AppShell>
-  );
-};
-
-export default History;
-import { useEffect, useState } from "react";
-import { Card } from "@/components/ui/card";
-
-const History = () => {
-  const [records, setRecords] = useState([]);
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('health_history') || '[]');
-    setRecords(data);
-  }, []);
-
-  return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">ประวัติการวิเคราะห์</h1>
-      {records.length === 0 ? (
-        <p>ยังไม่มีประวัติการประเมิน</p>
-      ) : (
-        <div className="grid gap-4">
-          {records.map((item: any) => (
-            <Card key={item.id} className="p-4">
-              <p className="text-sm text-gray-500">{item.date}</p>
-              <p className="mt-2">{item.result}</p>
-            </Card>
-          ))}
-        </div>
-      )}
-    </div>
   );
 };
 
