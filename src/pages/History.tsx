@@ -23,9 +23,10 @@ const History = () => {
   const [records, setRecords] = useState<any[]>([]);
 
   const loadData = () => {
-    // ดึงข้อมูลจาก LocalStorage ที่เราบันทึกไว้จากหน้า HealthAnalysis
-    const data = JSON.parse(localStorage.getItem('health_records_local') || '[]');
-    setRecords(data);
+    const stored = localStorage.getItem("assessment_snapshots") || "{}";
+    const data = Object.values(JSON.parse(stored) as Record<string, any>);
+    const sorted = data.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    setRecords(sorted);
   };
 
   useEffect(() => {
@@ -33,18 +34,18 @@ const History = () => {
   }, []);
 
   const removeRecord = (id: string) => {
-    const updated = records.filter(r => r.id !== id);
-    localStorage.setItem('health_records_local', JSON.stringify(updated));
-    setRecords(updated);
+    const stored = JSON.parse(localStorage.getItem("assessment_snapshots") || "{}") as Record<string, any>;
+    delete stored[id];
+    localStorage.setItem("assessment_snapshots", JSON.stringify(stored));
+    setRecords(records.filter((r) => r.id !== id));
     toast.success("ลบประวัติเรียบร้อย");
   };
 
-  // เตรียมข้อมูลสำหรับกราฟ (เรียงจากเก่าไปใหม่)
   const chartData = useMemo(() => {
-    return [...records].reverse().map((r) => ({
+    return records.map((r) => ({
       date: new Date(r.created_at).toLocaleDateString("th-TH", { day: "2-digit", month: "short" }),
-      score: r.risk_level === "High" ? 80 : r.risk_level === "Medium" ? 50 : 20,
-      risk_level: r.risk_level
+      score: Math.min(100, Math.max(0, r.score ?? 0)),
+      risk_level: r.risk_level,
     }));
   }, [records]);
 
@@ -96,20 +97,32 @@ const History = () => {
             {/* รายการประวัติแบบการ์ด */}
             <div className="grid gap-3">
               {records.map((item) => (
-                <Card key={item.id} className="p-4 flex items-center gap-4 hover:bg-accent/5 transition-colors">
-                  <div className={`h-12 w-12 rounded-xl flex items-center justify-center text-white font-bold ${
-                    item.risk_level === "High" ? "bg-red-500" : item.risk_level === "Medium" ? "bg-yellow-500" : "bg-green-500"
-                  }`}>
-                    {item.risk_level === "High" ? "H" : item.risk_level === "Medium" ? "M" : "L"}
+                <Card key={item.id} className="p-4 hover:bg-accent/5 transition-colors">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className={`h-12 w-12 rounded-xl flex items-center justify-center text-white font-bold ${
+                        item.risk_level === "High" ? "bg-red-500" : item.risk_level === "Medium" ? "bg-yellow-500" : "bg-green-500"
+                      }`}>
+                        {item.risk_level === "High" ? "H" : item.risk_level === "Medium" ? "M" : "L"}
+                      </div>
+                      <div>
+                        <div className="font-bold text-base">{item.risk_level === "High" ? "ความเสี่ยงสูง" : item.risk_level === "Medium" ? "ความเสี่ยงปานกลาง" : "ความเสี่ยงต่ำ"}</div>
+                        <div className="text-xs text-muted-foreground">{new Date(item.created_at).toLocaleString("th-TH")}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Link to={`/result/${item.id}`} className="text-sm text-primary hover:underline">ดูผลเต็ม</Link>
+                      <Button variant="ghost" size="icon" onClick={() => removeRecord(item.id)} className="text-muted-foreground hover:text-red-500">
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <div className="font-bold">{item.risk_level === "High" ? "ความเสี่ยงสูง" : item.risk_level === "Medium" ? "ความเสี่ยงปานกลาง" : "ความเสี่ยงต่ำ"}</div>
-                    <div className="text-xs text-muted-foreground">{new Date(item.created_at).toLocaleString("th-TH")}</div>
-                    <p className="text-sm mt-1 line-clamp-1">{item.ai_analysis}</p>
+                  {item.ai_summary && (
+                    <p className="text-sm mt-3 text-muted-foreground">{item.ai_summary}</p>
+                  )}
+                  <div className="mt-3 text-sm text-muted-foreground">
+                    คะแนนรวม: <span className="font-semibold">{item.score ?? "-"}</span>
                   </div>
-                  <Button variant="ghost" size="icon" onClick={() => removeRecord(item.id)} className="text-muted-foreground hover:text-red-500">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
                 </Card>
               ))}
             </div>

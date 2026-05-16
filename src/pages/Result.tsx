@@ -4,9 +4,10 @@ import { AppShell } from "@/components/AppShell";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RiskGauge } from "@/components/RiskGauge";
+import { RESEARCH_DOCUMENTS } from "@/lib/research";
 import { recommendationsFor, riskLevel, riskLevelLabel } from "@/lib/risk";
 import { supabase } from "@/integrations/supabase/client";
-import { CheckCircle2, ArrowLeft, RefreshCcw, Loader2, Activity, Radio } from "lucide-react";
+import { CheckCircle2, ArrowLeft, Loader2, Activity, Radio, RefreshCcw } from "lucide-react";
 import { SpeakButton } from "@/components/SpeakButton";
 import { SpeakableText } from "@/components/SpeakableText";
 
@@ -28,19 +29,43 @@ const HAZARD_LABEL: Record<string, string> = {
 const Result = () => {
   const { id } = useParams();
   const [row, setRow] = useState<any>(null);
+  const [aiData, setAiData] = useState<{ aiSummary: string } | null>(null);
 
   useEffect(() => {
     if (!id) return;
     supabase.from("assessments").select("*").eq("id", id).maybeSingle()
-      .then(({ data }) => setRow(data));
+      .then(({ data }) => {
+        if (data) {
+          setRow(data);
+          return;
+        }
+        const stored = localStorage.getItem("assessment_snapshots");
+        if (!stored) return;
+        try {
+          const parsed = JSON.parse(stored) as Record<string, any>;
+          if (parsed[id]) setRow(parsed[id]);
+        } catch {
+          // ignore malformed storage
+        }
+      });
+  }, [id]);
+
+  useEffect(() => {
+    if (!id) return;
+    const stored = localStorage.getItem("assessment_ai_results");
+    if (!stored) return;
+    try {
+      const parsed = JSON.parse(stored) as Record<string, { aiSummary: string }>;
+      if (parsed[id]) setAiData(parsed[id]);
+    } catch {
+      // ignore malformed storage
+    }
   }, [id]);
 
   if (!row) return <AppShell><div className="grid place-items-center py-20"><Loader2 className="h-6 w-6 animate-spin text-primary" /></div></AppShell>;
 
-  const total = row.score as number;
-  const staticScore = (row.static_score as number) ?? total;
-  const dynamicScore = (row.dynamic_score as number) ?? 0;
-  const level = riskLevel(total);
+  const total = (row.score as number) ?? 0;
+  const integratedLevel = riskLevel(total);
   const b = row.behavior_data ?? {};
   const env = row.environment_data ?? {};
   const rec = recommendationsFor(total, b.smokingStatus);
@@ -72,34 +97,69 @@ const Result = () => {
           />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-4">
-          <Card className="p-8 gradient-card border-border/50 shadow-elegant flex flex-col items-center justify-center">
-            <RiskGauge score={total} />
-            <div className="mt-6 grid grid-cols-2 gap-4 w-full text-center">
-              <div className="p-3 rounded-lg bg-secondary/60">
-                <div className="text-xs text-muted-foreground flex items-center justify-center gap-1"><Activity className="h-3 w-3" /> Static</div>
-                <div className="font-display font-bold text-2xl tabular-nums">{staticScore}</div>
-              </div>
-              <div className="p-3 rounded-lg bg-secondary/60">
-                <div className="text-xs text-muted-foreground flex items-center justify-center gap-1"><Radio className="h-3 w-3" /> Dynamic</div>
-                <div className="font-display font-bold text-2xl tabular-nums">{dynamicScore}</div>
+        <div className="grid gap-6 mt-4">
+          <Card className="p-8 gradient-card border-border/50 shadow-elegant">
+            <div className="flex flex-col items-center text-center gap-4">
+              <RiskGauge score={total} />
+              <div className="space-y-2">
+                <div className="text-xs uppercase tracking-widest text-muted-foreground">คะแนนรวมความเสี่ยง</div>
+                <div className="text-5xl font-display font-bold tabular-nums">{total}</div>
+                <div className="text-sm text-muted-foreground">คะแนนเดียวจากแบบสอบถามและเซ็นเซอร์ทั้งหมด</div>
               </div>
             </div>
-            <p className="mt-4 text-xs text-muted-foreground">
-              ประเมินเมื่อ {new Date(row.created_at).toLocaleDateString("th-TH")}
-            </p>
+            <div className="mt-8">
+              <div className="relative h-4 overflow-hidden rounded-full bg-slate-200">
+                <div className="absolute inset-y-0 left-0 w-[35%] bg-emerald-300" />
+                <div className="absolute inset-y-0 left-[35%] w-[30%] bg-amber-300" />
+                <div className="absolute inset-y-0 left-[65%] right-0 bg-red-300" />
+                <div
+                  className="absolute top-[-8px] h-5 w-5 rounded-full border-2 border-white bg-slate-900 shadow-lg"
+                  style={{ left: `calc(${Math.min(100, total)}% - 10px)` }}
+                />
+              </div>
+              <div className="mt-3 flex justify-between text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+                <span className="text-emerald-700">ต่ำ</span>
+                <span className="text-amber-700">ปานกลาง</span>
+                <span className="text-red-700">สูง</span>
+              </div>
+            </div>
+            <div className="mt-6 text-left">
+              <div className="text-sm font-semibold text-foreground">{riskLevelLabel(integratedLevel)}</div>
+              <p className="mt-3 text-sm leading-relaxed text-foreground/90">
+                {row.raw_sensor_data?.sensors ? (
+                  (() => {
+                    const abnormal = Object.entries(row.raw_sensor_data.sensors as Record<string, number>)
+                      .filter(([, value]) => value > 4000)
+                      .sort((a, b) => b[1] - a[1])
+                      .slice(0, 3)
+                      .map(([key]) => key);
+                    const sensorPart = abnormal.length > 0
+                      ? `ระบบพบค่าเซ็นเซอร์ ${abnormal.join(", ")} สูงผิดปกติ` 
+                      : `ค่าจากเซ็นเซอร์ยังอยู่ในช่วงปกติหรือกลาง`;
+                    const smokingPart = b.smokingStatus === "current"
+                      ? "และยังมีประวัติสูบบุหรี่/บุหรี่ไฟฟ้าอยู่"
+                      : b.smokingStatus === "former"
+                      ? "และเคยสูบบุหรี่มาก่อน"
+                      : "และไม่มีประวัติสูบบุหรี่";
+                    return `คะแนนรวมของคุณอยู่ที่ ${total} จาก 100. ${sensorPart} ${smokingPart}. หากคุณมีอาการไอเรื้อรัง, ไอเป็นเลือด หรือเหนื่อยง่าย ควรไปพบแพทย์ทันที.`;
+                  })()
+                ) : (
+                  `คะแนนรวมของคุณอยู่ที่ ${total} จาก 100. ระบบใช้ข้อมูลแบบสอบถามเป็นหลัก ควรปรึกษาแพทย์เพื่อการตรวจที่ละเอียดขึ้น.`
+                )}
+              </p>
+            </div>
           </Card>
 
           <Card className={`p-8 border-0 text-white shadow-elegant ${
-            level === "Low" ? "gradient-low" : level === "Medium" ? "gradient-moderate" : "gradient-high"
+            integratedLevel === "Low" ? "gradient-low" : integratedLevel === "Medium" ? "gradient-moderate" : "gradient-high"
           }`}>
             <SpeakableText
               hint
               className="block"
-              text={`ระดับความเสี่ยงมะเร็งปอด ${riskLevelLabel(level)}. ผลการวิเคราะห์: ${rec.headline}. คำแนะนำ: ${rec.items.join(". ")}`}
+              text={`ระดับความเสี่ยงมะเร็งปอด ${riskLevelLabel(integratedLevel)}. ผลการวิเคราะห์: ${rec.headline}. คำแนะนำ: ${rec.items.join(". ")}`}
             >
               <div className="text-xs uppercase tracking-widest opacity-80">ระดับความเสี่ยงมะเร็งปอด</div>
-              <h2 className="font-display text-3xl font-bold mt-1">{riskLevelLabel(level)}</h2>
+              <h2 className="font-display text-3xl font-bold mt-1">{riskLevelLabel(integratedLevel)}</h2>
               <p className="mt-3 text-white/90 text-balance">{rec.headline}</p>
               <div className="mt-6">
                 <div className="text-xs uppercase tracking-widest opacity-80 mb-3">คำแนะนำ (คลิกเพื่อฟัง)</div>
@@ -164,51 +224,36 @@ const Result = () => {
           </Card>
 
           <Card className="p-6 gradient-card border-border/50 shadow-soft">
-            <h3 className="font-display font-bold text-lg">รายละเอียดคะแนน (Static)</h3>
-            {breakdown.length === 0 ? (
-              <p className="text-sm text-muted-foreground mt-3">ไม่มีปัจจัยเสี่ยงเด่น</p>
-            ) : (
-              <ul className="mt-4 space-y-2 text-sm">
-                {breakdown.map((b) => (
-                  <li key={b.label} className="flex items-center justify-between gap-3 border-b border-border/50 pb-2 last:border-0 last:pb-0">
-                    <span>{b.label}</span>
-                    <span className="font-mono font-semibold">+{b.points}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <p className="text-xs text-muted-foreground mt-4">
-              Dynamic Score (จาก raw sensor: VOCs, gas concentration) จะถูกเพิ่มเมื่อมีการเชื่อมต่ออุปกรณ์
+            <h3 className="font-display font-bold text-lg">เหตุผลของคะแนนรวม</h3>
+            <p className="mt-3 text-sm leading-relaxed text-foreground/90">
+              คะแนนรวมนี้คำนวณจากพฤติกรรมตัวคุณและการอ่านค่าจากเซ็นเซอร์ หากมีค่าเซ็นเซอร์สูงผิดปกติ ร่างกายจะต้องได้รับการตรวจเพิ่มเติม.
             </p>
+            <div className="mt-4 space-y-3">
+              {breakdown.length === 0 ? (
+                <p className="text-sm text-muted-foreground">ไม่มีปัจจัยเสี่ยงเด่นจากแบบสอบถาม</p>
+              ) : (
+                breakdown.map((item) => (
+                  <div key={item.label} className="flex items-center justify-between gap-3 border-b border-border/50 pb-2">
+                    <span className="text-sm">{item.label}</span>
+                    <span className="font-mono font-semibold">+{item.points}</span>
+                  </div>
+                ))
+              )}
+            </div>
           </Card>
         </div>
 
-        {(() => {
-          const insights = [
-            "บุหรี่และบุหรี่ไฟฟ้าเป็นปัจจัยเสี่ยงอันดับ 1 — พบในผู้ป่วยมะเร็งปอด 80–90%",
-            "กัญชามีสารก่อมะเร็งมากกว่าบุหรี่ประมาณ 2 เท่า — ยิ่งสูบยิ่งเสี่ยง",
-            "ฝุ่น PM2.5 และก๊าซเรดอนทำให้ปอดอักเสบเรื้อรัง สะสมเป็นมะเร็งระยะยาว",
-            "แร่ใยหิน (Asbestos) เพิ่มความเสี่ยง 5 เท่า และสูงถึง 90 เท่าหากสูบบุหรี่ร่วมด้วย",
-            "หากมีอาการ ไอเรื้อรังเกิน 3 สัปดาห์ ไอเป็นเลือด เสียงแหบ น้ำหนักลด — ควรพบแพทย์ทันที",
-          ];
-          const speakText = "คำแนะนำจากงานวิจัย. " + insights.join(". ") + ".";
-          return (
-            <Card className="mt-6 p-6 gradient-card border-border/50 shadow-soft">
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="font-display font-bold text-lg">คำแนะนำจากงานวิจัย</h3>
-                <SpeakButton size="sm" variant="outline" label="ฟังคำแนะนำ" text={speakText} />
+        <Card className="mt-6 p-6 border-border/50 bg-secondary/40">
+          <div className="text-xs uppercase tracking-widest text-muted-foreground">อ้างอิงจากงานวิจัย 8 เรื่อง</div>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            {RESEARCH_DOCUMENTS.map((doc) => (
+              <div key={doc.id} className="rounded-xl bg-white p-3 border border-border">
+                <p className="text-sm font-semibold">{doc.title}</p>
+                <p className="text-xs text-muted-foreground mt-1">{doc.tags.join(", ")}</p>
               </div>
-              <ul className="mt-4 space-y-3">
-                {insights.map((it, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm sm:text-base leading-relaxed">
-                    <CheckCircle2 className="h-5 w-5 mt-0.5 shrink-0 text-primary" />
-                    <span>{it}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          );
-        })()}
+            ))}
+          </div>
+        </Card>
 
         <div className="mt-8 flex justify-center">
           <Link to="/assessment">

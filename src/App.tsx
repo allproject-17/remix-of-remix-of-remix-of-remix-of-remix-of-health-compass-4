@@ -12,7 +12,6 @@ import Dashboard from "./pages/Dashboard";
 import Assessment from "./pages/Assessment";
 import Result from "./pages/Result";
 import History from "./pages/History";
-import HealthAnalysis from "./pages/HealthAnalysis";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,10 +29,9 @@ const App = () => (
             <Route path="/profile" element={<ProtectedRoute requireProfile={false}><Profile /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/assessment" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
+            <Route path="/health-analysis" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
             <Route path="/result/:id" element={<ProtectedRoute><Result /></ProtectedRoute>} />
             <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
-            
-            <Route path="/health-analysis" element={<ProtectedRoute><HealthAnalysis /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

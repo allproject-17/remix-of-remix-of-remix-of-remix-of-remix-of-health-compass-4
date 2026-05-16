@@ -2,6 +2,8 @@
 // Static: questionnaire (smoking, occupational, environmental, medical history)
 // Dynamic: future raw sensor data (VOCs, gas concentration). Initial = 0.
 
+import { researchRiskBoost } from "@/lib/research";
+
 export type SmokingStatus = "never" | "former" | "current";
 export type QuitWindow = "lt1" | "1-5" | "5-10" | "gt10";
 
@@ -192,52 +194,93 @@ export function recommendationsFor(
   smokingStatus?: SmokingStatus,
 ): { headline: string; items: string[] } {
   const lvl = riskLevel(score);
-  // Smoking-specific advice line that adapts to status
   const smokingAdvice =
     smokingStatus === "former"
-      ? "ทำได้ดีมาก รักษาวินัยนี้ไว้ และอย่ากลับไปสูบอีกเพื่อสุขภาพปอดในระยะยาว"
+      ? "ทำได้ดีที่เลิกแล้ว รักษามาตรฐานนี้ไว้และอย่าให้กลับไปสูบอีก"
       : smokingStatus === "current"
-      ? "ควรวางแผนเลิกบุหรี่/บุหรี่ไฟฟ้าอย่างจริงจัง — โทรสายด่วนเลิกบุหรี่ 1600"
+      ? "ควรเลิกบุหรี่/บุหรี่ไฟฟ้าให้เร็วที่สุด และขอความช่วยเหลือจากสายด่วนเลิกบุหรี่ 1600"
       : "รักษาวิถีชีวิตปลอดบุหรี่ต่อไป และหลีกเลี่ยงควันบุหรี่มือสอง";
+  const nutritionAdvice =
+    lvl === "Low"
+      ? "ทานผักใบเขียวและผลไม้สดเป็นประจำ ลดของทอดและอาหารแปรรูป"
+      : lvl === "Medium"
+      ? "เพิ่มปลา ถั่ว เมล็ดพืช และผักใบเขียวในมื้ออาหาร ลดอาหารเค็มและของหมักดอง"
+      : "เน้นอาหารต้านอักเสบ เช่น ปลา ถั่วเหลือง ผักใบเขียว ผลไม้เบอร์รี่ และน้ำเปล่าแทนน้ำหวาน";
 
   if (lvl === "Low") {
     return {
-      headline: "ความเสี่ยงต่อมะเร็งปอดของคุณอยู่ในระดับต่ำ",
+      headline: "ระดับความเสี่ยงของคุณอยู่ในระดับต่ำ แต่ยังควรระมัดระวัง",
       items: [
         smokingAdvice,
-        "หลีกเลี่ยงการสัมผัสควันบุหรี่มือสองและพื้นที่ PM2.5 สูง",
-        "ตรวจสุขภาพเชิงป้องกันประจำปี",
+        nutritionAdvice,
+        "หลีกเลี่ยงการสัมผัสควันบุหรี่มือสองและพื้นที่ฝุ่น PM2.5 สูง",
+        "ตรวจสุขภาพเช็กปอดเป็นประจำอย่างน้อยปีละครั้ง",
       ],
     };
   }
+
   if (lvl === "Medium") {
     return {
-      headline: "พบปัจจัยเสี่ยงต่อมะเร็งปอดที่ควรเฝ้าระวัง",
+      headline: "พบปัจจัยเสี่ยงที่ควรจับตาและปรับพฤติกรรม",
       items: [
         smokingAdvice,
+        nutritionAdvice,
         "ใช้หน้ากาก N95 ในวันที่ฝุ่นสูง และปรับปรุงการระบายอากาศในบ้าน",
-        "หากทำงานสัมผัสฝุ่น/สารเคมี ควรใช้อุปกรณ์ป้องกันส่วนบุคคลทุกครั้ง",
-        "พิจารณาเอ็กซเรย์ปอด/CT low-dose ตามคำแนะนำของแพทย์",
+        "ถ้าอยู่ในพื้นที่ทำงานที่มีฝุ่นหรือสารเคมี ให้ใส่อุปกรณ์ป้องกันทุกครั้ง",
       ],
     };
   }
+
   return {
-    headline: "ระดับความเสี่ยงต่อมะเร็งปอดสูง — ควรพบแพทย์เพื่อคัดกรอง",
+    headline: "ระดับความเสี่ยงสูง — ควรพบแพทย์เพื่อตรวจละเอียด",
     items: [
-      "ปรึกษาแพทย์เฉพาะทางเพื่อพิจารณา Low-dose CT scan สำหรับคัดกรองมะเร็งปอด",
-      smokingStatus === "former"
-        ? "เยี่ยมมากที่เลิกแล้ว — อย่ากลับไปสูบอีก และหลีกเลี่ยงควันบุหรี่มือสองอย่างเคร่งครัด"
-        : "หยุดสูบบุหรี่/บุหรี่ไฟฟ้า/กัญชาทันที — ขอความช่วยเหลือจากคลินิกเลิกบุหรี่ (1600)",
-      "หลีกเลี่ยงสภาพแวดล้อมที่มีฝุ่น ควัน และสารเคมีอย่างเคร่งครัด",
-      "เฝ้าระวังอาการ ไอเรื้อรัง ไอเป็นเลือด เสียงแหบ น้ำหนักลด — พบแพทย์ทันที",
+      smokingAdvice,
+      nutritionAdvice,
+      "พบแพทย์เฉพาะทางเพื่อตรวจคัดกรองอย่างละเอียด",
+      "หยุดสูบบุหรี่ บุหรี่ไฟฟ้า และกัญชาโดยทันที",
+      "หากมีอาการไอเรื้อรัง ไอเป็นเลือด หรือเหนื่อยง่าย ควรไปพบแพทย์ทันที",
     ],
   };
 }
 
 // Stable empty sensor payload — populated later by the hardware integration.
 export const EMPTY_SENSOR_DATA = {
-  voc_ppb: null as number | null,
-  co_ppm: null as number | null,
-  no2_ppb: null as number | null,
+  sensors: {} as Record<string, number | null>,
   captured_at: null as string | null,
 };
+
+// Dynamic scoring from sensor array (VOCs resistance values in Ohms)
+export type SensorReadings = Record<string, number>;
+
+/**
+ * Calculate a dynamic risk score from sensor readings.
+ * - avg below ~3500 -> low dynamic contribution
+ * - avg >=4000 or key sensors high -> high contribution
+ * Returns 0..60 (so static + dynamic <= 100 reasonably)
+ */
+export function calculateDynamicRisk(
+  readings: SensorReadings,
+  keySensorIds: string[] = [],
+  environmentalHazards: string[] = [],
+  smokingStatus: SmokingStatus = "never",
+): number {
+  const ids = Object.keys(readings);
+  if (ids.length === 0) return 0;
+  const vals = ids.map((k) => readings[k]).filter((v) => typeof v === "number" && !isNaN(v));
+  if (vals.length === 0) return 0;
+  const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+
+  const base = Math.max(0, Math.min(1, (avg - 3500) / (6500 - 3500)));
+  let dyn = Math.round(base * 40);
+
+  let keyBoost = 0;
+  if (keySensorIds.length) {
+    const keyVals = keySensorIds.map((k) => readings[k]).filter((v) => typeof v === "number");
+    const highKeys = keyVals.filter((v) => v >= 4500).length;
+    keyBoost = Math.min(24, highKeys * 6);
+  }
+
+  const researchBoost = researchRiskBoost(environmentalHazards, smokingStatus);
+  dyn = Math.min(60, dyn + keyBoost + researchBoost);
+  return dyn;
+}

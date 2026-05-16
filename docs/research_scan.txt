@@ -1,0 +1,1319 @@
+
+=== research.pdf ===
+PAGE 1 LINE 1: Breath-based lung cancer detection
+PAGE 1 LINE 2: using an ML-driven low-cost sensor
+PAGE 1 LINE 7: systems have emerged as a promising method for non-invasive lung cancer detection. These systems,
+PAGE 1 LINE 8: however, have several limitations, including low accuracy rates and long detection times. To address
+PAGE 1 LINE 11: sensors and one chemi-resistive alkane sensor. The device recorded data for 28 healthy controls and 18
+PAGE 1 LINE 12: lung cancer breath samples that were then analyzed using a multilayer perceptron neural network. The
+PAGE 1 LINE 18: findings highlight the potential of this breath analyzer system as a rapid and cost -effective tool for
+PAGE 1 LINE 19: preliminary lung cancer screening.
+PAGE 1 LINE 21: detection, more than 75% of lung cancer patients are diagnosed after stage 3, when treatment options are limited
+PAGE 1 LINE 22: and prognosis is poor2. However, early detection of lung cancer can substantially improve survival outcomes.
+PAGE 1 LINE 24: IV , the 5-year survival rate drops to 10% or lower3.
+PAGE 1 LINE 25: Although current lung cancer detection tools have high accuracy, they also have limitations. Low-dose CT
+PAGE 1 LINE 28: participants, reported LDCT scans had a 96.4% false positive rate for early stages of lung cancer, highlighting
+PAGE 1 LINE 31: A promising diagnosis method for lung cancer utilizes gas sensors to analyze volatile organic compounds
+PAGE 1 LINE 32: (VOCs) for breath-based detection10–13. Certain diseases, such as chronic obstructive pulmonary disease
+PAGE 1 LINE 33: (COPD) and pulmonary fibrosis, can alter the composition of VOCs in human breath, allowing them to serve
+PAGE 1 LINE 34: as biomarkers for those diseases14–18. This method is viable for lung cancer as it has a distinct VOC profile
+PAGE 1 LINE 36: lung cancer, such as altered protein expression, gene mutations, and the Warburg effect, which is an abnormal
+PAGE 1 LINE 37: reliance of cancer cells on aerobic glycolysis19,20,22. These processes lead to the production of VOC byproducts
+PAGE 1 LINE 38: such as toluene, benzene, and acetone, as well as the alkane VOC subgroup, which serve as analytical markers
+PAGE 1 LINE 40: Currently, the gold standard for breath-based lung cancer detection is the gas chromatography-mass
+PAGE 1 LINE 42: a lengthy processing time. Recently, many studies have used small-scale sensor arrays to detect and analyze
+PAGE 1 LINE 43: various VOC compounds present in exhaled breath31–33. They show the promise of e-nose systems but are often
+PAGE 2 LINE 2: for highly accurate, rapid, and non-invasive lung cancer detection. In this pilot study, samples from 46 study
+PAGE 2 LINE 10: This pilot study was designed to evaluate the effectiveness of a breath-based device for lung cancer detection. The
+PAGE 2 LINE 11: study population consisted of 46 participants, including 28 healthy controls and 18 patients with a confirmed
+PAGE 2 LINE 12: diagnosis of lung cancer. Data collection was conducted at the Rashtra Sant Tukdoji Regional Cancer Hospital
+PAGE 2 LINE 18: Table 1. The primary outcome measure was to evaluate the model’s accuracy in detecting lung cancer.
+PAGE 2 LINE 19: Selection of sensors
+PAGE 2 LINE 20: Based on prior research identifying lung cancer-indicative VOCs, we selected 12 gas sensors to capture a wide
+PAGE 2 LINE 21: breath profile23–26. The device’s sensor array contains 12 metal oxide semiconductor (MOS) sensors and one
+PAGE 2 LINE 22: chemiresistive alkane sensor. The alkane sensor was fabricated by following the procedures described by Tan
+PAGE 2 LINE 27: Table 2 shows the full list of sensors used in this study and their corresponding VOCs. The sensors primarily
+PAGE 2 LINE 28: target different specific VOCs, with some compound cross-sensitivity. As a result, each sensor outputs a unique
+PAGE 2 LINE 29: electrical resistance value when exposed to the same gas mixture39. This characteristic enables the sensor array
+PAGE 2 LINE 31: 1 TGS 2600 Metal Oxide Semiconductor 1–1000 Hydrogen, Ethanol, Formaldehyde, etc. FIGARO
+PAGE 2 LINE 32: 2 TGS 2602 Metal Oxide Semiconductor 0.05–10.05 Ammonia, Toluene, Hydrogen-Sulfide, etc. FIGARO
+PAGE 2 LINE 33: 3 TGS 2620 Metal Oxide Semiconductor 1–30 Ethanol, Toluene, Acetone, etc. FIGARO
+PAGE 2 LINE 34: 4 MQ-2 Metal Oxide Semiconductor 200-10,000 Benzene, Toluene, Xylene, etc. Winsen
+PAGE 2 LINE 35: 5 MQ-3 Metal Oxide Semiconductor 50-10,000 Ethanol, Acetone, Methanol, etc. Winsen
+PAGE 2 LINE 36: 6 MQ-4 Metal Oxide Semiconductor 200-10,000 Methane, Ethane, Propane, etc. Winsen
+PAGE 2 LINE 37: 7 MQ-5 Metal Oxide Semiconductor 200–2000 Benzene, Toluene, Propane, etc. Winsen
+PAGE 2 LINE 38: 8 MQ-6 Metal Oxide Semiconductor 200–1000 Butane, Propane, Hexane, etc. Winsen
+PAGE 2 LINE 39: 9 MQ-7 Metal Oxide Semiconductor 20–2000 Carbon-Monoxide, Benzene, Ethanol, etc. Winsen
+PAGE 2 LINE 40: 10 MQ-9 Metal Oxide Semiconductor 200–2000 Carbon-Monoxide, Methane, Benzene, etc. Winsen
+PAGE 2 LINE 41: 11 MC-135 Metal Oxide Semiconductor 10–500 Ammonia, Formaldehyde, Hydrogen, etc. Winsen
+PAGE 2 LINE 43: Table 2 . Overview of gas sensors and their specifications. Lung Cancer (n=18) Healthy Control (n=28) p value
+PAGE 3 LINE 3: sensors described in Table 2 and two fans positioned underneath the sensor plate to remove residual VOCs.
+PAGE 3 LINE 7: After a breath sample is transported inside the gas chamber, sensors react to the gases and output their
+PAGE 3 LINE 8: resistance signals. Signals from the sensors are converted from analog to digital on the Arduino board and are
+PAGE 3 LINE 11: In order to collect and read sensor data from the Arduino, we developed a computer program written in
+PAGE 3 LINE 16: ensure the patient’s VOC profile was not impacted by substances that could skew results21,42,43.
+PAGE 3 LINE 18: using a gas sampling pump. During this time, baseline calibration sensor readings were recorded for 30 seconds.
+PAGE 3 LINE 20: During the response phase, sensor readings were recorded at a sampling frequency of approximately 0.97 Hz,
+PAGE 3 LINE 21: yielding 29 data points per sensor. This procedure ensured that sensor responses could be compared against a
+PAGE 3 LINE 25: clears residual VOCs in the sensor cores through inelastic collisions without chemically interacting with the
+PAGE 3 LINE 26: sensor core itself. This cleaning process is essential as it prevents previous breath samples from impacting
+PAGE 3 LINE 27: subsequent readings and ensures a stable sensor baseline reading for consistency and accuracy. The cleaning
+PAGE 3 LINE 33: Gas Chamber Housing $40 Enclosure for sensors and electronics
+PAGE 4 LINE 2: Prior to model training, the resistance data obtained from the sensor array underwent several preprocessing steps:
+PAGE 4 LINE 4: performed by subtracting the mean resistance value recorded during the initial stabilization period from each
+PAGE 4 LINE 5: sensor signal to account for environmental noise. Standardization was then applied to rescale all features to zero
+PAGE 4 LINE 6: mean and unit variance, ensuring comparability across sensors.
+PAGE 4 LINE 7: Our dataset included 28 healthy and 18 lung cancer samples, which is small relative to the dimensionality
+PAGE 4 LINE 8: of the sensor feature space (12 sensors × 29 time points = 348  features per sample). Small- N, high- d settings
+PAGE 4 LINE 16: altering class centers. We generated mLC= 35  synthetic lung cancer samples and mH= 25  synthetic healthy
+PAGE 4 LINE 17: samples for a final dataset of 53 lung cancer and 79 healthy samples. Only the training set was augmented to
+PAGE 4 LINE 28: Prior to deep learning-based classification, we analyzed sensor response data from healthy individuals and lung
+PAGE 4 LINE 29: cancer patients. Fig. 4a shows the response of the gas sensor array to exhaled breath from a healthy individual,
+PAGE 4 LINE 30: while Fig. 4b shows the responses to a breath sample from a lung cancer patient.
+PAGE 4 LINE 31: The two graphs show the responses of the 12 gas sensors, for which sensor-specific details are available in
+PAGE 4 LINE 32: Table 2. Each sensor demonstrated distinct sensitivity profiles but comparable response times, with certain
+PAGE 4 LINE 33: sensors–particularly TGS2620, TGS2602, and MQ135–exhibiting markedly higher responses to the exhaled
+PAGE 4 LINE 34: breath of lung cancer patients. Variance in response and sensitivity was due to the different target VOCs of each
+PAGE 4 LINE 35: gas sensor. This diversity in sensor reactions allowed for a broader breath profile to be captured, resulting in
+PAGE 4 LINE 37: To further examine sensor performance, we performed a progressive backward ablation on the preprocessed
+PAGE 4 LINE 38: 12-sensor matrix, using a stratified 5-fold cross-validation (CV) logistic-regression pipeline on 46 samples.
+PAGE 4 LINE 39: Starting from all 12 sensors, at each step we removed the sensor whose removal yielded the highest CV
+PAGE 4 LINE 41: AUC =0 .9867±0.0267 ), yielding the minimum-optimal subset TGS2602, TGS2620, MQ2, MQ135 . For
+PAGE 4 LINE 43: data and evaluating SHAP on the held-out test fold to avoid information leakage. Per-sensor SHAP values were
+PAGE 4 LINE 44: summed across all 29 time points and averaged over folds, yielding a robust measure of each sensor’s contribution
+PAGE 4 LINE 45: (Fig. 5). The resulting SHAP ranking ( TGS2602 >TGS2620 >MQ2>MQ135 ) aligned closely with the
+PAGE 4 LINE 46: ablation-derived subset, reinforcing the discriminative importance of these four sensors. Sensors such as MQ9
+PAGE 4 LINE 47: Fig. 2 . System flow of the proposed breath analyzer for lung cancer detection. Exhaled breath samples are
+PAGE 4 LINE 49: through an array of MOS and alkane sensors housed within a gas chamber, where the gas responses are
+PAGE 5 LINE 1: and MQ6 , which were removed early in ablation, consistently showed negligible SHAP contributions across
+PAGE 5 LINE 3: To examine differences between the healthy and lung cancer sample populations, we applied principal
+PAGE 5 LINE 7: cancer samples are generally separated from healthy samples along PC1. While there is some overlap between
+PAGE 5 LINE 11: A multi-layer perceptron (MLP) model was implemented to classify lung cancer and healthy breath samples
+PAGE 5 LINE 12: using multimodal sensor array resistance data. The model was developed in TensorFlow and trained on a Google
+PAGE 5 LINE 15: from each of 12 chemiresistive sensors. The dataset consisted of 28 healthy and 18 lung cancer samples that were
+PAGE 5 LINE 17: dataset to 79 healthy and 53 lung cancer samples. Following this process, the data was split such that 70% of both
+PAGE 5 LINE 18: healthy and lung cancer samples were used for training. The remaining 30% of samples were kept for testing. The
+PAGE 5 LINE 21: respectively, each followed by ReLU activation, L2 regularization ( λ = 0.001), batch normalization, and dropout
+PAGE 5 LINE 29: Logistic Regression, Random Forest, and XGBoost clustered together and were noticeably lower than the MLP
+PAGE 5 LINE 31: Regression) did not match the MLP , indicating that non-linear interactions across sensors and time points are
+PAGE 5 LINE 41: between lung cancer patients and healthy controls. The device achieved a mean area under the ROC curve
+PAGE 5 LINE 42: (AUC) of 0.9286, an accuracy of 96.26%, a sensitivity of 92.88%, and a specificity of 97.75%. The high sensitivity
+PAGE 5 LINE 43: Fig. 3 . Distribution of a representative sensor feature after standardization for healthy (left) and lung cancer
+PAGE 6 LINE 1: and specificity signify the accuracy and precision in detecting lung cancer using this device. These performance
+PAGE 6 LINE 2: metrics highlight the device’s potential as a rapid, non-invasive screening tool that could facilitate early detection,
+PAGE 6 LINE 4: The device performance is competitive with existing multimodal sensor-based systems. Previous studies show
+PAGE 6 LINE 6: et al. (2020) achieved a classification accuracy of 88.56%, both using a small-scale sensor array34,47. Our system’s
+PAGE 6 LINE 8: Fig. 4 . Representative sensor response patterns to exhaled breath.
+PAGE 7 LINE 5: scale MOS sensors, enabling the device to detect a broader range of VOCs. This contributed to the system’s
+PAGE 7 LINE 6: higher prediction accuracy.Model Accuracy Specificity Sensitivity F1-score
+PAGE 7 LINE 13: Fig. 6 . Two-dimensional mapping results of PCA. Blue circles represent samples from healthy individuals, and
+PAGE 7 LINE 14: orange triangles represent samples from lung cancer patients.
+PAGE 7 LINE 15: Fig. 5 . Cross-validated SHAP attribution for the top four sensors, averaged across folds and time points.
+PAGE 8 LINE 3: sensor studies with upwards of 40 minutes for prediction, as they absorb VOCs from exhaled breath instead of
+PAGE 8 LINE 6: imaging tests, which require several days for processing and follow-ups, the breath analyzer system enables
+PAGE 8 LINE 7: immediate identification of high-risk individuals during a quick in-office visit. By integrating such a device
+PAGE 8 LINE 9: asymptomatic lung cancer cases, ultimately improving patient outcomes.
+PAGE 8 LINE 10: Accurate early-stage lung detection is another strength of the system. With the majority of the lung cancer
+PAGE 8 LINE 13: training and testing sets, proving the system’s viability for early-stage lung cancer detection.
+PAGE 8 LINE 15: characteristics, combined with the device’s low cost of approximately $215, make our system more suitable for
+PAGE 8 LINE 16: lung cancer preliminary screening in both clinical and non-clinical settings. It also has the potential to improve
+PAGE 8 LINE 17: lung cancer detection in underserved regions where conventional diagnostic tools are limited or unaffordable.
+PAGE 8 LINE 19: of 0.9286; (b) Confusion matrix of classification results showing correct predictions for healthy and cancer
+PAGE 8 LINE 20: classes; (c) The performance metrics of the MLP model for classification of lung cancer patients and controls.
+PAGE 9 LINE 3: sensor array was largely homogenous, relying on MOS sensors.
+PAGE 9 LINE 5: an opportunity to further improve the system’s accuracy by researching the use of type-different sensors in
+PAGE 9 LINE 6: our array, such as electrochemical or catalytic combustion sensors. Secondly, we implemented an MLP neural
+PAGE 9 LINE 13: The findings display the potential of our small-scale sensor device for VOC breath analysis-based lung cancer
+PAGE 9 LINE 14: detection. The device demonstrated high accuracy across all stages of lung cancer while remaining low-cost,
+PAGE 9 LINE 17: tools is often limited. By enabling earlier detection, the device may help identify high-risk individuals prior to
+PAGE 9 LINE 22: lung cancer prevention and early diagnosis in healthcare.
+PAGE 9 LINE 28: The Python scripts used for decoding and saving sensor readings to a CSV file database, data augmentation,
+PAGE 9 LINE 33: 2. Nooreldeen, R. & Bach, H. Current and future development in lung cancer diagnosis. International journal of molecular sciences
+PAGE 9 LINE 35: 3. Ning, J. et al. Early diagnosis of lung cancer: which is the optimal choice?. Aging (Albany NY)  13, 6214 (2021).
+PAGE 9 LINE 38: 5. Pozzessere, C., von Garnier, C. & Beigelman-Aubry, C. Radiation exposure to low-dose computed tomography for lung cancer
+PAGE 9 LINE 40: 6. Chudgar, N. P . et al. Results of the national lung cancer screening trial: where are we now?. Thoracic surgery clinics  25, 145 (2015).
+PAGE 9 LINE 41: 7. Zhang, Y ., Shi, L., Simoff, M. J., J Wagner, O. & Lavin, J. Biopsy frequency and complications among lung cancer patients in the
+PAGE 9 LINE 43: 8. Chiu, Y .-W . et al. Costs of biopsy and complications in patients with lung cancer. ClinicoEconomics and Outcomes Research  191–
+PAGE 9 LINE 45: 9. Lokhandwala, T. et al. Costs of diagnostic assessment for lung cancer: a medicare claims analysis. Clinical lung cancer  18, e27–e34
+PAGE 9 LINE 47: 10. Peng, G. et al. Detection of lung, breast, colorectal, and prostate cancers from exhaled breath using a single array of nanosensors.
+PAGE 9 LINE 49: 11. Phillips, M. et al. Prediction of lung cancer using volatile biomarkers in breath. Cancer biomarkers  3, 95–109 (2007).
+PAGE 9 LINE 50: 12. Mazzone, P . J. et al. Exhaled breath analysis with a colorimetric sensor array for the identification and characterization of lung
+PAGE 9 LINE 54: 14. Horvath, I., Lazar, Z., Gyulai, N., Kollai, M. & Losonczy, G. Exhaled biomarkers in lung cancer. European Respiratory Journal  34,
+PAGE 9 LINE 60: 17. V A, B., Subramoniam, M. & Mathew, L. Noninvasive detection of copd and lung cancer through breath analysis using mos sensor
+PAGE 9 LINE 64: 19. Setlhare, T. C., Mpolokang, A. G., Flahaut, E. & Chimowa, G. Determination of lung cancer exhaled breath biomarkers using
+PAGE 10 LINE 4: culture for detection of lung cancer. Metabolites  9, 52 (2019).
+PAGE 10 LINE 5: 24. Lv, W . et al. Identification of volatile biomarkers for lung cancer from different histological sources: A comprehensive study.
+PAGE 10 LINE 7: 25. Keogh, R. J. & Riches, J. C. The use of breath analysis in the management of lung cancer: is it ready for primetime?. Current
+PAGE 10 LINE 9: 26. Choueiry, F., Barham, A. & Zhu, J. Analyses of lung cancer-derived volatiles in exhaled breath and in vitro models. Experimental
+PAGE 10 LINE 11: 27. Wang, P . et al. Identification of lung cancer breath biomarkers based on perioperative breathomics testing: A prospective
+PAGE 10 LINE 13: 28. Sani, S. N. et al. Lc-ms/ms based volatile organic compound biomarkers analysis for early detection of lung cancer. Cancers  15,
+PAGE 10 LINE 16: screening of lung cancer disease. Microchemical Journal  114003 (2025).
+PAGE 10 LINE 17: 30. Nardi-Agmon, I. et al. Exhaled breath analysis for monitoring response to treatment in advanced lung cancer. Journal of Thoracic
+PAGE 10 LINE 25: 34. Ozsandikcioglu, U., Atasoy, A. & Sevim, Y . Lung cancer detection utilizing mixed sensor based electronic nose. IEEE Access  (2025).
+PAGE 10 LINE 26: 35. Jia, Z., Thavasi, V ., Venkatesan, T. & Lee, P . Breath analysis for lung cancer early detection-a clinical study. Metabolites  13, 1197
+PAGE 10 LINE 28: 36. Lee, B. et al. Breath analysis system with convolutional neural network (cnn) for early detection of lung cancer. Sensors and
+PAGE 10 LINE 32: 38. Tan, J.-L., Y ong, Z.-X. & Liam, C.-K. Using a chemiresistor-based alkane sensor to distinguish exhaled breaths of lung cancer
+PAGE 10 LINE 33: patients from subjects with no lung cancer. Journal of thoracic disease  8, 2772 (2016).
+PAGE 10 LINE 34: 39. Dey, A. Semiconductor metal oxide gas sensors: A review. Materials science and Engineering: B  229, 206–217 (2018).
+PAGE 10 LINE 38: 42. Fan, X. et al. Exhaled voc detection in lung cancer screening: a comprehensive meta-analysis. BMC cancer  24, 775 (2024).
+PAGE 10 LINE 46: 47. Li, W ., Liu, H., Xie, D., He, Z. & Pi, X. Lung cancer screening based on type-different sensor arrays. Scientific reports  7, 1969 (2017).
+PAGE 10 LINE 47: 48. Takamori, S. et al. Differential diagnosis of lung cancer and benign lung lesion using salivary metabolites: A preliminary study.
+
+=== research1.pdf ===
+PAGE 1 LINE 12: surge in new cases, particularly in developing countries. In Thaila nd, the prevalence of lung cancer,
+PAGE 1 LINE 15: Objective: This review aims to analyze risk factors contribut ing to lung cancer in Thailand, focusing on
+PAGE 1 LINE 16: the vulnerability of Thai teenagers. The study explores the multif aceted etiology of lung cancer,
+PAGE 1 LINE 21: insights into the risk factors contributing to lung cancer and substance use trends, particularly among Thai
+PAGE 1 LINE 23: Result: The findings underscore the intricate nature of lung cancer development, emphasizing the
+PAGE 1 LINE 28: importance of preventing lung cancer among Thai teenagers.
+PAGE 1 LINE 29: Conclusion: the study provides valuable insights into the multifaceted nature of lung cancer and substance
+PAGE 1 LINE 32: Keywords —lung cancer, risk factors, prevention, Thailand, teenagers
+PAGE 1 LINE 37: cases, projecting 24 million by 2030, with lung cancer contributing signi ficantly to the estimated 12.9
+PAGE 1 LINE 39: where urbanization-induced lifestyle changes play a role in the ris ing incidence of lung cancer.[1],[2] In
+PAGE 1 LINE 40: Thailand, lung cancer emerges as the leading cancer among the top five, with projections indicating a 14%
+PAGE 1 LINE 42: trajectory.[3] Notably, the prevalence of lung cancer is higher in individuals aged 50-75, especially in the
+PAGE 2 LINE 3: ISSN : 2581-7175                             ©IJSRED: All Rights are Reserved  Page 119 advancements in chemotherapy, the 5-year survival rate for lung cancer patients in Thailand is 78%, while
+PAGE 2 LINE 7: exposure to carcinogenic substances contribute to lung cancer risk. This  review aims to analyze factors
+PAGE 2 LINE 16: The development of lung cancer is closely associated with prolonged i rritation of the cells lining the
+PAGE 2 LINE 18: The primary factors are as follows.[9]
+PAGE 2 LINE 19: (1) Smoking is a major cause of lung cancer, accounting for as much a s 80-90% of cases. Smoking
+PAGE 2 LINE 21: have a significantly higher risk of lung cancer compared to non-smoker s, with the risk increasing by more
+PAGE 2 LINE 23: higher risk, at least twice that of the general population. If i ndividuals quit smoking, the risk of lung
+PAGE 2 LINE 35: and contributing to the development of lung cancer.[11]
+PAGE 2 LINE 36: (2) Marijuana smoking has a higher potential to cause cancer than sm oking cigarettes. While the smoke
+PAGE 2 LINE 39: higher accumulation of cancer-causing substances in the respiratory tract compared to smoking an
+PAGE 2 LINE 44: tends to result in the accumulation of tar at a higher rate than s moking cigarettes, making it a contributing
+PAGE 2 LINE 45: factor to an elevated risk of lung cancer.[13],[14]
+PAGE 3 LINE 13: contains carcinogens that can lead to various cancers, such as lung cancer, laryngeal cancer, bronchial
+PAGE 3 LINE 17: of lung cancer associated with cigarette smoking, as it contains hydrocarbons that transform into cigarette
+PAGE 3 LINE 23: emitting alpha radiation, is considered a toxic substance that contri butes to the development of lung cancer
+PAGE 3 LINE 26: elements. It has fine thread-like characteristics with spec ial properties such as fire resistance, heat
+PAGE 3 LINE 27: insulation, electrical resistance, and flexibility. It can be spun into threads and woven into fabric, and it is
+PAGE 3 LINE 37: This can significantly increase the risk of lung cancer, up to 5 ti mes more than the general population.
+PAGE 3 LINE 39: up to 90 times more likely to develop lung cancer than non-smokers. Othe r substances that may contribute
+PAGE 3 LINE 40: to lung cancer include radon, nickel, chromium, and air pollution.[19]
+PAGE 3 LINE 49: indoor radon accumulation, posing health risks for inhabitants exposed to higher  concentrations of this
+PAGE 4 LINE 5: accumulation of stable lead in lung air sacs cannot be expelled, rai sing the risk of lung cancer due to both
+PAGE 4 LINE 11: pulmonary tuberculosis or emphysema face a higher risk of developing l ung cancer compared to the
+PAGE 4 LINE 12: general population. Notably, reports highlight an increased occurrence of lung cancer in patients with
+PAGE 4 LINE 19: pulmonary silicosis, can also increase lung cancer risk. Infecti ons, particularly with human papillomavirus
+PAGE 4 LINE 20: (HPV) and mycobacterial infections, are linked to an increased ri sk of lung cancer. Research from Taiwan
+PAGE 4 LINE 22: likelihood of developing lung cancer. Although infection with Chlamydia pneumoni a is not directly
+PAGE 4 LINE 26: (9) Air Pollution: The World Health Organization (WHO) reveals that 14% of lung cancer cases stem
+PAGE 4 LINE 27: from outdoor air pollution, while 17% result from indoor air pollution. Adenoca rcinoma lung cancer is
+PAGE 4 LINE 33: lungs. PM 2.5 is associated with heightened mortality rates and t he increased spread of lung cancer.
+PAGE 4 LINE 34: The mechanism of PM 2.5 leading to lung cancer involves several ke y processes. PM 2.5 stimulates
+PAGE 4 LINE 38: (10) Gender Differences: Recent research suggests that female s have a higher risk of developing lung
+PAGE 4 LINE 39: cancer than males. Genetic factors, lower DNA repair capabil ities, and higher mutations of certain genes
+PAGE 4 LINE 42: factors also play a role in the risk of lung cancer. A family history of lung cancer, especially diagnosed
+PAGE 4 LINE 45: The trends in lung cancer incidence and mortality in Thailand reveal  significant numbers and regional
+PAGE 5 LINE 3: ISSN : 2581-7175                             ©IJSRED: All Rights are Reserved  Page 122 certain areas show a higher prevalence of lung cancer cases per  100,000 population. Notably, Lampang
+PAGE 5 LINE 4: leads with 45 cases per 100,000, followed by Chiang Mai with 41, and Nan w ith 38. In contrast, Pattani
+PAGE 5 LINE 5: exhibits the lowest incidence, with only 6 cases per 100,000, while Bang kok reports 24 cases per 100,000
+PAGE 5 LINE 6: people. These regional variations highlight the diverse landscape of  lung cancer prevalence in different
+PAGE 5 LINE 9: Preventing lung cancer involves adopting a proactive approach and making  lifestyle choices that
+PAGE 5 LINE 10: contribute to overall well-being. Here are key measures to reduc e the risk of lung cancer:
+PAGE 5 LINE 19: prevention. Timely screenings and medical assessments can identi fy potential risks and allow for proactive
+PAGE 5 LINE 22: diet. A healthy lifestyle supports the immune system and helps kee p the body strong and resilient.
+PAGE 5 LINE 26: susceptibility to lung cancer. These strategies, coupled with re gular health monitoring, contribute to
+PAGE 5 LINE 34: underscore Kamphaeng Phet's position with the highest smoking rate in t he northern region.The study
+PAGE 5 LINE 39: concerns about increased accessibility. A real-world incident invol ving marijuana consumption highlights
+PAGE 5 LINE 45: Thai teenagers are at an elevated risk of developing lung cancer , primarily due to a complex interplay of
+PAGE 6 LINE 4: pressure and societal norms, are particularly vulnerable, with r egional disparities highlighting areas like
+PAGE 6 LINE 5: Kamphaeng Phet with the highest smoking rates. The continuous rise in smoking rates among females,
+PAGE 6 LINE 13: The increasing incidence of lung cancer poses a significant global public health challenge, with
+PAGE 6 LINE 14: projections indicating a surge in new cases, especially in devel oping countries. In Thailand, lung cancer is
+PAGE 6 LINE 16: air pollution. Despite advancements in chemotherapy, the survival r ates for lung cancer patients in
+PAGE 6 LINE 17: Thailand remain a concern. The review identified several risk f actors contributing to lung cancer, with
+PAGE 6 LINE 21: the multifaceted nature of lung cancer etiology, necessitating a  comprehensive approach to prevention and
+PAGE 6 LINE 23: associated with lung cancer. Key strategies include smoking cess ation, avoiding environmental hazards,
+PAGE 6 LINE 24: choosing clean air environments, routine health check-ups, maintaining a  healthy lifestyle, and addressing
+PAGE 6 LINE 25: potential toxins in the home environment. The comprehensive analysis of lung cancer trends, risk factors,
+PAGE 6 LINE 27: with a particular emphasis on the vulnerability of Thai teenagers  to developing lung cancer. The
+PAGE 6 LINE 35: and nutrition can contribute to reducing lung cancer susceptibility among  Thai teenagers. It is imperative
+PAGE 6 LINE 37: healthier environment and raising awareness about the critical im portance of preventing lung cancer
+PAGE 7 LINE 13: [10]  Thandra KC, BarsoukA,  Saginala K, Aluru JS,  Barso uk A. Epidemiology of lung cancer. Contemp Oncol (Po zn). 2021; 25(1): 45-52.
+PAGE 7 LINE 22: [14]  Mayo Clinic Health System [Internet]. Wisconsin: Ma yo Clinic Health System; c2018-2023.  Does smoking mar ijuana increase lung cancer risk? ; 2023
+PAGE 7 LINE 24: [15]  Bracken-Clarke D, Kapoor D, Baird AM, Buchanan PJ, Gately K, Cuffe S, et al. Vaping and lung cancer - A review of current data and
+PAGE 7 LINE 28: [17]  Ragavan M, Patel MI. The evolving landscape of sex- based differences in lung cancer: a distinct diseas e in women.  European Respiratory Review. 2022;
+PAGE 7 LINE 37: engineering professor suggests ways to prevent it; 2023 [cite 2023 Dec 10]. Available from:  https://ww w.chula.ac.th/highlight/97284/
+PAGE 7 LINE 39: [23]  Baldacci S, Maio S, Meschi C, Chimera D, Tagliaferro  S, Angio AA, et al. A narrative review of epidemio logy and prevention of lung cancer: sex/gender
+PAGE 7 LINE 43: [25]  Li R, Zhou R, Zhang J. Function of PM2.5 in the pat hogenesis of lung cancer and chronic airway inflammat ory diseases. Oncol Lett. 2018; 15(5): 7506-
+PAGE 7 LINE 45: [26]  Chulalongkorn University [Internet]. Bangkok: Chula longkorn University; 2023. Doctors at Chulalongkorn  University point out that "lung cancer" can
+PAGE 7 LINE 47: https://www.chula.ac.th/highlight/118356/
+PAGE 7 LINE 50: [28]  The Agenda Agency [Internet]. Bangkok: The Agenda C o.,ltd.; 2022. How much lung cancer is there in each  province? ; 2022 [cite 2023 Dec 17].
+
+=== research2.pdf ===
+PAGE 1 LINE 2: Risk patterns of lung cancer mortality in
+PAGE 1 LINE 7: Background: Over the past decade, lung cancers have exhibited a disproportionately high mortality and increasing
+PAGE 1 LINE 10: respond to the risk of lung cancer mortality in specific areas. The aim of our study was to identify risk patterns for
+PAGE 1 LINE 11: lung cancer mortality within the northern region of Thailand.
+PAGE 1 LINE 12: Methods: In the spatial analysis, the relative risk (RR) was used as a measure of the risk of lung cancer mortality in
+PAGE 1 LINE 15: presented the overall and gender specific lung cancer mortality risk patterns of the region using the Quantum
+PAGE 1 LINE 17: Results: The overall risk of lung cancer mortality was the highest in the west of northern Thailand, especially in the
+PAGE 1 LINE 18: Hang Dong, Doi Lo, and San Pa Tong districts. For both genders, the risk patterns of lung cancer mortality indicated
+PAGE 1 LINE 19: a high risk in the west of northern Thailand, with females being at a higher risk than males.
+PAGE 1 LINE 20: Conclusions: There was distinct geographical variation in risk patterns of lung cancer mortality in Thailand.
+PAGE 1 LINE 22: provides a starting point for estimating the spatial pattern of the risk of lung cancer mortality and for examining
+PAGE 1 LINE 30: lung cancer has been the leading cause of mortality and
+PAGE 1 LINE 34: rate caused by lung cancer and in addition, has thehighest mortality rate compared to other types of can-
+PAGE 1 LINE 39: lung cancer in northern Thailand, such as demographic
+PAGE 2 LINE 7: Focusing on Chiang Mai province, the high-risk dis-
+PAGE 2 LINE 8: tricts have a problem with high air pollution from par-
+PAGE 2 LINE 11: area is surrounded by high mountains that block diffu-
+PAGE 2 LINE 12: sion and redirect airflow, thereby exacerbating air pollu-
+PAGE 2 LINE 15: to the occurrence of lung cancer and leading to death
+PAGE 2 LINE 19: declined. In addition, the risk patterns of lung cancer
+PAGE 2 LINE 26: ical patterns of lung cancer mortality using the standard-
+PAGE 2 LINE 28: of the observed and expected number of lung cancer mor-
+PAGE 2 LINE 35: lung cancer mortality across 81 districts spanning the six
+PAGE 2 LINE 49: of the districts was 50,132 (range 11,025 –229,033), of
+PAGE 2 LINE 51: (range 5735 –110,167) and 25,843 (range 5290 –122,063),
+PAGE 2 LINE 53: We used data on lung cancer mortality from the Chiang
+PAGE 2 LINE 73: agnosed with lung cancer from any cause during the
+PAGE 2 LINE 80: (range 9 –469), of which the median number of males
+PAGE 2 LINE 81: was 57 (range 9 –266) and that of females was 39 (range
+PAGE 2 LINE 84: lung cancer and multiplying the population at the mid-
+PAGE 2 LINE 91: (i=1,...,81) are assumed to follow an independent Pois-
+PAGE 2 LINE 96: lung cancer mortality includes both spatial heterogeneity
+PAGE 2 LINE 99: lows [ 42]:
+PAGE 3 LINE 2: cent neighbors of each district and is assumed to follow a
+PAGE 3 LINE 4: erogeneities are assumed to follow a normal distribution
+PAGE 3 LINE 7: the RR spatial distribution for the risk of lung cancer mor-
+PAGE 3 LINE 14: mated the RR of the lung cancer mortality for each district
+PAGE 3 LINE 16: Table 1 The observed and expected number of lung cancer mortality in the six northern Thailand provinces
+PAGE 4 LINE 1: Fig. 2 Relative risk patterns of lung cancer mortality in the six northern Thailand provinces: aoverall, bmale, and cfemale. Source of reference
+PAGE 5 LINE 3: patterns of lung cancer mortality for the 81 districts in 6
+PAGE 5 LINE 12: The lung cancer mortality data during 2008 –2017 in the
+PAGE 5 LINE 17: lung cancer were higher than the expected number for
+PAGE 5 LINE 22: to be 552.8. The RR of lung cancer mortality over the
+PAGE 5 LINE 23: whole study ranged from 0.581 –1.666 (Fig. 2a). The
+PAGE 5 LINE 24: highest RR was found in Hang Dong district (Chiang
+PAGE 5 LINE 33: in that order (Table 2) [see RR of lung cancer mortality
+PAGE 5 LINE 34: for all districts in Additional file 2]. The high-risk pat-
+PAGE 5 LINE 40: RR of lung cancer mortality for males over the whole
+PAGE 5 LINE 41: study area ranged from 0.549 –1.555 and that of females
+PAGE 5 LINE 42: ranged from 0.525 –1.978 (Fig. 2b,2c). The results also
+PAGE 5 LINE 43: show that in some provinces, the districts with the highest
+PAGE 5 LINE 44: RR of lung cancer mortality were different for males and
+PAGE 5 LINE 55: However, we found that the districts with the highest RR
+PAGE 5 LINE 61: genders (Table 3) [see RR of lung cancer mortality by gen-
+PAGE 5 LINE 62: der for all districts in Additional file 2]. The highest risk
+PAGE 5 LINE 63: pattern of lung cancer mortality for males was found in
+PAGE 5 LINE 64: southern Chiang Mai (Fig. 2b) whereas the highest risk
+PAGE 5 LINE 69: lung cancer mortality were the highest in the west (ChiangTable 2 The three districts with the highest risk of lung cancer
+PAGE 6 LINE 1: Mai) and lowest in the east (Phayao and Phrae) and south
+PAGE 6 LINE 5: lung cancer, chronic obstructive pulmonary disease, dia-
+PAGE 6 LINE 6: betes etc.). Regarding lung cancer, they found that the risk
+PAGE 6 LINE 7: of mortality was the highest in Chiang Mai and the lowest
+PAGE 6 LINE 9: the risk was high in Lamphun whereas it was low in our
+PAGE 6 LINE 13: ously diagnosed with lung cancer who had died of any
+PAGE 6 LINE 15: of people recorded as having died from lung cancer only.
+PAGE 6 LINE 19: for spatial or geographical analyses in risk pattern studies.The geographical patterns of risk of lung cancer mor-
+PAGE 6 LINE 22: the highest risk level (RR ≥1.50) are located in areas af-
+PAGE 6 LINE 23: fected by high indoor radon and air pollution, which
+PAGE 6 LINE 25: risk patterns of lung cancer mortality [ 24,25,31]. Future
+PAGE 6 LINE 27: tal factors and lung cancer mortality.
+PAGE 6 LINE 28: In our study, different levels of risk of lung cancer
+PAGE 6 LINE 31: lung cancer mortality closely following those of lung
+PAGE 6 LINE 36: of high air pollution [ 16,27], a geographical location char-
+PAGE 6 LINE 37: acterized by high mountains [ 28–30], and increasingTable 3 The three districts with the highest risk of lung cancer mortality in each province by gender
+PAGE 7 LINE 2: the high risk of lung cancer mortality in Chiang Mai prov-
+PAGE 7 LINE 6: the highest air pollution level in this region, thus it seems
+PAGE 7 LINE 8: from lung cancer.
+PAGE 7 LINE 9: The analysis of the risk of lung cancer mortality by
+PAGE 7 LINE 10: gender revealed that females were at a higher risk of
+PAGE 7 LINE 11: lung cancer mortality than males, especially in districts
+PAGE 7 LINE 16: pastime is higher than males [ 57]. Moreover, the severity
+PAGE 7 LINE 17: of the stage of lung cancer at the time of diagnosis for
+PAGE 7 LINE 18: females was higher than for males [ 7]. In addition, we
+PAGE 7 LINE 20: lung cancer mortality by gender in Chiang Mai province,
+PAGE 7 LINE 21: which exhibited high RR in the west of the study area
+PAGE 7 LINE 22: for both genders. Although females had a higher risk of
+PAGE 7 LINE 23: lung cancer mortality than males, the development of
+PAGE 7 LINE 24: lung cancer preventative strategies should focus on both
+PAGE 7 LINE 25: genders due to lung cancer being a healthcare burden
+PAGE 7 LINE 28: to study the environmental factors related to lung cancer
+PAGE 7 LINE 33: of lung cancer mortality as a surrogate for the prevalence
+PAGE 7 LINE 41: In conclusion, we found that there was a high risk of
+PAGE 7 LINE 42: lung cancer mortality in districts within Chiang Mai
+PAGE 7 LINE 44: geographical variation in risk patterns of lung cancer
+PAGE 7 LINE 48: examine the spatial pattern of the risk of lung cancer
+PAGE 7 LINE 51: lung cancer mortality and for examining associations be-
+PAGE 7 LINE 56: Additional file 2: Table S1. Relative risks of lung cancer mortality in
+PAGE 7 LINE 65: unit, Lampang Cancer Hospital for providing lung cancer mortality data used
+PAGE 8 LINE 32: Thailand: assessing cancers with the highest burdens. Cancers (Basel). 2017;
+PAGE 8 LINE 43: Kangwanpong D. TP53 gene mutations of lung cancer patients in upper
+PAGE 8 LINE 53: Risk factors for lung cancer among northern Thai women: epidemiological,
+PAGE 8 LINE 54: nutritional, serological, and bacteriological surveys of residents in high-and
+PAGE 8 LINE 55: low-incidence areas. Cancer Sci. 1999;90:1187 –95.
+PAGE 8 LINE 63: cell lung cancer patients: a budget impact analysis based in Thailand. Curr
+PAGE 8 LINE 81: 22. Chen W, Zheng R, Zeng H, Zhang S. Epidemiology of lung cancer in China.
+PAGE 8 LINE 87: efficiency and radon related risk of lung cancer: modelling study. Br Med J.
+PAGE 8 LINE 90: to radon gas and lung cancer. Bull World Health Organ. 2003;81:732 –8.
+PAGE 8 LINE 115: on mortality trends for lung cancer, in association with gender-specific
+PAGE 8 LINE 117: 34. Devesa SS, Bray F, Vizcaino AP, Parkin DM. International lung cancer trends by
+PAGE 8 LINE 130: lung cancer and part II —colorectal, prostate, breast, and cervical cancers. J
+PAGE 9 LINE 35: in lung cancer and smoking behavior in Italy: an alarm bell for women.
+PAGE 9 LINE 43: 56. Simarak S, DE Jong UW, Breslow N, Dahl CJ, Ruckphaopunt K, Scheelings P,
+
+=== research3.pdf ===
+PAGE 1 LINE 3: www.nature.com/scientificreportsEstimation of lung cancer deaths
+PAGE 1 LINE 11: Radon exposure is the second leading cause of lung cancer, after smoking. In upper northern
+PAGE 1 LINE 12: Thailand (UNT), lung cancer incidence was frequently reported by Thailand National Cancer Institute.
+PAGE 1 LINE 13: Besides smoking, radon exposure may also influence the high lung cancer incidence in this region.
+PAGE 1 LINE 15: concentrations ranged from 11 to 405 Bq  m−3 and estimated annual effective dose ranged from 0.44 to
+PAGE 1 LINE 17: of lung cancer cases and healthy controls (p = 0.033). We estimated that 26% of lung cancer deaths
+PAGE 1 LINE 22: induced the fractal proportion of lung cancer deaths in UNT.
+PAGE 1 LINE 24: cancer deaths, accounting for 18% of all cancer deaths  globally1. In Thailand, lung cancer was a main cause of
+PAGE 1 LINE 26: northern Thailand where lung cancer incidence and mortality were twice as high as other areas of the  country3.
+PAGE 1 LINE 27: Recently, lung cancer incidence in this region has declined, likely as a result of decreased tobacco smoking, the
+PAGE 1 LINE 28: major risk for development of lung  cancer4. However, lung cancer continues to have significantly higher incidence
+PAGE 1 LINE 31: There are many known risk factors causing lung cancer, particularly, tobacco smoking. In 2004, the Interna-
+PAGE 1 LINE 32: tional Agency for Research on Cancer (IARC), reported that more than 80% of lung cancer patients were related
+PAGE 1 LINE 33: to tobacco smoking, both voluntary and  involuntary6. However, more than 25% of lung cancer patients were
+PAGE 1 LINE 36: ally decreased to 18.4% in  20095,9. Concurrently, the types of lung cancer found in UNT have also shifted, with a
+PAGE 2 LINE 4: mental  factors4,10,11. Therefore, other environmental factors might play a crucial role in lung cancer development,
+PAGE 2 LINE 6: After smoking, radon is the second most important cause of lung cancer, excluding the genetic and other
+PAGE 2 LINE 8: sure to high natural  radiation15–18 and approximately 10–20% of lung cancer worldwide was a result of radon
+PAGE 2 LINE 16: (Group1) by the IARC  22. In the last several decades, many studies have found the association between lung cancer
+PAGE 2 LINE 17: and long-term exposures to residential  radon23–25. The induction period of lung cancer attributable to radon
+PAGE 2 LINE 18: exposure in humans is between 5 and 25  years26. The high dose and long-term exposure to radon in UNT was
+PAGE 2 LINE 19: a crucial factor that enhanced lung cancer  development14. Radon is a linear non-threshold carcinogen that can
+PAGE 2 LINE 20: induce the risk of lung cancer without minimal value of  concentration17. Additionally, the general population
+PAGE 2 LINE 21: study suggests that chronic low dose exposure to radon can cause lung cancer development, for every 100 Bq   m−3
+PAGE 2 LINE 22: increase in indoor radon concentration, the risk of lung cancer is estimated to increase by 8–33%23,24,26,27. The
+PAGE 2 LINE 24: by  countries19. To elucidate the potential contribution of radon exposure on the high incidence of lung cancer
+PAGE 2 LINE 30: Table  1. This ranged from 11 to 405 Bq   m−3, with an arithmetic mean of 105 ± 74 Bq   m−3 and geometric mean
+PAGE 2 LINE 31: of 80 Bq   m−3, which is higher than the global average of 39 Bq   m−319 and the domestic mean of 16 Bq   m−3 in
+PAGE 2 LINE 32: Thailand28. The arithmetic mean was slightly higher than the WHO reference level and lower than the EPA action
+PAGE 2 LINE 34: the provinces of UNT. The highest indoor radon concentration was found in Phrae province, with a arithmetic
+PAGE 2 LINE 35: mean ± SD (range) of 168 ± 69 (54–286) Bq  m−3, follow by Phayao, Chiang Rai, Chiang Mai, Nan, Mae Hong Son,
+PAGE 2 LINE 36: Lampang and Lamphun provinces with the mean ± SD (range) of 167 ± 52 (64–219), 139 ± 77 (31–242), 110 ± 87
+PAGE 2 LINE 38: Of 192 surveyed houses, 41% and 30% had radon concentration higher than the WHO and EPA recom-
+PAGE 2 LINE 39: mended levels (Table S1) which may be associated with the higher incidence and mortality of lung cancer in
+PAGE 2 LINE 44: is abundant uranium and its decay products around this  area29,30. Reportedly, granitic gneiss has high frequency
+PAGE 2 LINE 48: Therefore, the presence of active fault zones may contribute to high radon concentrations in the UNT region
+PAGE 2 LINE 51: (Table  2), we found more than 80% of houses had indoor radon concentration higher than the global average Table 1.  Arithmetic and geometric means of indoor radon concentrations in eight provinces of upper
+PAGE 4 LINE 3: www.nature.com/scientificreports/(39 Bq   m−3). Moreover, the concentrations found in this study were also higher than the mean value of 16 Bq   m−3
+PAGE 4 LINE 13: The presence of an air conditioning in the room was associated with having significantly higher indoor radon
+PAGE 4 LINE 15: and help control indoor air humidity and temperature. Consequently, this allows radon gas to accumulate and
+PAGE 4 LINE 23: Table  4 shows the average indoor radon concentration in the bedrooms of lung cancer cases compared to the
+PAGE 4 LINE 24: healthy controls. By using the Wilcoxon paired test, the average concentration in case houses (109 ± 82 Bq   m−3)
+PAGE 4 LINE 25: was significantly higher (p  = 0.033) than those of the control houses (103 ± 79 Bq   m−3). As a result, radon may
+PAGE 4 LINE 26: be a significant risk factor for development of lung cancer in UNT.
+PAGE 4 LINE 29: an indoor occupancy factor (T ) of 0.69 (Table S1). This average, T, was used to estimate AED, which ranged
+PAGE 4 LINE 30: between 0.44 and 12.18 mSv  y−1 and an average of 4.27 mSv  y−1, which is approximately 3 times higher than the
+PAGE 4 LINE 31: global average AED of 1.3 mSv  y−115. This value is also higher than the previously reported measurements in Pa
+PAGE 4 LINE 32: Miang, Chiang Mai province, where it ranged between 0.9—3.8 mSv  y−129. The AED of lung cancer cases was
+PAGE 4 LINE 33: significantly higher than those of healthy controls (p = 0.032), with AED values of case and controls at 4.28 ± 3.0 Table 2.  Arithmetic means indoor radon concentrations previously reported in upper northern Thailand
+PAGE 5 LINE 4: of lung cancer in this region of Thailand.
+PAGE 5 LINE 5: The association between lung cancer and indoor radon, using indoor radon concentration less than 40 Bq   m−3
+PAGE 5 LINE 7: (Table S2). An association between radon exposure and lung cancer was restricted to males (OR = 4.60, 95%
+PAGE 5 LINE 10: 40–100 Bq   m−3 and more than 100 Bq   m−3, respectively). Moreover, there was no association between higher
+PAGE 5 LINE 12: Hence, EPA  model16 and BEIR VI  model17 were employed to estimate the number of lung cancer deaths attrib -
+PAGE 5 LINE 14: there were 10,164 lung cancer deaths in UNT, 6,115 males and 4,049 females. Table  5 shows the different expo-
+PAGE 5 LINE 16: exposure for registered lung cancer deaths in UNT. Indoor radon exposure in UNT accounted for 26% and 28%
+PAGE 5 LINE 17: of lung cancer deaths in males and females, respectively. Among these eight provinces, the highest lung cancer
+PAGE 5 LINE 18: deaths attributable to indoor radon exposure was in Phrae province, at 37% of all lung cancer deaths, and the
+PAGE 5 LINE 19: lowest was Lampang province (19%). The estimated number of lung cancer deaths due to radon exposure in
+PAGE 5 LINE 20: male and female non-smokers was higher than those in smokers (Table  6). Since the sub-multiplicative interac-
+PAGE 5 LINE 24: male lung cancer were smokers while 52% were female smokers (Table S3). Based on our study results, smoking
+PAGE 5 LINE 25: is linked to a higher proportional risk of lung cancer death than radon exposure in males, but lower in females
+PAGE 5 LINE 26: due to the higher male smokers than in females.
+PAGE 5 LINE 27: Previous studies have estimated that about 4–29% of all lung cancer deaths were attributable to radon expo-
+PAGE 5 LINE 29: of lung cancer deaths attributable to radon with previous studies calculated using the exposure-age concentration
+PAGE 5 LINE 32: According to our estimation, approximately 553 lung cancer deaths every year were attributable to indoor
+PAGE 5 LINE 33: radon exposure in UNT between 2015 and 2019. This result is high relative to the total lung cancer deaths in
+PAGE 5 LINE 35: of lung cancer deaths attributable to indoor radon exposure in Thailand was in UNT. The higher attributable
+PAGE 5 LINE 36: risk in this study is due to the higher indoor radon concentration measured in UNT than the national average.
+PAGE 5 LINE 39: Table 4.  Indoor radon concentrations (Bq  m−3) and AED (annual effective dose) of lung cancer cases and
+PAGE 5 LINE 40: healthy controls.All Lung cancer case Healthy controls
+PAGE 6 LINE 3: www.nature.com/scientificreports/Table 5.  The estimates of lung cancer deaths attributable to indoor radon exposure from 2015—2019 in the
+PAGE 6 LINE 4: eight provinces of upper northern Thailand (UNT).Number of lung cancer deaths attributable to:
+PAGE 6 LINE 36: Table 6.  The estimates of lung cancer deaths attributable to indoor radon exposure in 2015—2019 for eight
+PAGE 6 LINE 37: provinces of upper northern Thailand (UNT) by gender and smoking status, according to the EAC models.ProvincesNumber of lung cancer deaths attributable to indoor radon exposure
+PAGE 7 LINE 3: www.nature.com/scientificreports/However, these values were in a worldwide range between 3 and 40% of all lung cancer deaths due to indoor
+PAGE 7 LINE 4: radon  exposure52,53. These values tend to increase in high radon countries.
+PAGE 7 LINE 5: Our study found that there was significantly higher smoking behavior among lung cancer cases (80%)
+PAGE 7 LINE 6: than healthy controls (52%) (p  > 0.001) (Table S3). Smoking is the primary causal development of lung cancer
+PAGE 7 LINE 7: worldwide11. Reportedly, smoking has a synergistic effect with high radon concentration to increase lung cancer
+PAGE 7 LINE 8: risk by up to 25  times17,23. However, in northern Thailand, smoking prevalence was the lowest (11.3%) than those
+PAGE 7 LINE 9: of the other part and the country mean (15.2%)9 while lung cancer incidence was the highest  prevalence3,5. Fur -
+PAGE 7 LINE 10: ther, the attributable risk of only smoking and smoking with radon of lung cancer in this region of Thailand also
+PAGE 7 LINE 11: needs to be elucidated. Greater than 40% of houses in this study had radon levels higher than the recommended
+PAGE 7 LINE 13: The higher indoor radon value in lung cancer cases compared to those of healthy controls in this study sug -
+PAGE 7 LINE 14: gests that radon may be a risk factor for development of lung cancer in UNT. This may be synergistic in effect
+PAGE 7 LINE 15: with other factors such as smoking to increase the high incidence and mortality of lung cancer in this area. In
+PAGE 7 LINE 16: UNT, open biomass burning, primarily for agricultural purposes, also results in high ambient air pollution, which
+PAGE 7 LINE 17: may further contribute to the increased risk of lung cancer in this  region14,54–56.
+PAGE 7 LINE 20: lung cancer in the general population, and these levels are influenced by different geological and topographic
+PAGE 7 LINE 22: tion ranged from 11–405 Bq   m−3, corresponding to an annual effective dose of 0.44–12.18 mSv  y−1. The mean,
+PAGE 7 LINE 23: which exceeded the global mean, and greater than 41% of houses in this study had higher indoor radon concen-
+PAGE 7 LINE 24: trations than the WHO recommended level (100 Bq   m−3). The finding of higher indoor radon concentrations
+PAGE 7 LINE 25: in the houses of lung cancer patients compared to those of healthy controls suggests a contribution of indoor
+PAGE 7 LINE 26: radon to lung cancer in this region. The EAC model of BEIR VI estimated that 27% of all lung cancer deaths were
+PAGE 7 LINE 27: attributable to residential radon exposure or approximately 553 lung cancer deaths per year. Indoor radon may
+PAGE 7 LINE 28: be responsible for a substantial proportion of lung cancer deaths in UNT, and an effective strategy to prevent
+PAGE 7 LINE 29: and mitigate indoor radon exposure is needed to reduce the high lung cancer mortality in UNT.
+PAGE 7 LINE 32: urement and data collection from participants. The primary lung cancer patients were enrolled from hospitals
+PAGE 7 LINE 33: while the healthy controls were enrolled at the same communities of lung cancer cases who had no history of
+PAGE 7 LINE 34: lung cancer in family members. All participants must have lived in UNT at least 5 years. All participants were
+PAGE 7 LINE 44: Data collection. From September 2018 to December 2020, seventy-seven lung cancer cases and 78 healthy
+PAGE 7 LINE 45: controls matched by sex and age (± 5 years) who lived within a 5 km radius of lung cancer cases were enrolled
+PAGE 7 LINE 47: tionnaire about individual data, history of smoking, occupation, lifestyle, and house characteristics (construc-Table 7.  Comparison percentage of lung cancer deaths attributable to indoor radon in previous studies using
+PAGE 8 LINE 8: were enrolled to the extra heathy control. 192 houses (houses of the 77 lung cancer cases and those of the 115
+PAGE 8 LINE 9: healthy controls) underwent indoor radon measurement (Fig. S1). The indoor radon concentration was deter -
+PAGE 8 LINE 21: tract and interact with biological molecules in the lung leading to lung cancer by damaging DNA, which is a
+PAGE 8 LINE 24: mSv  y−1 was estimated using following the equation:
+PAGE 8 LINE 28: The number of lung cancer deaths attributable to radon exposure in this region was estimated using Eq. (2 )
+PAGE 8 LINE 29: where  Nr,a is the lung cancer deaths attributable to r  radon exposure at attained age a, ERR is the excess relative
+PAGE 8 LINE 30: risk at attained age a  and exposure r,  and N  is the number of lung cancer deaths at attained age a.
+PAGE 8 LINE 31: The excess relative risk (ERR) can be calculated following the exposure-age concentration (EAC) model
+PAGE 8 LINE 32: from BEIR  VI17 and some parameters were received from EPA  model16 that giving as follows the Eq. (3 ) by
+PAGE 8 LINE 55: 10. Khuder, S. A. Effect of cigarette smoking on major histological types of lung cancer: A meta-analysis. Lung Cancer  31, 139–148.
+PAGE 8 LINE 57: 11. Pesch, B. et al.  Cigarette smoking and lung cancer–relative risk estimates for the major histological types from a pooled analysis
+PAGE 8 LINE 59: 12. Gibelin, C. & Couraud, S. Somatic alterations in lung cancer: Do environmental factors matter?. Lung Cancer  100, 45–52. https://
+PAGE 9 LINE 3: www.nature.com/scientificreports/ 13. Shankar, A. et al. Environmental and occupational determinants of lung cancer. Transl. Lung Cancer Res. 8, S31–S49. https://  doi.
+PAGE 9 LINE 21: 23. Darby, S. et al. Radon in homes and risk of lung cancer: collaborative analysis of individual data from 13 European case-control
+PAGE 9 LINE 23: 24. Krewski, D. et al. A combined analysis of North American case-control studies of residential radon and lung cancer. J. Toxicol.
+PAGE 9 LINE 29: 27. Vineis, P . et al. Air pollution and risk of lung cancer in a prospective study in Europe. Int. J. Cancer  119, 169–174 (2006).
+PAGE 9 LINE 33: 30. Autsavapromporn, N. et al. Short telomere length as a biomarker risk of lung cancer development induced by high radon levels:
+PAGE 9 LINE 44: 35. Ciotoli, G., Lombardi, S. & Annunziatellis, A. Geostatistical analysis of soil gas data in a high seismic intermontane basin: Fucino
+PAGE 9 LINE 54: 40. Boonyaprapa, S. W . et al.  Residential radon exposure and lung cancer: A survey in Chiang Mai Province. J. Health Syst. Res. 2,
+PAGE 9 LINE 68: 47. Pisa, F. E. et al.  Residential radon and risk of lung cancer in an Italian alpine area. Arch. Environ. Health  56, 208–215. https://  doi.
+PAGE 9 LINE 74: 50. Peterson, E. et al.  Lung cancer risk from radon in Ontario, Canada: how many lung cancers can we prevent?. Cancer Causes Control
+PAGE 9 LINE 76: 51. Lee, H. A. et al. Risks of lung cancer due to radon exposure among the regions of Korea. J. Kor. Med. Sci. 30, 542–548. https:// doi.
+PAGE 9 LINE 78: 52. Kim, S. H., Hwang, W . J., Cho, J. S. & Kang, D. R. Attributable risk of lung cancer deaths due to indoor radon exposure. Ann. Occup.
+PAGE 9 LINE 80: 53. Gaskin, J., Coyle, D., Whyte, J. & Krewksi, D. Global estimate of lung cancer mortality attributable to residential radon. Environ.
+
+=== research4.pdf ===
+PAGE 1 LINE 11: mechanisms of volatile organic com-pounds (VOCs).
+PAGE 1 LINE 13: detection of VOCs.
+PAGE 1 LINE 14: /C15A comprehensive review of VOCs' role in
+PAGE 1 LINE 22: Volatile organic compounds (VOCs) are carbon-based chemicals characterized by high vapor pressure and low
+PAGE 1 LINE 23: boiling points under standard temperature and pressure conditions. VOCs are categorized as exogenous or
+PAGE 1 LINE 24: endogenous, depending on their source. Endogenous VOCs are metabolic byproducts eliminated via respiration.
+PAGE 1 LINE 27: approach for assessing metabolic status by comparing VOC levels. Consequently, VOCs are increasingly studied as
+PAGE 1 LINE 28: novel biomarkers for cancer screening, diagnosis, and treatment ef ﬁcacy prediction. This review outlines VOC
+PAGE 1 LINE 30: screening, diagnosis, and prognosis. Nonetheless, challenges remain in the utilization of VOCs for cancer
+PAGE 2 LINE 23: sive, user-friendly, and highly accurate biomarkers are urgently needed
+PAGE 2 LINE 26: (VOCs), including hydrocarbons, oxygenated compounds, sulfur com-
+PAGE 2 LINE 28: VOCs produced in the body.3Using precise analytical instruments enable
+PAGE 2 LINE 29: the identi ﬁcation of unique VOC pro ﬁles changes in individuals with
+PAGE 2 LINE 30: tumors. Detecting VOCs in exhaled breath shows promise for diagnosing
+PAGE 2 LINE 33: examined the predictive value of VOCs in assessing the therapeutic
+PAGE 2 LINE 35: and transcatheter arterial chemoembolization (TACE). Analyzing VOC
+PAGE 2 LINE 39: VOC detection for early screening, diagnosis, and treatment outcome
+PAGE 2 LINE 44: According to the World Health Organization, VOCs are a diverse
+PAGE 2 LINE 45: group of organic compounds characterized by a melting point below
+PAGE 2 LINE 47: 50–260/C14C. Once generated, VOCs migrate to the lungs via the circulatory
+PAGE 2 LINE 48: system and are eliminated via gas-blood exchange. Notably, VOCs are
+PAGE 2 LINE 51: VOCs can be categorized as exogenous or endogenous based on their
+PAGE 2 LINE 52: source. Exogenous VOCs originate from external sources such as the
+PAGE 2 LINE 54: croorganisms, whereas endogenous VOCs are intricately linked to
+PAGE 2 LINE 57: nous VOCs. Tumor tissues exhibit substantial metabolic transformations
+PAGE 2 LINE 59: these VOC changes remain incompletely understood and are potentially
+PAGE 2 LINE 63: [Figure 1 C].3,17The shifts in the changes of VOCs in malignant tumors
+PAGE 2 LINE 65: triggered by the tumor. Concurrently, the VOC pro ﬁle is in ﬂuenced by
+PAGE 2 LINE 70: that despite radical colorectal cancer (CRC) surgery, VOC distributions
+PAGE 2 LINE 71: differ between patients with CRC and healthy individuals,23indicating
+PAGE 2 LINE 72: that VOC changes are in ﬂuenced by the tumor and alterations in the
+PAGE 2 LINE 73: tumor-induced microenvironment. Consequently, the analysis of VOCs
+PAGE 2 LINE 75: prognostic ef ﬁcacy, and monitoring follow-up.
+PAGE 2 LINE 77: VOC analysis in exhaled breath is noninvasive, reducing patient
+PAGE 2 LINE 78: discomfort. It allows convenient sampling with high reproducibility,
+PAGE 2 LINE 81: Prior to VOC analysis, gas collection is a prerequisite. Participants are
+PAGE 2 LINE 89: to minimize errors. Following collection, gas analysis should be con-
+PAGE 2 LINE 93: techniques enrich VOCs in samples via adsorption, enhancing their
+PAGE 2 LINE 95: The primary techniques for VOC detection include gas
+PAGE 2 LINE 97: MS is the standard method for VOC detection owing to its sensitivity to
+PAGE 2 LINE 98: detect low VOC concentrations, conduct qualitative and quantitative
+PAGE 2 LINE 99: analyses of exhaled breath, and identify unknown VOCs, aiding in the
+PAGE 2 LINE 100: exploration of disease-speci ﬁc VOCs.26However, GC-MS is expensive,
+PAGE 2 LINE 104: is a device with an array of electronic chemical sensors and a pattern
+PAGE 2 LINE 106: molecules,28offering high sensitivity, portability, ease of use, and the
+PAGE 2 LINE 108: for VOC detection ef ﬁciently provide a comprehensive distribution of
+PAGE 2 LINE 109: relevant VOCs in a short time, enabling the development of differentia-
+PAGE 2 LINE 110: tion models based on the VOC differences between patients with cancer
+PAGE 2 LINE 111: and healthy individuals. However, an electronic nose cannot detect un-
+PAGE 2 LINE 112: known VOCs and requires improved sensor stability.29
+PAGE 2 LINE 114: reaction-mass spectrometry (PTR-MS), and high-pressure photonY. Gao et al. Cancer Pathogenesis and Therapy 3 (2025) 411 –419
+PAGE 3 LINE 2: available for VOCs detection. SIFT-MS offers real-time quantitativeanalysis, ﬂexible sample handling, high sensitivity, speci ﬁcity, and
+PAGE 3 LINE 3: reproducibility; however, it is not suitable for trace gas or low-volatility
+PAGE 3 LINE 5: 30,31PTR-MS enables real-time detection of VOC
+PAGE 3 LINE 8: magnitude higher than that of SIFT-MS. However, PTR-MS cannot
+PAGE 3 LINE 9: differentiate between isomeric compounds and compounds with lower
+PAGE 3 LINE 11: high-throughput, real-time analysis without sample pretreatment, and is
+PAGE 3 LINE 12: promising for complex gas analysis; however, it exhibits lower sensitivity
+PAGE 3 LINE 19: Recent studies highlight the potential utility of VOCs for detecting
+PAGE 3 LINE 21: breath samples from 84 patients with lung cancer (LC) before and after
+PAGE 3 LINE 22: surgery as the discovery set, using HPPI-TOFMS. Sixteen VOCs were
+PAGE 3 LINE 24: LC-associated VOCs. A multivariable logistic regression model was con-
+PAGE 3 LINE 26: healthy individuals. By incorporating 16 VOCs, the diagnostic model
+PAGE 3 LINE 27: effectively differentiated between individuals with LC and healthy par-
+PAGE 3 LINE 29: 89.2%, speci ﬁcity of 89.1%, and accuracy of 89.1%. This studyintegrated VOC biomarkers identi ﬁed in prior research. Notable and
+PAGE 3 LINE 30: distinct VOCs were selected from samples for model development andexternal validation to enhance generalizability. Nevertheless,
+PAGE 3 LINE 35: participants, comprising 239 individuals with LC and 336 without. VOCs
+PAGE 3 LINE 48: explored the ability of VOCs to distinguish patients with LC at different
+PAGE 3 LINE 56: those in healthy individuals.37–39Inhalation of 2-butanone from the
+PAGE 3 LINE 61: Figure 1. Mechanisms of VOC pro ﬁle alterations in
+PAGE 3 LINE 68: VOCs such as alcohols and aldehydes. Increasedoxidative stress, induced by aging, environmentalexposures, and smoking in ﬂuences the VOC pro ﬁle.
+PAGE 3 LINE 73: and levels of VOCs. (C) Genomic instability and mu-
+PAGE 3 LINE 76: novel intermediate synthesis, leading to distinct VOCproduction. CYP450: Cytochrome P450; ROS: Reac-
+PAGE 3 LINE 77: tive oxygen species; VOCs: Volatile organic
+PAGE 4 LINE 2: smoking, as smokers typically exhibit higher levels than non-smokers.37
+PAGE 4 LINE 5: vestigations into VOCs present in tumor tissues from patients with LC
+PAGE 4 LINE 9: However, the precise mechanisms underlying the production of thesetwo VOCs remain inadequately explored.
+PAGE 4 LINE 11: with LC compared to healthy controls (HCs); however, its diagnostic
+PAGE 4 LINE 12: capabilities were lower in distinguishing patients with LC from in-
+PAGE 4 LINE 15: 41–43This discrepancy may stem from similarities in VOC pro-
+PAGE 4 LINE 18: analogous VOC pro ﬁles. Furthermore, participants ’lifestyles and other
+PAGE 4 LINE 19: health conditions can in ﬂuence VOC distributions. Consequently, when
+PAGE 4 LINE 35: Two studies identi ﬁed higher concentrations of hexanoic acid, buta-
+PAGE 4 LINE 79: from a cohort of healthy adults ( n¼54) and patients with hepatocellular
+PAGE 4 LINE 80: carcinoma (HCC) ( n¼112). Using SIFT-MS, 17 VOCs that were signi ﬁ-
+PAGE 4 LINE 82: levels higher in samples from the control group. A random forest machine
+PAGE 4 LINE 87: extensively used in the screening and diagnosing HCC. However, its high
+PAGE 4 LINE 88: false-negative rate highlights the need for diagnostic methods with
+PAGE 4 LINE 115: 10used HPPI-TOFMS to analyze the VOCs present in exhaled
+PAGE 4 LINE 117: patients with breast cancer (BC). Ten speci ﬁc VOCs were identi ﬁed as
+PAGE 5 LINE 6: controls highlighted hexanal as a compound exhibiting signi ﬁcant dif-
+PAGE 5 LINE 9: acid oxidation. In OGC, aldehydes are VOCs that result from lipid per-
+PAGE 5 LINE 10: oxidation.50The electronic nose can detect speci ﬁc VOCs, including
+PAGE 5 LINE 14: These studies suggest that VOCs offer advantages for identifying and
+PAGE 5 LINE 20: gas collection bags can in ﬂuence VOC analysis results. Smokers have
+PAGE 5 LINE 21: higher levels of 2-butanone in their exhaled breath than non-smokers.
+PAGE 5 LINE 26: Identical VOCs identi ﬁed in the same cancer type across studies can
+PAGE 5 LINE 28: utility of these VOCs across various cancer types is essential. Variations in
+PAGE 5 LINE 29: VOC compositions in different cancers suggest the potential for cancer
+PAGE 5 LINE 30: categorization based on VOC pro ﬁles. Validation via cellular experiments
+PAGE 5 LINE 31: is required to establish the cancer-speci ﬁc characteristics of these VOCs.
+PAGE 5 LINE 32: Notably, VOC type varies across different cancer types. Even within the
+PAGE 5 LINE 34: sults [ Table 1 ]. However, the VOCs detailed in Table 1 originate from the
+PAGE 5 LINE 37: identi ﬁcation of disease-speci ﬁc VOC markers. For example, elevated
+PAGE 5 LINE 44: contaminating samples.39Excluding VOC alterations from external fac-
+PAGE 5 LINE 45: tors during detection may improve the diagnostic accuracy of VOC
+PAGE 5 LINE 51: Exhaled breath VOCs play a crucial role in cancer detection, diag-
+PAGE 5 LINE 58: study to determine whether the baseline exhaled breath VOC pro ﬁles
+PAGE 5 LINE 60: therapy among patients with non-small cell lung cancer (NSCLC).
+PAGE 5 LINE 65: criteria after a 3-month follow-up. An electronic nose was used to cap-
+PAGE 5 LINE 66: ture VOC patterns, and a discriminant function was used to create a
+PAGE 5 LINE 73: criteria at the 3-month follow-up. Using the model established by De
+PAGE 5 LINE 78: Investigations into the predictive capacity of VOCs regarding anti-PD-1
+PAGE 5 LINE 79: therapy ef ﬁcacy have demonstrated promising results. Integrating VOCs
+PAGE 5 LINE 88: month after chemotherapy or targeted therapy. Three VOCs that dis-played signi ﬁcantly reduced levels ( P<0.05) were identi ﬁed in patients
+PAGE 5 LINE 102: environment, which considerably in ﬂuence VOC pro ﬁles. (2) Discrep-
+PAGE 5 LINE 105: of the electronic nose, affecting sensor responses to gases and result reli-
+PAGE 5 LINE 125: These studies highlight the potential of VOCs in predicting the ther-
+PAGE 6 LINE 2: Examples of changes in VOCs in different cancer types.
+PAGE 6 LINE 3: Cancer type Study Analytical platform Groups Change of VOC levels in patients AUC Sensitivity, % Speci ﬁcity, % Accuracy, %
+PAGE 6 LINE 46: aData for patients with HCC vs. those without HCC (healthy control, cirrhosis, pulmonary hypertension, and colorectal cancer liver metastases).bData derived from the test set.cFour compounds are included in the model.
+PAGE 6 LINE 49: carcinoma; SIFT-MS: Selected ion ﬂow tube mass spectrometry; TF: Tumor free; VOC: Volatile organic compound.Y. Gao et al. Cancer Pathogenesis and Therapy 3 (2025) 411 –419
+PAGE 7 LINE 1: their use in cancer screening and diagnosis, research on VOCs for pre-
+PAGE 7 LINE 6: emphasized the predictive ability of VOCs for short-term treatment re-
+PAGE 7 LINE 9: determine whether VOCs can function as predictive indicators of long-
+PAGE 7 LINE 10: term ef ﬁcacy. Prolonged patient follow-up in each study is essential to
+PAGE 7 LINE 11: explore the potential of VOCs in predicting long-term treatment ef ﬁcacy.
+PAGE 7 LINE 13: The use of VOCs for monitoring the recurrence of malignant tumors
+PAGE 7 LINE 18: 1-year follow-up. This study identi ﬁed 31 VOCs as signi ﬁcant metabolites
+PAGE 7 LINE 19: for distinguishing between patients with CRC and the follow-up group
+PAGE 7 LINE 20: and between the follow-up and HC groups. Of these, 11 VOCs were
+PAGE 7 LINE 22: subsequently used to develop a model based on these 11 VOCs to
+PAGE 7 LINE 23: discriminate between the CRC and follow-up groups and between the
+PAGE 7 LINE 24: follow-up and HC groups. The model exhibited high sensitivity and
+PAGE 7 LINE 26: suggest that VOC differences exist between patients with cancer and
+PAGE 7 LINE 27: healthy individuals and between disease-free patients and healthy in-
+PAGE 7 LINE 34: create a VOC-based monitoring tool for CRC following radical surgery.
+PAGE 7 LINE 41: Three studies conducted a comparative analysis of VOCs in patients
+PAGE 7 LINE 46: formity of VOC distribution between patients with tumor recurrence and
+PAGE 7 LINE 48: alterations in VOC pro ﬁles among patients following cancer metastasis
+PAGE 7 LINE 50: The precise occurrence of VOC alterations following tumor treatment
+PAGE 7 LINE 53: 67used GC-MS to identify VOC changes in
+PAGE 7 LINE 56: operative phase, noting alterations in 16 VOC concentrations 4 weeks
+PAGE 7 LINE 57: post-surgery. Conversely, Poli et al68reported that VOC levels in pa-
+PAGE 7 LINE 60: speciﬁc VOC concentrations exhibited changes; pentadiene and benzene
+PAGE 7 LINE 62: increased compared to baseline. Ge et al69investigated VOCs 0.5 h before
+PAGE 7 LINE 64: radiotherapy. The timing of signi ﬁcant VOCs post-radiotherapy varied,with some exhibiting substantial changes as early as 0.5 h post-treatment,
+PAGE 7 LINE 66: VOCs exhibited an initial increase before a subsequent decrease.
+PAGE 7 LINE 68: treatment breath sampling with follow-up assessments to dynamically
+PAGE 7 LINE 69: monitor VOC changes in patients.68Further validation is required to
+PAGE 7 LINE 70: determine whether post-treatment VOC alterations are associated with
+PAGE 7 LINE 73: duction to VOC detection equipment, lacking an exhaustive delve into
+PAGE 7 LINE 75: detecting VOCs in prevalent solid tumors, excluding hematological ma-
+PAGE 7 LINE 78: VOC detection in exhaled breath offers several advantages, such as
+PAGE 7 LINE 79: non-invasiveness, convenience, and high accuracy, making it valuable for
+PAGE 7 LINE 82: to comprehensively understand the mechanisms behind VOC production,
+PAGE 7 LINE 83: variations in VOC levels among patients with cancer, and changes in VOC
+PAGE 7 LINE 84: proﬁles following treatment. Moreover, the existence of tumor-speci ﬁc
+PAGE 7 LINE 85: VOCs remains uncon ﬁrmed, necessitating further research into the mo-
+PAGE 7 LINE 86: lecular processes governing VOC production and changes. Efforts are also
+PAGE 7 LINE 87: crucial to distinguish between VOC distributions in patients with ma-
+PAGE 7 LINE 88: lignant tumors and healthy individuals, identify VOCs associated with
+PAGE 7 LINE 89: various tumor types, and assess potential changes in VOC pro ﬁles at
+PAGE 7 LINE 91: equipment, standardizing VOC detection procedures, and establishing
+PAGE 7 LINE 92: detection criteria are critical for enhancing VOC analysis. Based on the
+PAGE 7 LINE 94: analyses of VOCs in patients with cancer is recommended to establish a
+PAGE 7 LINE 95: speciﬁc VOC pro ﬁle for different tumor types. Subsequently, electronic
+PAGE 7 LINE 96: nose technology should be applied to detect and model complex VOC
+PAGE 8 LINE 11: healthy human breath and bodily ﬂuids: the human volatilome. J Breath Res . 2021;
+PAGE 8 LINE 16: 4. Shlomi D, Abud M, Liran O, et al. Detection of lung cancer and egfr mutation by
+PAGE 8 LINE 27: approaches for exhaled breath and tumor tissue analyses to identify lung cancer
+PAGE 8 LINE 30: 8. Binson VA, Subramoniam M, Mathew L. Detection of copd and lung cancer with
+PAGE 8 LINE 33: 9. Wang P, Huang Q, Meng S, et al. Identi ﬁcation of lung cancer breath biomarkers
+PAGE 8 LINE 40: response to treatment in advanced lung cancer. J Thorac Oncol . 2016;11:827 –837.
+PAGE 8 LINE 43: therapy in patients with non-small-cell lung cancer by electronic nose analysis of
+PAGE 8 LINE 47: response monitoring in non-small cell lung cancer. Lung Cancer . 2021;160:36 –43.
+PAGE 8 LINE 56: the detection of lung cancer- a systematic review. J Biomim Biomater Biomed Eng .
+PAGE 8 LINE 61: cancer through breath analysis using mos sensor array based e-nose. Expert Rev Mol
+PAGE 8 LINE 65: volatile organic compounds (VOCs) and their effects on children and people with
+PAGE 8 LINE 69: healthy female aging on exhaled breath biomarkers. iScience . 2022;25:103739.
+PAGE 8 LINE 75: compounds in exhaled breath in a healthy population: effect of tobacco smoking. Arch
+PAGE 8 LINE 78: surgery on exhaled volatile organic compounds and potential implications inclinical follow-up. Ann Surg . 2015;262:862 –866. https://doi.org/10.1097/
+PAGE 8 LINE 81: organic compounds in exhaled breath as biomarkers of lung cancer: Advances and
+PAGE 8 LINE 114: 35. Kort S, Brusse-Keizer M, Schouwink H, et al. Diagnosing non-small cell lung cancer
+PAGE 8 LINE 117: 36. Binson VA, Mathew P, Thomas S, Mathew L. Detection of lung cancer and stages via
+PAGE 8 LINE 121: Identi ﬁcation of volatile lung cancer markers by gas chromatography-mass
+PAGE 8 LINE 124: 38. Buszewski B, Ulanowska A, Kowalkowski T, Cie /C19sli/C19nski K. Investigation of lung cancer
+PAGE 8 LINE 127: 39. Bajtarevic A, Ager C, Pienz M, et al. Noninvasive detection of lung cancer by analysis of
+PAGE 8 LINE 129: 40. Hakim M, Broza YY, Barash O, et al. Volatile organic compounds of lung cancer and
+PAGE 8 LINE 133: selecting volatile organic compounds as markers of lung cancer. J Breath Res . 2018;
+PAGE 8 LINE 136: lung cancer through exhaled breath: a comprehensive study. Mol Diagn Ther . 2024;
+PAGE 8 LINE 139: diagnosing subtypes of lung cancer by exhaled-breath analysis. Lung Cancer . 2018;
+PAGE 9 LINE 7: 53. Ligor T, Ligor M, Amann A, et al. The analysis of healthy volunteers' exhaled breath
+PAGE 9 LINE 13: cancers from exhaled breath using a single array of nanosensors. Br J Cancer . 2010;
+PAGE 9 LINE 35: affecting gas sensors response: a review on effects and compensation strategies for
+PAGE 9 LINE 36: electronic nose applications. Chemosensors . 2023;11:514. https://doi.org/10.3390/
+PAGE 9 LINE 37: chemosensors11100514 .
+PAGE 9 LINE 42: compound in breath analysis in the follow-up of colorectal cancer: a pilot study. Eur J
+PAGE 9 LINE 48: follow-up after lung tumor resection. Nanomedicine . 2013;9:15 –21.https://doi.org/
+PAGE 9 LINE 50: 68. Poli D, Goldoni M, Caglieri A, et al. Breath analysis in non small cell lung cancer
+
+=== research5.pdf ===
+PAGE 1 LINE 20: Abstract: Breath analysis is a promising technique for lung cancer screening. Despite the rapid
+PAGE 1 LINE 22: organic compound (VOC) signature for lung cancer has been identified. This review summarizes the
+PAGE 1 LINE 23: identified VOC biomarkers from both exhaled breath analysis and in vitro cultured lung cell lines. Both
+PAGE 1 LINE 27: Keywords: volatile organic compound; lung cancer; breath analysis; in vitro study; biomarker
+PAGE 1 LINE 30: disease [ 1]. Among all types of cancer, lung cancer accounts for 1.6 million deaths each year, exceeding
+PAGE 1 LINE 33: are often ignored by patients as typical signs of the onset of old age. Histologically, lung cancer is
+PAGE 1 LINE 34: divided into non-small cell lung cancer (NSCLC) and small cell lung cancer (SCLC), with the former
+PAGE 1 LINE 38: techniques, such as computer tomography (CT), sputum cytology, and biopsy, 85% of lung cancer
+PAGE 1 LINE 41: the 5-year survival increases dramatically to 80% [ 5]. With lung cancer incidences rising around the
+PAGE 1 LINE 43: (VOC) analysis is one such promising technique.
+PAGE 1 LINE 44: In the last few decades, extensive effort has been focused on searching for VOC biomarkers for
+PAGE 1 LINE 45: lung cancer, either from the headspace of lung cancer cells or from the exhaled breath of patients.
+PAGE 2 LINE 4: The most commonly used techniques for VOC analysis include mass spectrometry and sensor
+PAGE 2 LINE 6: used as biomarkers, while studies using sensor arrays only produce a pattern without individual
+PAGE 2 LINE 7: compound identiﬁcation. Though detecting lung cancer using various sensor technologies has
+PAGE 2 LINE 9: Comprehensive reviews on lung cancer VOC studies using sensors could be found elsewhere [ 15,16].
+PAGE 2 LINE 13: review on breath analysis of lung cancer can be found in [ 17]. Saalberg et al. and Hua et al. did systematic
+PAGE 2 LINE 14: reviews on breath analysis as a screening technique for lung cancer [ 18,19]. Zhou et al. discussed the
+PAGE 2 LINE 15: recent developments in the analytical techniques of breath analysis for lung cancer detection [ 20]. None of
+PAGE 2 LINE 17: 2. VOC Biomarkers of Lung Cancer in Exhaled Breath
+PAGE 2 LINE 18: The pioneering study on VOC in exhaled breath from lung cancer patients was done by Gordon
+PAGE 2 LINE 20: the clinical diagnostic potential of breath analysis in lung cancer detection has risen, evidenced by a
+PAGE 2 LINE 22: studies on the breath analysis of lung cancer patients who have identiﬁed biomarkers. A majority of
+PAGE 2 LINE 24: subjects not clinically diagnosed with lung cancer were recruited as a control group, and the breath
+PAGE 2 LINE 25: VOC proﬁle was compared between them. An identiﬁed VOC is considered as a biomarker if its
+PAGE 2 LINE 30: The lung cancer biomarkers identiﬁed by these studies are largely inconsistent. To better illustrate
+PAGE 2 LINE 33: biomarkers of lung cancer include propanol, isoprene, acetone, pentane, hexanal, toluene, benzene,
+PAGE 2 LINE 35: independent biomarker discovery studies for lung cancer using GC-MS [ 25–27]. In view of the different
+PAGE 2 LINE 38: are consistent in all three of his studies. The relative abundance of most of these VOCs was found to
+PAGE 2 LINE 39: have decreased in the participants with lung cancer, as compared to the healthy control; this difference
+PAGE 2 LINE 41: CYP450 genotypes in lung cancer [ 26]. However, there are many other studies in which alkanes were
+PAGE 2 LINE 42: not found to be associated with lung cancer [ 28–30]. None of these studies evaluated the origin of the
+PAGE 2 LINE 43: detected VOCs. In fact, the mechanism of most VOCs in exhaled breath remains unknown. Hakim et al.
+PAGE 2 LINE 44: reviewed the possible biochemical pathways of lung cancer related VOCs [31].
+PAGE 2 LINE 45: Generally, it is accepted that until now there has been no consistent and validated list of VOC
+PAGE 2 LINE 46: biomarkers for lung cancer in the literature [ 31–33]. Reasons for these inconsistencies are manifold.
+PAGE 3 LINE 2: Table 1. Identiﬁed volatile biomarkers of lung cancer through breath (Chronological order).
+PAGE 5 LINE 4: Figure 1.  Volatile organic compounds (VOCs) identified as lung cancer biomarker in four or more studies.
+PAGE 5 LINE 12: 1. Environmental VOCs
+PAGE 5 LINE 14: 3. Expiratory flow rate and Hyperventilation
+PAGE 5 LINE 24: 2.2. Environmental VOCs
+PAGE 5 LINE 25: More than 1000 VOCs have been detected in human breath and the majority of these VOCs have
+PAGE 5 LINE 26: exogenous origins [52]. The effect of environmental VOCs on breath analysis was first recognized by Philips,
+PAGE 5 LINE 27: and he has proposed that this problem can be solved by determination of the “alveolar gradient” of a VOC
+PAGE 5 LINE 28: [42,43]. The alveolar gradient is defined as the concentration of the VOC in breath minus the concentration
+PAGE 5 LINE 29: in the room air. A positive alveolar gradient means more of the VOC was exhaled than inhaled and vice
+PAGE 5 LINE 30: versa. Philips measured the alveolar gradients of various VOCs and concluded that VOCs with negative
+PAGE 5 LINE 32: in the body [53,54]. However, later studies proved this to be an incorrect assertion. VOCs with positive
+PAGE 5 LINE 33: alveolar gradients may result from VOCs absorbed from food [55], drugs [56,57], or even bacteria in the GI
+PAGE 5 LINE 34: tract, airways, or mouth cavity [58]. On the other hand, VOCs with a negative alveolar gradient may, in fact,
+PAGE 5 LINE 35: Figure 1. V olatile organic compounds (VOCs) identified as lung cancer biomarker in four or more studies.
+PAGE 5 LINE 43: 1. Environmental VOCs
+PAGE 5 LINE 55: 2.2. Environmental VOCs
+PAGE 5 LINE 56: More than 1000 VOCs have been detected in human breath and the majority of these VOCs have
+PAGE 5 LINE 57: exogenous origins [ 52]. The effect of environmental VOCs on breath analysis was ﬁrst recognized
+PAGE 5 LINE 59: gradient” of a VOC [ 42,43]. The alveolar gradient is deﬁned as the concentration of the VOC in breath
+PAGE 5 LINE 60: minus the concentration in the room air. A positive alveolar gradient means more of the VOC was
+PAGE 5 LINE 61: exhaled than inhaled and vice versa. Philips measured the alveolar gradients of various VOCs and
+PAGE 5 LINE 62: concluded that VOCs with negative alveolar gradients are metabolized by the body and those with
+PAGE 5 LINE 64: to be an incorrect assertion. VOCs with positive alveolar gradients may result from VOCs absorbed
+PAGE 5 LINE 66: other hand, VOCs with a negative alveolar gradient may, in fact, have metabolic origins. The journey
+PAGE 5 LINE 67: of environmental VOCs in the human body is a complex process of mixing, diffusion, distribution in
+PAGE 6 LINE 2: to which environmental VOCs are removed from the body depend on the concentration of the VOC,
+PAGE 6 LINE 4: Early theoretical modelling experiments, aimed at evaluating the health effects of industrial VOC
+PAGE 6 LINE 5: exposure, have shown that the partition coefﬁcient of a VOC in lungs, blood, and tissue is speciﬁc to
+PAGE 6 LINE 7: expired, and blood concentrations for four VOCs (pentane, acetone, isoprene, and isoﬂurane) and
+PAGE 6 LINE 9: the disappearance rate of VOC from the blood correlate signiﬁcantly with the rate of exhalation [ 64].
+PAGE 6 LINE 10: Another study by Spanel et al. found that all seven studied VOCs (pentane, isoprene, acetone,
+PAGE 6 LINE 15: for these seven VOCs vary numerically from 0.06 for formaldehyde to 0.76 for pentane [65].
+PAGE 6 LINE 17: to all VOCs when accounting for the effects of environmental VOCs. Apart from using the concept of
+PAGE 6 LINE 21: the time it takes to clear out environmental VOCs from the body is compound specific. Much more effort
+PAGE 6 LINE 22: is, therefore, needed to understand the origins and dynamics of various VOCs observed in human breath.
+PAGE 6 LINE 27: one exhalation. For the purpose of disease diagnostics, the alveolar phase is desired because VOCs in
+PAGE 6 LINE 29: conditions. Concentrations of certain VOCs differ in whole breath versus end-tidal breath. For example,
+PAGE 6 LINE 30: VOCs such as carbonic acid, dimethyl ester, and methyl format were found to be signiﬁcantly higher
+PAGE 6 LINE 31: in end-tidal breath, while methylene chloride and 3-ethyl pentane were lower in end-tidal breath than
+PAGE 6 LINE 33: Most studies on lung cancer breath analysis either collected whole breath [ 26,38] or collected
+PAGE 6 LINE 36: Kischkel et al. collected alveolar breath based on a fast responding CO 2sensor [41].
+PAGE 6 LINE 38: level is a reliable indicator of the phase, and CO 2sensors are readily available. Birken et al. integrated
+PAGE 6 LINE 44: allows an accurate selection of phase. Such controlled and standardized methods in selecting phase of
+PAGE 6 LINE 46: 2.4. Expiratory Flow Rate, Breath-Holding, and Hyperventilation
+PAGE 6 LINE 48: VOCs. Contradictory results were reported on the effect of ﬂow rates on common breath VOCs.
+PAGE 6 LINE 49: Doran et al. found that at a higher ﬂow rate, lower levels of acetone and phenols were observed [ 67].
+PAGE 7 LINE 3: another study, higher levels of acetone at a higher ﬂow rate were reported [ 72]. Reports on trends of
+PAGE 7 LINE 6: exhalation. Therefore, the effect of breath-holding on breath VOC was investigated, and results
+PAGE 7 LINE 9: holding [ 74]. Other VOCs found to be increased after breath holding in this study include 2-propanol
+PAGE 7 LINE 11: signiﬁcantly after 30 s of breath holding [ 72]. The unanimous increase of various VOCs with breath
+PAGE 7 LINE 15: notably affected by hyperventilation [ 75]. This is attributed to the fact that acetone has much lower
+PAGE 7 LINE 16: solubility in blood than the rest of the VOCs, and, therefore, can be quickly released from blood
+PAGE 7 LINE 18: The diameter of the mouthpiece used during sampling affects airway resistance and, subsequently,
+PAGE 7 LINE 19: affects levels of certain VOCs. It was found that a smaller mouthpiece diameter caused a 19% increase
+PAGE 7 LINE 25: breath-holding, and airway resistance, must be controlled and recorded in a standardized manner
+PAGE 7 LINE 32: assessed the changes in exhaled VOC concentrations sampled after a 5 min stay under 3C, 47%
+PAGE 7 LINE 34: and propanol showed higher concentrations in the samples collected under the warm air compared to
+PAGE 7 LINE 35: those collected in the cold air. On the other hand, VOCs with a proton transfer reaction product of
+PAGE 7 LINE 36: ionm/zs of 85, 86, 99 and 169 showed higher concentrations in samples collected under cold air. The
+PAGE 7 LINE 37: fact that studies on lung cancer biomarkers were conducted under vastly different temperature and
+PAGE 7 LINE 42: collection are made of polyvinyl fluoride and are known to emit many VOCs from the bag material,
+PAGE 7 LINE 43: which, therefore, poses a threat of contamination [ 77,78]. Several studies used tedlar bags for lung cancer
+PAGE 7 LINE 48: increase in oxidative stress level with advancing age, levels of these VOCs in breath increase gradually.
+PAGE 8 LINE 3: cyanide do not vary greatly with age [ 82]. Gender also inﬂuences the breath VOC proﬁle. isoprene
+PAGE 8 LINE 4: and several other VOCs were found to be gender speciﬁc [41,80,83].
+PAGE 8 LINE 6: studies, lung cancer patients are often signiﬁcantly older than control subjects [ 23,24,38,41,43–45,47],
+PAGE 8 LINE 9: The effect of diet on breath VOCs is also a complex one. Certain types of food, such as yoghurt [ 84]
+PAGE 8 LINE 10: and seafood [ 85] contains a number of VOCs that rapidly and directly appear after ingestion. Food also
+PAGE 8 LINE 11: affects breath VOC by changing metabolism, inﬂammation, or redox status, or by interacting with gut
+PAGE 8 LINE 13: while other studies had no restrictions; It is not understood how long it takes for the VOCs from diet
+PAGE 8 LINE 18: Smoking was identiﬁed as one of the key risk factors for lung cancer, and smoke contain many
+PAGE 8 LINE 19: VOCs. It was found smokers have higher levels of benzene and acetonitrile in their breath. Although
+PAGE 8 LINE 25: not directly related to VOCs from cigarettes. Smoking cigarettes is also known to increase oxidative
+PAGE 8 LINE 27: Other smoking-related VOCs include 2,5-dimethyl furan and 1,3-butadiene. Smoking related VOCs
+PAGE 8 LINE 31: results, even though the case and control group had highly uneven smoking histories [ 40,47]. Coraddi
+PAGE 8 LINE 33: VOC markers could help in developing a more robust biomarker panel for lung cancer detection.
+PAGE 8 LINE 34: Wang et al. identiﬁed smoking related VOCs using ROC and excluded these molecules from the lung
+PAGE 8 LINE 40: exclude smoking-related VOCs from the biomarkers for lung cancer detection. However, it is not fully
+PAGE 8 LINE 44: These diseases will also change the VOC proﬁle and confound the biomarker discovery for the targeting
+PAGE 8 LINE 45: disease. Most studies recruited healthy subjects as a control group [ 29,41,50], while a few studies
+PAGE 9 LINE 4: know if stage inﬂuences VOC proﬁle. Philips et al. identiﬁed 22 breath VOCs that could differentiate
+PAGE 9 LINE 5: control and lung cancer subjects, regardless of stages. For stage 1 patients, the 22 VOCs had 100%
+PAGE 9 LINE 7: stage and advanced stage [ 26,38,40,45,47]. However, Corradi et al. showed that although lung cancer
+PAGE 9 LINE 8: patients have higher levels of ethylbenzene in their breath, the difference is less pronounced between
+PAGE 9 LINE 9: early stage lung cancer and control subjects [ 49]. Peled et al. analyzed breath samples using a
+PAGE 9 LINE 11: between early stage and late stage, and also for sub-histological types of lung cancer; however,
+PAGE 9 LINE 14: the chemical sensor array, the identity of the VOCs that contribute to these discriminations is unknown.
+PAGE 9 LINE 16: Lung cancer is a complex disease with different histologies. Very few studies compared the VOC
+PAGE 9 LINE 18: showed higher concentrations of 1-butanol and 3-hydroxy-2-butanone [ 40]. In the study by Corradi
+PAGE 9 LINE 19: et al., adenocarcinoma showed higher levels of hexane and ethyl benzene compared to squamous cell
+PAGE 9 LINE 20: carcinoma [ 49]. Other studies showed that histology has no significant impact on breath VOCs [ 26,27,47].
+PAGE 9 LINE 21: Most of the methodological issues discussed above are not limited to lung cancer. Rather, they
+PAGE 9 LINE 22: are shared by breath VOC studies with various objectives. Establishing a standardized practice for
+PAGE 9 LINE 26: biomarkers in lung disease [ 90] and highlighted a few key areas for future research. These are
+PAGE 9 LINE 27: important ﬁrst steps towards standardized protocols in breath analysis. For highly complex and
+PAGE 9 LINE 28: heterogenous diseases, such as lung cancer, implementing standardized practice is especially critical
+PAGE 9 LINE 35: have identiﬁed the VOC biomarker of cultured lung cells, and the results show that different types
+PAGE 9 LINE 36: of lung cell lines can generate different panels of VOCs (Table 3). Studies from the same cell line
+PAGE 9 LINE 38: Calu-1 using selected ion ﬂow tube-mass spectrometry (SIFT-MS) [ 91–93] consistently showed higher
+PAGE 9 LINE 40: cell line. Sporning et al. also found decreased level of acetaldehyde in another type of lung cancer
+PAGE 9 LINE 42: lines [ 96,97]. These studies brought in vitro studies one step further to investigating whether VOCs
+PAGE 9 LINE 43: from cells in vitro could discriminate between different histologies. Barash et al. showed that VOCs
+PAGE 9 LINE 44: could discriminate between (1) lung cancer and normal lung epithelial cells; (2) NSCLC and SCLC
+PAGE 9 LINE 46: demonstrated that although NSCLC and SCLC showed distinct VOC proﬁles, adenocarcinoma and
+PAGE 9 LINE 48: carcinomas show different VOC proﬁle with the rest of the NSCLCs [97].
+PAGE 10 LINE 2: Table 3. Identiﬁed volatile biomarker of lung cancer from in vitro studies.
+PAGE 10 LINE 3: First Author Cancer Cell Normal Cell Analytical Technique VOC-Increased Concentration VOC-Decreased Concentration
+PAGE 11 LINE 3: Though analyzing VOCs from cultured cells faces fewer problems compared to analyzing human
+PAGE 11 LINE 6: Polymer materials like polystyrene emit VOCs themselves. The background from the vessel should be
+PAGE 11 LINE 13: supplier were used to get a uniform VOC background. A culture medium contains nutrients, such
+PAGE 11 LINE 16: (Dulbecco’s modiﬁed Eagle’s medium). A culture medium has a considerable VOC background and
+PAGE 11 LINE 18: was cultured in a basic medium, in order to get the same VOC background across different cell
+PAGE 11 LINE 19: lines. Filipiak el al. studied three cell lines: lung cancer cell line A549, primary human bronchial
+PAGE 11 LINE 22: (American Type Culture Collection) for initial propagation, for the VOC experiment they cultured
+PAGE 11 LINE 24: healthy condition in DMEM, as no cell viability data or pictures of the cells were shown. It is beyond
+PAGE 11 LINE 25: doubt that different VOC backgrounds from different types of cell growth media should be taken
+PAGE 11 LINE 28: medium and the VOC effect of the medium was corrected during data analysis before comparing
+PAGE 11 LINE 32: relevance [ 105,106]. Kalluri et al. showed that hypoxia inﬂuences the VOCs that the cancer cells
+PAGE 11 LINE 34: cell grown in a 3D environment was found to emit higher levels of VOCs than in 2D cultures [ 93].
+PAGE 11 LINE 38: effect of certain stimuli on the VOC proﬁle produced by cancer cells. Lawal et al. used cultured lung
+PAGE 11 LINE 39: cells to study the effect of a bacterial infection on the VOC proﬁle [ 107]. They co-cultured lung epithelial
+PAGE 11 LINE 41: VOC proﬁle with and without the bacteria. Acetone, ethanol, 3-methyl-1butanol, and three other
+PAGE 11 LINE 42: VOCs were found to be elevated in bacteria infected cells, indicating the bacterial origin of these VOCs.
+PAGE 11 LINE 45: Feinberg et al. blocked glycolysis in cultured lung cancer cells and identiﬁed unique signatures in
+PAGE 11 LINE 46: all cells studied [ 108]. A recent study identiﬁed the unique VOC proﬁles of lung cancer cells with a
+PAGE 11 LINE 48: in vitro cell cultures in identifying the possible biochemical origins of VOCs.
+PAGE 12 LINE 3: Breath analysis for lung cancer screening is a rapidly developing ﬁeld. Accelerating the pace
+PAGE 12 LINE 7: understanding of the biochemical pathways involved in lung cancer development and progression.
+PAGE 12 LINE 8: Measuring VOCs in vitro , after blocking speciﬁc pathways or knocking out speciﬁc genes, provides
+PAGE 12 LINE 9: direct evidence of the biochemical origins of the VOCs. We believe that these discoveries will ultimately
+PAGE 12 LINE 11: cancer, allowing breath analysis to realize its long-held potential and to become a critical tool in
+PAGE 12 LINE 25: D’Amico, A.; Di Natale, C.; et al. Volatile signature for the early diagnosis of lung cancer. J. Breath Res. 2016 ,
+PAGE 12 LINE 31: sensors. Biosens. Bioelectron. 2003 ,18, 1209–1218. [CrossRef]
+PAGE 12 LINE 35: 10. Mazzone, P .J.; Hammel, J.; Dweik, R.; Na, J.; Czich, C.; Laskowski, D.; Mekhail, T. Diagnosis of lung cancer
+PAGE 12 LINE 36: by the analysis of exhaled breath with a colorimetric sensor array. Thorax 2007 ,62, 565–568. [CrossRef]
+PAGE 12 LINE 39: An investigation on electronic nose diagnosis of lung cancer. Lung Cancer 2010 ,68, 170–176. [CrossRef]
+PAGE 12 LINE 45: Sterk, P .J. An electronic nose in the discrimination of patients with non-small cell lung cancer and COPD.
+PAGE 12 LINE 48: Haick, H. Diagnosing lung cancer in exhaled breath using gold nanoparticles. Nat. Nanotechnol. 2009 ,4,
+PAGE 13 LINE 2: 15. Adiguzel, Y.; Külah, H. Breath sensors for lung cancer diagnosis. Biosens. Bioelectron. 2015 ,65, 121–138.
+PAGE 13 LINE 5: volatile organic compound analysis: A review of array-based sensors. J. Breath Res. 2014 ,8, 27112. [CrossRef]
+PAGE 13 LINE 8: Barón, M.G.; et al. New screening method for lung cancer by detecting volatile organic compounds in breath.
+PAGE 13 LINE 10: 18. Saalberg, Y.; Wolff, M. VOC breath biomarkers in lung cancer. Clin. Chim. Acta 2016 ,459, 5–9. [CrossRef]
+PAGE 13 LINE 11: 19. Hua, Q.; Zhu, Y.; Liu, H. Detection of volatile organic compounds in exhaled breath to screen lung cancer:
+PAGE 13 LINE 14: organic compounds in exhaled breath as biomarkers for lung cancer diagnosis. Anal. Chim. Acta 2017 ,996.
+PAGE 13 LINE 19: Haick, H.; Peled, N. Cancerous glucose metabolism in lung cancer—Evidence from exhaled breath analysis.
+PAGE 13 LINE 24: Jamnig, H.; et al. Noninvasive detection of lung cancer by analysis of exhaled breath. BMC Cancer 2009 ,
+PAGE 13 LINE 27: organic compounds in breath as markers of lung cancer: A cross-sectional study. Lancet 1999 ,353, 1930–1933.
+PAGE 13 LINE 33: Munawar, M.I.; Pass, H.I.; et al. Prediction of lung cancer using volatile biomarkers in breath. Cancer Biomark.
+PAGE 13 LINE 35: 28. Fuchs, P .; Loeseken, C.; Schubert, J.K.; Miekisch, W. Breath gas aldehydes as biomarkers of lung cancer.
+PAGE 13 LINE 38: volatile organic compounds as lung cancer biomarkers during one-lung ventilation. Sci. Rep. 2014 ,4, 7312.
+PAGE 13 LINE 41: of metabolomics panels for potential lung cancer screening by analysis of exhaled breath condensate.
+PAGE 14 LINE 3: for screening for the presence of breath biomarkers in lung cancer. Clin. Chem. 1988 ,34, 1613–1618. [PubMed]
+PAGE 14 LINE 5: Exhaled volatile organic compounds in patients with non-small cell lung cancer: Cross sectional and nested
+PAGE 14 LINE 6: short-term follow-up study. Respir. Res. 2005 ,6, 71. [CrossRef]
+PAGE 14 LINE 11: of lung, breast, colorectal and prostate cancers from exhaled breath using a single array of nanosensors.
+PAGE 14 LINE 14: breath analysis of volatile organic compounds of lung cancer patients. Lung Cancer 2010 ,67, 227–231.
+PAGE 14 LINE 17: for lung cancer detection and assessment of smoking related effects—Confounding variables, inﬂuence of
+PAGE 14 LINE 20: biomarkers of lung cancer by SPME–GC–TOF/MS and chemometrics. J. Chromatogr. B Biomed. Sci. Appl.
+PAGE 14 LINE 23: VOCs to identify patients with lung cancer. J. Breath Res. 2011 ,5, 46008. [CrossRef]
+PAGE 14 LINE 28: volatile organic compounds biomarkers for lung cancer in exhaled breath, tissues and cell lines. CBM 2012 ,
+PAGE 14 LINE 31: lung cancer markers by gas chromatography–mass spectrometry: Comparison with discrimination by
+PAGE 14 LINE 33: 47. Hu, Y.; Zou, Y.; Zhang, X.; Chen, X.; Ying, K.; Wang, P . Optimization of volatile markers of lung cancer to
+PAGE 14 LINE 36: Paolesse, R.; Di Natale, C.; et al. The lung cancer breath signature: A comparative analysis of exhaled breath
+PAGE 14 LINE 39: Casalini, A.; et al. Exhaled breath analysis in suspected cases of non-small-cell lung cancer: A cross-sectional
+PAGE 14 LINE 42: Comparison of volatile organic compounds from lung cancer patients and healthy controls—Challenges and
+PAGE 14 LINE 48: A review of the volatiles from the healthy human body. J. Breath Res. 2014 ,8, 14001. [CrossRef] [PubMed]
+PAGE 15 LINE 44: 76. Sukul, P .; Schubert, J.K.; Kamysek, S.; Trefz, P .; Miekisch, W. Applied upper-airway resistance instantly affects
+PAGE 16 LINE 38: of volatile organic compounds (VOCs) from the lung cancer cell line CALU-1 in vitro. Cancer Cell Int. 2008 ,
+PAGE 16 LINE 40: 95. Sponring, A.; Filipiak, W.; Mikoviny, T. Release of Volatile Organic Compounds from the lung cancer cell
+PAGE 16 LINE 42: 96. Barash, O.; Peled, N.; Tisch, U.; Bunn, P .A.; Hirsch, F.R.; Haick, H. Classiﬁcation of lung cancer histology by
+PAGE 16 LINE 43: gold nanoparticle sensors. Nanomed. Nanotechnol. Biol. Med. 2012 ,8, 580–589. [CrossRef] [PubMed]
+PAGE 16 LINE 48: organic compounds exhaled by lung cancer cells in vitro for breath diagnosis. Cancer 2007 ,110, 835–844.
+PAGE 17 LINE 3: compounds released from human lung cancer cells and from the urine of tumor-bearing mice. Cancer Cell Int.
+PAGE 17 LINE 7: lung cancer cultured cells using gas sensor array and SPME-GCMS. BMC Cancer 2018 ,18, 362. [CrossRef]
+PAGE 17 LINE 18: In vitro cultured lung cancer cells are not suitable for animal-based breath biomarker detection. J. Breath Res.
+PAGE 17 LINE 20: 106. Kalluri, U.; Naiker, M.; A Myers, M. Cell culture metabolomics in the diagnosis of lung cancer-the inﬂuence
+PAGE 17 LINE 26: metabolism: The volatile signature of glycolysis— In vitro model in lung cancer cells. J. Breath Res. 2017 ,
+
+=== research6.pdf ===
+PAGE 1 LINE 18: The analysis of volatile organic compounds (VOCs) in exhaled breath has emerged as a promising non-invasive
+PAGE 1 LINE 20: primary methodologies are employed for VOCs detection: mass spectrometry (MS)-based techniques, which provide
+PAGE 1 LINE 21: high-precision identification and quantification of individual compounds, and sensor-based pattern recognition
+PAGE 1 LINE 22: methods, which detect disease-specific VOC signatures. Despite their diagnostic potential, inconsistencies in accuracy
+PAGE 1 LINE 23: highlight the need for a comprehensive evaluation of these techniques. This review synthesizes evidence from clinical
+PAGE 1 LINE 24: studies through meta-analysis to assess the diagnostic performance of MS and sensor-based approaches. Further -
+PAGE 1 LINE 25: more, we examine variations in VOC profiles across cancer types, which may influence diagnostic precision, and dis-
+PAGE 1 LINE 26: cuss key biomarkers, analytical methodologies, current challenges, and future directions in VOCs-based diagnostics.
+PAGE 1 LINE 27: Meta-analysis revealed a high diagnostic accuracy, with a mean area under the receiver operating characteristic curve
+PAGE 1 LINE 29: bly, no significant difference was observed between MS and sensor-based methods (AUC: 0.91 vs. 0.93, p = 0.286), sup -
+PAGE 1 LINE 30: porting the potential of sensor technologies for clinical application. Subgroup analysis further indicated no statistical
+PAGE 1 LINE 31: difference in AUCs between heterogeneous and homogeneous sensor groups, suggesting that simplified detection
+PAGE 1 LINE 34: and optimize VOCs-based breath tests, enhancing their diagnostic reliability and translational potential in oncology.
+PAGE 2 LINE 16: compounds (VOCs)-based breath testing stands at the
+PAGE 2 LINE 19: Exhaled breath VOCs hold potential for early cancer
+PAGE 2 LINE 21: analytical methodologies. VOCs in exhaled breath are
+PAGE 2 LINE 23: the presence of cancer cells [6, 7], providing a "metabolic fingerprint" that can be detected with high precision [8,
+PAGE 2 LINE 25: summarizing current VOCs-based technologies, as it is
+PAGE 2 LINE 30: evaluation of VOCs present in exhaled breath [14]. The
+PAGE 2 LINE 34: cal composition of VOCs in a given sample [15]. This
+PAGE 2 LINE 35: method allows for the individual examination of each
+PAGE 2 LINE 39: selective/cross-reactive sensors in conjunction with pat -
+PAGE 2 LINE 41: of VOCs that act as unique  "fingerprints"  for a specific
+PAGE 2 LINE 43: tate the identification of each individual VOCs, it has
+PAGE 3 LINE 5: specific designs informed by the reported VOCs [17].
+PAGE 3 LINE 6: VOCs-based breath tests have demonstrated consider -
+PAGE 3 LINE 15: assessing its diagnostic performance relative to sensor-
+PAGE 3 LINE 19: Additionally, the inherent variability in VOC signatures
+PAGE 3 LINE 21: parities in test performance, highlighting the need for
+PAGE 3 LINE 23: the landscape of exhaled VOCs and evaluating VOCs-
+PAGE 3 LINE 27: exhaled VOCs across a variety of cancers; (2) conduct a
+PAGE 3 LINE 33: trials aimed at achieving higher quality outcomes.
+PAGE 3 LINE 52: sensors (n = 52), with the cancer patient sample size
+PAGE 3 LINE 54: including lung cancer (n = 100), breast cancer (n = 24),
+PAGE 3 LINE 65: patients and 9402 healthy controls for MS detection.
+PAGE 3 LINE 66: 2551 patients and 3668 healthy controls were included
+PAGE 3 LINE 67: in the meta-analysis of sensor detection. Certain stud -
+PAGE 3 LINE 68: ies employed both MS and sensors and distinguished
+PAGE 3 LINE 69: between cancer patients and healthy individuals, subse -
+PAGE 3 LINE 72: a single cohort of healthy controls, the low heterogeneity
+PAGE 3 LINE 76: eases of the same organs, e.g., between lung cancer and
+PAGE 3 LINE 79: VOCs sources and markers for cancer diagnosis
+PAGE 3 LINE 80: The hypothesis that VOCs can be used in cancer diagnosis
+PAGE 3 LINE 81: Cancer-related metabolic alterations influence VOC pro -
+PAGE 3 LINE 91: alterations in the spectra and concentrations of VOCs,
+PAGE 3 LINE 97: teristics of VOC biomarkers. These methodologies have
+PAGE 3 LINE 98: yielded hundreds of preliminary identifications of VOCs
+PAGE 3 LINE 102: biochemical mechanisms related to specific VOCs are
+PAGE 3 LINE 104: ies have indicated that the VOCs present in the exhaled
+PAGE 4 LINE 3: when compared to those found in healthy individuals
+PAGE 4 LINE 5: a plausible hypothesis that the atypical VOCs associated
+PAGE 4 LINE 11: detect approximately 3000 distinct VOCs which are exog -
+PAGE 4 LINE 14: per billion by volume (ppbv) [35]. The exogenous VOCs
+PAGE 4 LINE 17: In contrast, endogenous VOCs are generated internally
+PAGE 4 LINE 19: ble diversity in the makeup of VOCs across individuals,
+PAGE 4 LINE 20: with a limited subset of VOCs being linked to a prevalent
+PAGE 4 LINE 22: Reported VOC markers for cancer diagnosis
+PAGE 4 LINE 23: Various types of VOCs can serve as biomarkers in
+PAGE 4 LINE 45: nation pathway. VOCs permeate through the cancer cell
+PAGE 4 LINE 48: Fig. 1 The principle of VOCs detection and the application of VOCs detection in different tumor types
+PAGE 5 LINE 3: VOCs are not definitively known, highlighting the neces -
+PAGE 5 LINE 8: we conducted a systematic enumeration of VOC mark -
+PAGE 5 LINE 18: research studies focusing on lung cancer have identified a
+PAGE 5 LINE 19: total of 69 distinct VOC markers, as reported by various
+PAGE 5 LINE 21: 2-one, propan-1-ol, benzene, ethylbenzene, and hexanal Table 1 VOCs that have been consistently identified by various research groups within a specific type of cancer
+PAGE 5 LINE 22: Given the substantial quantity of lung cancer markers, only those markers exhibiting more than five occurrences are presented, while the comprehensive list is
+PAGE 6 LINE 2: are among the well-established markers of lung cancer,
+PAGE 6 LINE 6: VOCs have been proposed as potential biomarkers for
+PAGE 6 LINE 11: cal pathways across various cancer types.Mass spectrometry techniques for VOCs analysis
+PAGE 6 LINE 14: selectivity capable of identifying a range of minute con -
+PAGE 6 LINE 15: centrations and types of VOCs in exhaled breath samples
+PAGE 6 LINE 16: [88]. Given that the theoretical basis of VOCs in cancer
+PAGE 6 LINE 28: derivatizatio nhigh (ppbv-pptv ) long (20-40
+PAGE 6 LINE 29: minutes)high/hig hH igh
+PAGE 6 LINE 37: calibration)high/lo wM edium
+PAGE 6 LINE 41: TOFMSHigh Nospecia lm edium (ppbv) fast(<60s)m edium/low HighA B
+PAGE 7 LINE 10: ion flow tube-mass spectrometry (SIFT-MS), Secondary
+PAGE 7 LINE 15: GC-MS is a widely used analytical method that is highly
+PAGE 7 LINE 16: regarded for its ability to analyze VOCs. It is considered
+PAGE 7 LINE 44: vidual VOC molecules provides a distinct advantage in
+PAGE 7 LINE 54: conducted in 2021 involving 272 lung cancer patients and 261 control subjects investigated the differences in VOCs
+PAGE 7 LINE 56: for the early diagnosis of lung cancer, demonstrating an
+PAGE 7 LINE 65: for real-time detection and quantification of VOCs at
+PAGE 7 LINE 70: of water vapor within the hollow cathode ion source.
+PAGE 7 LINE 72: H3O+ to VOCs within the drift tube, resulting in the pro -
+PAGE 7 LINE 73: tonation of VOCs [98]. These reagent ions are generated
+PAGE 7 LINE 74: through a hollow cathode ion source where water vapor
+PAGE 7 LINE 76: molecules are then analyzed using high-resolution MS,
+PAGE 7 LINE 92: lung cancer patients demonstrated diagnostic capability
+PAGE 7 LINE 93: with an AUC of 0.77 [101]. The technique’s high sensitiv -
+PAGE 7 LINE 94: ity and specificity for VOC biomarkers, combined with
+PAGE 7 LINE 97: high instrument costs (typically exceeding $500,000) and
+PAGE 8 LINE 2: Selected ion flow tube‑mass spectrometry (SIFT‑MS)
+PAGE 8 LINE 4: combines flow tube technology with chemical ionization
+PAGE 8 LINE 13: undergo a reaction with the analyte within the flow tube
+PAGE 8 LINE 18: low ppbv to high pptv [106], encompassing a m/z range
+PAGE 8 LINE 24: incomplete breath VOCs fingerprinting, difficulty in
+PAGE 8 LINE 25: specific VOC identification based solely on m/z values
+PAGE 8 LINE 26: [15], and inability to detect low-volatility compounds
+PAGE 8 LINE 29: SIFT-MS’s potential in lung cancer diagnostics, analyzing
+PAGE 8 LINE 54: pounds [114, 115], and can detect low-volatility, biologi -
+PAGE 8 LINE 61: direct coupling with high-resolution mass spectrom -
+PAGE 8 LINE 63: MS is frequently combined with high-performance gas
+PAGE 8 LINE 68: cal applications leverage SESI-MS’s high sensitivity for
+PAGE 8 LINE 78: ing high-pressure photoionization (100-500 mbar) with
+PAGE 8 LINE 81: lowed by high-resolution separation (R > 3000) based on
+PAGE 8 LINE 83: zation preserving molecular structure, high sensitivity
+PAGE 8 LINE 84: (ppbv-pptv range), rapid analysis (< 1  s/spectrum), and
+PAGE 8 LINE 91: ticenter study, HPPI-TOFMS identified 10 VOC markers
+PAGE 8 LINE 93: model (VOCs + risk factors) achieved 94% accuracy
+PAGE 8 LINE 102: remain high, comparable to other high-end MS systems,
+PAGE 9 LINE 12: breath VOC profiles [120]. Fourier-transform ion cyclo -
+PAGE 9 LINE 19: requires specialized components including a high-perfor -
+PAGE 9 LINE 23: Sensors for VOCs detection
+PAGE 9 LINE 24: A wide range of sensor types has been developed over
+PAGE 9 LINE 26: medicine. Various nano-sensors have been created,
+PAGE 9 LINE 27: including chemiresistor sensors, electrochemical sen -
+PAGE 9 LINE 28: sors, piezoelectric sensors, and optical gas sensors, such
+PAGE 9 LINE 29: as colorimetric sensors, surface-enhanced Raman scat -
+PAGE 9 LINE 30: tering (SERS) sensors, and optical fiber sensors. Among
+PAGE 9 LINE 32: ucts for portable applications (Fig.  3). These sensors show
+PAGE 9 LINE 33: significant promise in detecting VOCs and have potential
+PAGE 9 LINE 35: sensitivity and responsiveness. To further enhance sensor
+PAGE 9 LINE 37: [123]. The utilization of nanotechnology in chemosensors
+PAGE 9 LINE 40: Fig. 3 Sensors as a volatolomic analytical platform: simplified working mechanisms. These sensors hold potential for application in future
+PAGE 9 LINE 41: diagnostic devices that are based on volatolomic analysis within the medical field. Clockwise: chemiresistor sensors, electrochemical sensors,
+PAGE 9 LINE 42: piezoelectric sensors, and optically gas sensors
+PAGE 10 LINE 4: for VOCs. The diminutive scale of these components
+PAGE 10 LINE 5: offers several advantages, including a high surface-to-vol -
+PAGE 10 LINE 8: als results in highly reactive interfaces, thereby enhanc -
+PAGE 10 LINE 14: Chemiresistor sensor
+PAGE 10 LINE 15: Chemiresistor sensors represent a promising category
+PAGE 10 LINE 16: of gas sensors, characterized by their straightforward
+PAGE 10 LINE 18: urements. Typically, these sensors consist of a semicon -
+PAGE 10 LINE 21: resistance of the sensor alters, while the potential differ -
+PAGE 10 LINE 24: culating the variations in resistance or current [126]. A
+PAGE 10 LINE 25: range of nanomaterial-based sensing films is employed
+PAGE 10 LINE 26: for the detection of VOCs, including nanotubes (NTs),
+PAGE 10 LINE 30: production, portability, and high sensitivity to gases
+PAGE 10 LINE 40: surface area, exceptional thermal stability, and high
+PAGE 10 LINE 45: their potential applicability in electrochemical sensors
+PAGE 10 LINE 47: in the deployment of CNT-based sensors is their dimin -
+PAGE 10 LINE 48: ished chemical selectivity [128]. The high working tem -
+PAGE 10 LINE 50: the purpose of having a high-performance device.Electrochemical sensors
+PAGE 10 LINE 51: Electrochemical sensors represent a distinct category of
+PAGE 10 LINE 52: sensors utilized for the detection of VOCs. The electro -
+PAGE 10 LINE 53: chemical sensors are composed of two or three electrodes
+PAGE 10 LINE 55: concentration of VOCs measured by these sensors is
+PAGE 10 LINE 57: This particular type of sensor functions within a closed
+PAGE 10 LINE 60: significant advantage of this sensor configuration lies in
+PAGE 10 LINE 62: the concurrent analysis of various VOCs and enhanc -
+PAGE 10 LINE 64: electrochemical sensors are increasingly favored among
+PAGE 10 LINE 66: well-established operating principles, high accuracy, low
+PAGE 10 LINE 67: detection limits, broad detection range, biocompatibil -
+PAGE 10 LINE 68: ity, potential for miniaturization, low power consump -
+PAGE 10 LINE 69: tion, and cost-effectiveness. However, these sensors
+PAGE 10 LINE 71: times and an inability to detect long-chain VOCs. While
+PAGE 10 LINE 72: enzyme-based electrochemical sensors demonstrate high
+PAGE 10 LINE 73: selectivity, non-enzymatic sensors are prone to cross-
+PAGE 10 LINE 75: peting VOCs and gases. Furthermore, electrochemical
+PAGE 10 LINE 81: Piezoelectric sensors
+PAGE 10 LINE 86: electric sensors, with the Quartz crystal microbalance
+PAGE 10 LINE 87: (QCM) and Surface acoustic wave sensor (SAW) serving
+PAGE 11 LINE 8: improve the sensitivity of these sensors [16]. The capabil -
+PAGE 11 LINE 9: ity of QCM sensors to conduct real-time monitoring of
+PAGE 11 LINE 10: target analytes [16], coupled with its high sensitivity and
+PAGE 11 LINE 11: low power consumption [136], constitutes key attributes
+PAGE 11 LINE 13: SAW sensor works slightly different from QCM sen -
+PAGE 11 LINE 15: acoustic wave generated by a SAW sensor propagates
+PAGE 11 LINE 30: of the sensor. Additional research into the properties of
+PAGE 11 LINE 32: improve the application of acoustic wave sensors for gas
+PAGE 11 LINE 34: Optically gas sensors
+PAGE 11 LINE 35: Colorimetric sensors
+PAGE 11 LINE 36: Colorimetric sensors are utilized in optical techniques,
+PAGE 11 LINE 39: underlying principles of these sensors are predicated on
+PAGE 11 LINE 48: sensor. However, certain critical factors, such as humid -
+PAGE 11 LINE 52: the sensor, including its responsiveness, sensitivity, and
+PAGE 11 LINE 54: is evident that the stabilization of a sensor necessitates robust intermolecular interactions. It is essential to
+PAGE 11 LINE 55: design sensors utilizing nanomaterials that establish
+PAGE 11 LINE 56: stronger connections with VOCs than those provided by
+PAGE 11 LINE 58: Surface enhanced Raman scattering (SERS) sensors
+PAGE 11 LINE 60: range of applications. It has been employed as a gas ana -
+PAGE 11 LINE 61: lytical method that is tailored to detect specific VOCs or
+PAGE 11 LINE 64: the SERS sensor is typically coated with a layer of func -
+PAGE 11 LINE 65: tionalized molecules that exhibit high selectivity and
+PAGE 11 LINE 66: affinity for particular VOCs, facilitating their capture.
+PAGE 11 LINE 69: The subsequent analysis of the Raman spectra allows
+PAGE 11 LINE 70: for the differentiation of VOCs present in various res -
+PAGE 11 LINE 73: materials, which contribute to the low detection rates,
+PAGE 11 LINE 74: as gas molecules exhibit high velocities. Additionally,
+PAGE 11 LINE 76: to their low concentrations [141]. These challenges can
+PAGE 11 LINE 79: high affinity for the analyte molecules.
+PAGE 11 LINE 80: Portable applications of VOCs sensors
+PAGE 11 LINE 81: For portable applications of VOCs sensors, E-nose is a
+PAGE 11 LINE 86: array of sensors, a signal processing unit, and a pattern
+PAGE 11 LINE 88: E-nose consists of a collection of sensors, such as metal
+PAGE 11 LINE 91: ness to particular VOC gas molecules [142]. These tech -
+PAGE 12 LINE 2: Fig. 4 Proposed standardized study framework for future studies investigating the role of VOCs in cancer diagnosis. The factors
+PAGE 12 LINE 3: that would influence the quality of the VOCs-based diagnostic studies is exhibited in a PICOS framework. These factors are summarized
+PAGE 13 LINE 5: SERS, QMB, SAW, electrochemical sensors and colori -
+PAGE 13 LINE 6: metric sensors, constitute a limited variety of the E-nose
+PAGE 13 LINE 9: employed MOS sensor arrays, which consist of a vary -
+PAGE 13 LINE 10: ing number of sensors. The reliance on MOS sensors is
+PAGE 13 LINE 11: somewhat unexpected, as these sensors typically neces -
+PAGE 13 LINE 14: Moreover, MOS sensors exhibit heightened sensitivity
+PAGE 13 LINE 17: of sensor coatings that can be applied [146]. QCM and
+PAGE 13 LINE 18: SAW sensors, conversely, present several advantages,
+PAGE 13 LINE 21: fication of their sensing surfaces, which allows for the
+PAGE 13 LINE 31: Workflow of VOCs detection
+PAGE 13 LINE 32: A qualitative review of the current research workflow
+PAGE 13 LINE 34: ference in detection process between MS and sensor
+PAGE 13 LINE 39: the sample transfer, analysis of VOCs, and subsequent
+PAGE 13 LINE 52: distinctive principles underlying sensor pattern recogni -
+PAGE 13 LINE 54: of utilizing sensors for the detection of exhaled air. The following aspects are summarized: patients’ preparation
+PAGE 13 LINE 93: from the lungs and lower respiratory tract mixes with
+PAGE 14 LINE 4: taminant VOCs from the Gastrointestinal (GI) tract
+PAGE 14 LINE 12: voidable contaminant VOCs in ambient room air, includ -
+PAGE 14 LINE 26: temperatures below 4 °C. The condensation temperature
+PAGE 14 LINE 37: ples is below - 70 °C [157].
+PAGE 14 LINE 58: breath sample system, Bio-VOC™ Sampler, and breath
+PAGE 14 LINE 68: VOCs-based diagnosis in the clinical setting and the
+PAGE 14 LINE 69: diagnostic test stability. The stability of target VOCs is
+PAGE 14 LINE 75: To detect VOCs present in breath at parts per million by
+PAGE 14 LINE 76: volume (ppmv) or lower concentrations, preconcentra -
+PAGE 14 LINE 78: ods, there may be dilution of the VOCs, especially when
+PAGE 14 LINE 83: of VOCs and account for almost half of the published
+PAGE 14 LINE 87: able for capturing highly volatile organic compounds (~
+PAGE 14 LINE 88: C2-C4), while Tenax adsorbents can capture lower vola -
+PAGE 14 LINE 89: tility VOCs (~ C7-C15) present in breath [165]. Factors
+PAGE 14 LINE 104: through the needle to capture VOCs. This method is
+PAGE 15 LINE 3: Fig. 5 Diagnostic value of VOCs-based breath test and Comparison of diagnostic efficiency of different detection techniques. A Summary
+PAGE 15 LINE 4: receiver operating characteristic (sROC) curve. B sROC Curves for VOCs-based breath test of MS technologies and sensor detection. C Subgroup
+PAGE 15 LINE 5: analysis for VOCs-based breath test of MS technologies and sensor detection. D sROC Curves for VOCs-based breath test of heterogeneous
+PAGE 15 LINE 6: and homogeneous sensor detection. E Subgroup analysis for VOCs-based breath test of heterogeneous and homogeneous sensor detection
+PAGE 16 LINE 11: Constructing a diagnostic model for VOCs-based breath
+PAGE 16 LINE 12: test included two aspects: cancer-associated VOC bio -
+PAGE 16 LINE 23: Accuracy of VOCs‑based breath tests in diagnostic studies
+PAGE 16 LINE 24: In all the included studies, the AUCs of VOCs-based
+PAGE 16 LINE 25: breath tests for cancer diagnosis ranged from 0.65 to
+PAGE 16 LINE 26: 1.00. The sensitivity and specificity ranged from 32 to
+PAGE 16 LINE 32: demonstrating high potency of cancers diagnosis. Con -
+PAGE 16 LINE 42: cancer diagnosis, GC-MS exhibited a markedly higher diagnostic efficacy, achieving an AUC of 0.91, which is
+PAGE 16 LINE 45: TOFMS and various sensors was found to be comparable
+PAGE 16 LINE 49: MS, SIFT-MS, and sensors when compared to GC-MS,
+PAGE 16 LINE 55: cacy of the SIFT-MS sensor was found to be comparable
+PAGE 16 LINE 60: Performance comparison of MS and sensor technology
+PAGE 16 LINE 62: ciple that MS and sensors are capable of differentiating
+PAGE 16 LINE 63: cancer patients from healthy individuals through the
+PAGE 16 LINE 64: detection of VOCs in exhaled breath. Nonetheless, there
+PAGE 16 LINE 66: the diagnostic efficacy of MS and sensors in this context.
+PAGE 16 LINE 70: In the MS group, the AUCs of VOCs-based breath tests
+PAGE 16 LINE 71: for cancer diagnosis ranged from 0.67 to 1.00. The sensi -
+PAGE 16 LINE 72: tivity and specificity ranged from 32% to 100%, and 56%
+PAGE 16 LINE 75: (95% CI 0.87-0.91) (Fig.  5B), demonstrating high potency
+PAGE 16 LINE 77: meta-analysis of the sensor group, with AUCs ranging
+PAGE 16 LINE 78: from 0.74 to 0.99. The sensitivity and specificity ranged
+PAGE 17 LINE 3: and sensors (p = 0.286). Subgroup analysis showed no statistical difference in specificity and sensitivity between
+PAGE 18 LINE 3: and homogeneous sensors
+PAGE 18 LINE 5: market typically consist of multiple types of sensors.
+PAGE 18 LINE 9: heterogeneous and homogeneous sensors (including
+PAGE 18 LINE 12: In the homogeneous-sensor group, the AUCs of
+PAGE 18 LINE 13: VOCs-based breath tests for cancer diagnosis ranged
+PAGE 18 LINE 14: from 0.69 to 0.99. The sensitivity and specificity ranged
+PAGE 18 LINE 19: the heterogeneous-sensor group. The sensitivity and
+PAGE 18 LINE 20: specificity ranged from 63% to 98%, and 63% to 97%,
+PAGE 18 LINE 27: VOCs detection and tumor stage
+PAGE 18 LINE 31: sample sizes, resulting in low statistical reliability, and
+PAGE 18 LINE 34: a comparison of specific VOC indicators between differ -
+PAGE 18 LINE 40: a significant increase in VOC levels with tumor stag -
+PAGE 18 LINE 42: Fig. 7 Forest Plot of Pooled Sensitivity and Specificity Analysis of sensor detection. The width of the horizontal line represents the 95% CI
+PAGE 19 LINE 3: VOC biomarkers showed statistical differences between
+PAGE 19 LINE 8: cellular carcinoma and lung cancer [54, 84]. Neverthe -
+PAGE 19 LINE 11: cancer, gastric cancer, and colorectal cancer, and no high-
+PAGE 19 LINE 14: Performance comparison of lung cancer and non‑lung
+PAGE 19 LINE 16: To date, the predominant application of VOCs anal -
+PAGE 19 LINE 17: ysis has focused on lung cancer detection, likely
+PAGE 19 LINE 21: regarding the validity of VOCs-based detection for
+PAGE 19 LINE 27: types, with lung cancer demonstrating a mean AUC of
+PAGE 19 LINE 28: 0.92 (95% CI 0.89-0.92) and non-lung cancers showing
+PAGE 19 LINE 33: broader application of VOCs analysis beyond pulmo -
+PAGE 19 LINE 36: The detection and analysis of VOC biomarkers from
+PAGE 19 LINE 39: ysis demonstrated the accuracy of VOCs-based breath
+PAGE 19 LINE 43: 88%). Our findings provided evidence for the high accu -
+PAGE 19 LINE 44: racy of overall VOCs-based cancer diagnosis. Our results
+PAGE 19 LINE 51: study, the accuracy of VOCs-based breath test in can -
+PAGE 19 LINE 53: lishes standardized VOC profiling protocols, identifies cancer-specific biomarkers, and resolves methodologi -
+PAGE 19 LINE 54: cal disparities between MS and sensor-based detection,
+PAGE 19 LINE 56: MS and sensor pattern recognition represent the two
+PAGE 19 LINE 61: particularly in the identification of novel VOC markers
+PAGE 19 LINE 63: markers. Conversely, sensors are more adept for routine
+PAGE 19 LINE 67: of sensor-based measurements, thereby raising concerns
+PAGE 19 LINE 70: gated the performance of VOCs-based diagnosis by MS
+PAGE 19 LINE 71: and sensors. We found that the diagnostic accuracy is
+PAGE 19 LINE 78: theoretical research remain unparalleled by sensor tech -
+PAGE 19 LINE 79: nology. Also, the homogeneous sensor does not show
+PAGE 19 LINE 81: the heterogeneous sensor (AUC 0.92 vs 0.95, p = 0.245).
+PAGE 19 LINE 83: sensor can be streamlined. Certainly, this conclusion
+PAGE 19 LINE 87: as the gold standard for the detection of VOCs, dem -
+PAGE 19 LINE 89: types. The diagnostic efficacy of the sensor is comparable
+PAGE 19 LINE 90: to that of GC-MS in the majority of instances. Follow -
+PAGE 19 LINE 94: nostic performance of SIFT-MS in lung cancer was found
+PAGE 19 LINE 99: Our study highlights breath VOC analysis as a com -
+PAGE 19 LINE 101: non-invasiveness, lower cost, and point-of-care potential
+PAGE 20 LINE 2: biopsy in validated biomarkers (20-30 VOC markers vs
+PAGE 20 LINE 10: strengths while overcoming current limitations in VOC
+PAGE 20 LINE 12: While demonstrating clinical promise, VOCs-based
+PAGE 20 LINE 19: (50+ markers), only 20-30 VOC biomarkers are validated.
+PAGE 20 LINE 21: lung cancer detector leads FDA Breakthrough Device
+PAGE 20 LINE 25: < $200/test cost, VOCs analysis may soon complement
+PAGE 20 LINE 32: VOCs-based breath test for cancer diagnosis should be
+PAGE 20 LINE 36: refined VOCs collection process, a standardized VOCs
+PAGE 20 LINE 38: posed a workflow and reporting framework for VOCs-
+PAGE 20 LINE 41: VOCs study standardization reported by the Interna -
+PAGE 20 LINE 48: unstandardized workflow, which may increase hetero -
+PAGE 20 LINE 53: The VOCs-based breath test shows high efficacy for
+PAGE 20 LINE 55: between the efficacy of VOCs detection by sensors or
+PAGE 20 LINE 56: MS. The diagnostic efficacy of an individual sensor mer -
+PAGE 20 LINE 58: foundation for further application of sensor-based VOCs
+PAGE 20 LINE 61: standardize VOCs-based breath test procedures.
+PAGE 20 LINE 72: nology, studies were included if they met the follow -
+PAGE 20 LINE 73: ing requirements: (1) trials analyzing exhaled VOCs for
+PAGE 20 LINE 74: cancer diagnosis, and (2) studies identifying VOCs with
+PAGE 20 LINE 75: MS or sensors. Studies were excluded if: (1) canine olfac -
+PAGE 20 LINE 77: out VOCs identification, (2) VOCs were collected from
+PAGE 20 LINE 84: a specific cancer type compared to a healthy control.
+PAGE 20 LINE 95: AND (“volatile organic compound” or “VOC” OR “breath
+PAGE 21 LINE 11: platform, discriminative VOCs, sensitivity, specificity,
+PAGE 21 LINE 78: SAW  Surface acoustic wave sensor
+PAGE 21 LINE 82: SIFT  Selected ion flow tube
+PAGE 21 LINE 93: VOCs  Volatile organic compounds
+PAGE 22 LINE 39: exogenous volatile organic compounds (EVOC) as metabolic pathway-
+PAGE 22 LINE 63: on e-nose sensors technology and machine learning approaches
+PAGE 22 LINE 73: pounds (VOCs) as biomarkers for the diagnosis of pathological
+PAGE 22 LINE 95: nanosensors. Br J Cancer. 2010;103(4):542–51.
+PAGE 22 LINE 98: cell lung cancer, lung adenocarcinoma or colon cancer. Molecules.
+PAGE 22 LINE 101: Application of chemoresistive gas sensors and chemometric analysis to
+PAGE 22 LINE 103: diseases. Preliminary results of COPD, lung cancer and breast cancer.
+PAGE 22 LINE 118: of lung cancer and possible biochemical pathways. Chem Rev.
+PAGE 22 LINE 123: 34. Liu L, Li W, He Z, et al. Detection of lung cancer with electronic
+PAGE 22 LINE 130: Raman scattering sensors distinguishes early and advanced gastric
+PAGE 22 LINE 131: cancer patients from healthy persons. ACS Nano. 2016;10(9):8169–79.
+PAGE 23 LINE 17: tering sensor. ACS Sens. 2022;7(5):1439–50.
+PAGE 23 LINE 36: profiling of colorectal cancer using selected ion flow-tube mass spec-
+PAGE 23 LINE 54: 54. Sukaram T, Apiparakoon T, Tiyarattanachai T, et al. VOCs from exhaled
+PAGE 23 LINE 63: (VOCs) determination and possible biochemical pathways. Cancers.
+PAGE 23 LINE 66: lung cancer biomarkers by hyphenated separation techniques and
+PAGE 23 LINE 72: 59. Phillips M, Altorki N, Austin JH, et al. Prediction of lung cancer using
+PAGE 23 LINE 74: compounds in exhaled breath from lung cancer patients using sup -
+PAGE 23 LINE 77: organic compounds in exhaled breath for lung cancer discrimination
+PAGE 23 LINE 78: from other pulmonary diseases and healthy persons. Metabolites.
+PAGE 23 LINE 81: in breath for high-accuracy prediction of lung cancer. Cancers.
+PAGE 23 LINE 84: lung cancer markers by gas chromatography-mass spectrometry:
+PAGE 23 LINE 88: exhaled breath of patients with lung cancer by means of on-fiber-
+PAGE 23 LINE 92: organic compounds from lung cancer patients and healthy controls-
+PAGE 23 LINE 100: compound biomarkers analysis for early detection of lung cancer.
+PAGE 23 LINE 104: for lung cancer–a pilot study. Free Radic Res. 2009;43(10):965–74.
+PAGE 23 LINE 106: compounds in exhaled breath of patients with lung cancer using
+PAGE 23 LINE 109: 70. Phillips M, Cataneo RN, Cummin AR, et al. Detection of lung cancer
+PAGE 23 LINE 112: pounds in patients with non-small cell lung cancer: cross sectional
+PAGE 23 LINE 113: and nested short-term follow-up study. Respir Res. 2005;6(1):71.
+PAGE 23 LINE 117: biomarkers of lung cancer. Int J Cancer. 2010;126(11):2663–70.
+PAGE 23 LINE 119: statistical methods using VOCs to identify patients with lung cancer.
+PAGE 23 LINE 121: 75. Wang P , Huang Q, Meng S, et al. Identification of lung cancer breath
+PAGE 23 LINE 126: biomarkers of lung cancer. RSC Adv. 2023;13(45):31835–43.
+PAGE 23 LINE 127: 77. Rudnicka J, Kowalkowski T, Buszewski B. Searching for selected VOCs
+PAGE 23 LINE 128: in human breath samples as potential markers of lung cancer. Lung
+PAGE 23 LINE 130: 78. Ding X, Lin G, Wang P , et al. Diagnosis of primary lung cancer and
+PAGE 23 LINE 133: 79. Gashimova E, Temerdashev A, Perunov D, et al. Diagnosis of lung cancer
+PAGE 23 LINE 137: lung cancer patients using gas chromatography/mass spectrometry
+PAGE 23 LINE 142: identify lung cancer biomarkers. Heliyon. 2020;6(6): e04224.
+PAGE 24 LINE 2: 82. Peng G, Tisch U, Adams O, et al. Diagnosing lung cancer in exhaled
+PAGE 24 LINE 8: organic compounds (VOCs) in exhalation for lung cancer screening and
+PAGE 24 LINE 11: lung cancer diagnosis. Lung Cancer. 2021;154:206–13.
+PAGE 24 LINE 13: biomarkers for diagnosis of lung cancer and potential biomarkers for
+PAGE 24 LINE 14: classification of lung cancer. J Breath Res. 2021;15(1):016017.
+PAGE 24 LINE 16: dysregulated pathways of lung cancer: a pilot study. Ann Med.
+PAGE 24 LINE 22: review of volatile organic compounds (VOCs) in diagnostic and thera-
+PAGE 24 LINE 46: 98. Jordan A, Haidacher S, Hanel G, et al. A high resolution and high
+PAGE 24 LINE 55: model for lung cancer using machine learning: a large-scale, multi-
+PAGE 24 LINE 57: 102. Spanĕl P , Rolfe P , Rajan B, et al. The selected ion flow tube (SIFT)–
+PAGE 24 LINE 63: 104. Belluomo I, Boshier PR, Myridakis A, et al. Selected ion flow tube mass
+PAGE 24 LINE 66: 105. Smith D, Spanel P . Selected ion flow tube mass spectrometry (SIFT-MS)
+PAGE 24 LINE 69: human breath using selected ion flow tube mass spectrometry. BMC
+PAGE 24 LINE 70: Res Notes. 2008;1:41. 107. Smith D, Španěl P . Status of selected ion flow tube MS: accomplish-
+PAGE 24 LINE 75: selected ion flow tube mass spectrometry (SIFT-MS). Rev Sep Sci.
+PAGE 24 LINE 95: 115. Lee JHJ, Zhu J. Optimizing secondary electrospray ionization high-
+PAGE 24 LINE 102: commercial high-resolution mass spectrometry instrumentation. Rapid
+PAGE 24 LINE 108: diagnosis, and progress of breast cancer by using high-pressure
+PAGE 24 LINE 123: 124. Tisch U, Haick H. Nanomaterials for cross-reactive sensor arrays. MRS
+PAGE 24 LINE 125: 125. Lagopati N, Valamvanos T-F, Proutsou V, et al. The role of nano-sensors
+PAGE 24 LINE 127: osensors. 2023;11(6):317.
+PAGE 24 LINE 129: sensors. Adv Mater Technol. 2021;6(3):2000883.
+PAGE 24 LINE 131: materials with metal oxide nanoparticles for gas sensors: a review.
+PAGE 24 LINE 136: 129. Obermeier J, Trefz P , Wex K, et al. Electrochemical sensor system for
+PAGE 25 LINE 3: 131. Haick H. Chemical sensors based on molecularly modified metallic
+PAGE 25 LINE 5: 132. Grabka M, Witkiewicz Z, Jasek K, et al. Acoustic wave sensors for detec-
+PAGE 25 LINE 8: 133. Ayad MM, Torad NL. Alcohol vapours sensor based on thin polyaniline
+PAGE 25 LINE 11: als for selective and fast responsive surface acoustic wave sensors: a
+PAGE 25 LINE 16: promising tool for disease diagnosis-the role of sensors. Sensors.
+PAGE 25 LINE 19: Surface Acoustic Wave sensors for organic vapor detection. 2016 5th
+PAGE 25 LINE 23: materials: existing and latent to acoustic wave sensors for VOCs detec-
+PAGE 25 LINE 24: tion as the potential exhaled breath biomarkers for lung cancer. Sens
+PAGE 25 LINE 26: 139. Sun J, Lu Y, He L, et al. Colorimetric sensor array based on gold nanopar -
+PAGE 25 LINE 30: pounds with colorimetric sensor arrays for lung cancer screening. Anal
+PAGE 25 LINE 33: Raman scattering. Biosensors. 2019;9(2):57.
+PAGE 25 LINE 38: diagnosis of lung cancer. J Thorac Oncol. 2018;13(7):883–94.
+PAGE 25 LINE 111: ity VOCs as potential biomarkers in oral cancer patients. J Breath Res.
+PAGE 25 LINE 124: volatile compound profiles in exhaled breath via selected ion-flow tube
+PAGE 25 LINE 126: 177. Fu XA, Li M, Knipp RJ, et al. Noninvasive detection of lung cancer using
+PAGE 25 LINE 132: lung cancer diagnostics through metabolites in exhaled breath:
+PAGE 25 LINE 135: 180. Phillips M, Altorki N, Austin JH, et al. Detection of lung cancer using
