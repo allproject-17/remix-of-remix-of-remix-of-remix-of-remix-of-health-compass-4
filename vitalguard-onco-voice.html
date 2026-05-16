@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VitalGuard x Onco-Voice</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Sarabun', sans-serif; }
+    @keyframes pulse-slow { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+    .animate-pulse-slow { animation: pulse-slow 2.4s infinite; }
+    label input:checked + div { background-color: #eef2ff; border-color: #6366f1; }
+    label input:checked + div .text-slate-900 { color: #0f172a; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+  <nav class="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-50 shadow-sm">
+    <div class="flex items-center justify-between gap-3 max-w-7xl mx-auto">
+      <div class="flex items-center gap-3">
+        <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <div>
+          <div class="text-xl font-semibold text-slate-950">VitalGuard <span class="text-indigo-600 font-medium">x Onco-Voice</span></div>
+          <div class="text-xs text-slate-500">AI Breathomics Lung Cancer Screening</div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 py-10">
+    <section class="text-center mb-10">
+      <h1 class="text-3xl md:text-4xl font-bold text-slate-950">การประเมินความเสี่ยงมะเร็งปอด</h1>
+      <p class="mt-3 text-slate-500 max-w-2xl mx-auto text-sm md:text-base">ระบบจำลองตรวจวัดสารบ่งชี้ทางชีวภาพ (VOCs) ในลมหายใจ โดยออกแบบตามงานวิจัย Jia et al. และ Gao et al. เพื่อให้คุณเห็นมุมมองความเสี่ยงเชิงลึกแบบ AI-assisted.</p>
+    </section>
+
+    <div class="grid grid-cols-1 gap-8">
+      <article class="bg-white rounded-[2rem] border border-slate-200 shadow-sm p-6 lg:p-8">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-5 mb-6">
+          <div>
+            <h2 class="text-lg md:text-xl font-bold text-slate-950 flex items-center gap-3">
+              <span class="w-3 h-3 rounded-full bg-indigo-600"></span>
+              ส่วนที่ 1: การจำลองสัญญาณชีวภาพ (VOCs)
+            </h2>
+            <p id="analysis-status" class="text-xs text-slate-400 mt-1">กรุณากดสุ่มค่า AI Analysis เพื่อสร้างผลลัพธ์ VOCs</p>
+          </div>
+          <button id="start-analysis" class="inline-flex items-center justify-center gap-2 rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-indigo-700 shadow-sm">🚀 เริ่มสุ่มค่า AI Analysis</button>
+        </div>
+
+        <div id="vocs-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="col-span-1 sm:col-span-2 text-center py-20 text-slate-400 bg-slate-50 rounded-3xl border border-dashed border-slate-200">กดปุ่มด้านบนเพื่อจำลองค่าสาร VOCs ทั้ง 8 ตัว</div>
+        </div>
+
+        <div id="unlock-box" class="hidden mt-6 rounded-[1.5rem] border border-emerald-100 bg-emerald-50 p-4 flex flex-col sm:flex-row items-center justify-between gap-4 animate-pulse-slow shadow-sm">
+          <div class="flex items-center gap-3">
+            <div class="bg-emerald-600 text-white rounded-2xl p-3">🔓</div>
+            <div>
+              <h3 class="text-sm font-semibold text-emerald-950">วิเคราะห์ค่า VOCs สำเร็จแล้ว!</h3>
+              <p class="text-xs text-emerald-700">คุณสามารถไปต่อยังแบบสอบถามเพื่อประเมินสภาพแวดล้อมและพฤติกรรมเพิ่มเติมได้</p>
+            </div>
+          </div>
+          <button id="go-questionnaire" class="rounded-2xl bg-emerald-600 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-emerald-700">คลิกไปทำแบบสอบถาม ➡️</button>
+        </div>
+      </article>
+
+      <article id="questionnaire-section" class="bg-slate-100 rounded-[2rem] border border-slate-200 p-6 lg:p-8 transition-opacity duration-500 opacity-40 pointer-events-none relative">
+        <div class="absolute inset-0 bg-slate-950/5 rounded-[2rem] flex items-center justify-center text-center p-6" id="questionnaire-lock-overlay">
+          <div class="bg-white/90 p-5 rounded-3xl shadow-md">
+            <div class="text-3xl mb-2">🔒</div>
+            <p class="text-xs font-semibold text-slate-500">กรุณากดสุ่มค่า VOCs ฝั่งบนเพื่อปลดล็อกแบบสอบถาม</p>
+          </div>
+        </div>
+
+        <div class="flex items-start justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="rounded-2xl bg-indigo-100 p-3 text-indigo-700">📋</div>
+            <div>
+              <h2 class="text-base font-bold text-slate-950">ส่วนที่ 2: แบบสอบถามสภาพแวดล้อมและพฤติกรรม</h2>
+              <p class="text-xs text-slate-500">ตอบข้อมูลสำคัญ 3 ข้อเพื่อประเมินความเสี่ยงโดยรวม</p>
+            </div>
+          </div>
+          <button id="speak-help" class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-amber-600">🔊 ฟังเสียงช่วยอ่าน (โทนเสียงอบอุ่น)</button>
+        </div>
+
+        <form id="risk-form" class="space-y-6">
+          <div class="space-y-3 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-900">1. ประวัติการสูบบุหรี่ (Smoking History)</h3>
+                <p class="text-xs text-slate-500">เลือกคำตอบที่ตรงกับคุณมากที่สุด</p>
+              </div>
+            </div>
+            <div class="grid gap-3">
+              <label class="cursor-pointer rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-indigo-300 hover:bg-indigo-50">
+                <input type="radio" name="smoke" value="never" class="sr-only" />
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-900">ไม่สูบ และไม่เคยสัมผัสควันเป็นประจำ</span>
+                  <span class="text-xs text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">ปกติ</span>
+                </div>
+              </label>
+              <label class="cursor-pointer rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-indigo-300 hover:bg-indigo-50">
+                <input type="radio" name="smoke" value="former" class="sr-only" />
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-900">เคยสูบหรือสัมผัสควันบุหรี่มือสองอย่างใกล้ชิด</span>
+                  <span class="text-xs text-amber-700 bg-amber-100 px-3 py-1 rounded-full">เริ่มสูง</span>
+                </div>
+              </label>
+              <label class="cursor-pointer rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-indigo-300 hover:bg-indigo-50">
+                <input type="radio" name="smoke" value="current" class="sr-only" />
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-900">สูบบุหรี่ในปัจจุบัน หรือได้รับควันบุหรี่มาก</span>
+                  <span class="text-xs text-rose-700 bg-rose-100 px-3 py-1 rounded-full">เสี่ยงสูง</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="space-y-3 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-900">2. สภาพแวดล้อมในที่ทำงาน (Workplace Environment)</h3>
+                <p class="text-xs text-slate-500">เลือกสถานการณ์ที่ตรงกับคุณ</p>
+              </div>
+            </div>
+            <div class="grid gap-3">
+              <label class="cursor-pointer rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-indigo-300 hover:bg-indigo-50">
+                <input type="radio" name="environment" value="clean" class="sr-only" />
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-900">ที่ทำงานปลอดภัย ไม่มีฝุ่น ควัน หรือสารเคมี</span>
+                  <span class="text-xs text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">ปกติ</span>
+                </div>
+              </label>
+              <label class="cursor-pointer rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-indigo-300 hover:bg-indigo-50">
+                <input type="radio" name="environment" value="hazard" class="sr-only" />
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-900">อยู่ใกล้สารเคมี ฝุ่นโรงงาน หรือควันและมลพิษบ่อย</span>
+                  <span class="text-xs text-amber-700 bg-amber-100 px-3 py-1 rounded-full">เริ่มสูง</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="space-y-3 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-900">3. อาการทางระบบทางเดินหายใจเบื้องต้น</h3>
+                <p class="text-xs text-slate-500">เลือกลักษณะอาการที่คุณพบในช่วงนี้</p>
+              </div>
+            </div>
+            <div class="grid gap-3">
+              <label class="cursor-pointer rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-indigo-300 hover:bg-indigo-50">
+                <input type="radio" name="symptom" value="none" class="sr-only" />
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-900">ไม่มีอาการไอเรื้อรังหรือเหนื่อยหอบผิดปกติ</span>
+                  <span class="text-xs text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full">ปกติ</span>
+                </div>
+              </label>
+              <label class="cursor-pointer rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-indigo-300 hover:bg-indigo-50">
+                <input type="radio" name="symptom" value="mild" class="sr-only" />
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-900">มีอาการไอเล็กน้อยหรือเหนื่อยบ้างเมื่อออกแรง</span>
+                  <span class="text-xs text-amber-700 bg-amber-100 px-3 py-1 rounded-full">เริ่มสูง</span>
+                </div>
+              </label>
+              <label class="cursor-pointer rounded-3xl border border-slate-200 bg-slate-50 p-4 transition hover:border-indigo-300 hover:bg-indigo-50">
+                <input type="radio" name="symptom" value="severe" class="sr-only" />
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-medium text-slate-900">มีอาการไอเรื้อรัง เจ็บหน้าอก หรือเหนื่อยหอบง่าย</span>
+                  <span class="text-xs text-rose-700 bg-rose-100 px-3 py-1 rounded-full">เสี่ยงสูง</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center gap-4">
+            <button type="button" id="submit-assessment" class="w-full rounded-3xl bg-indigo-950 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-900">ส่งผลวิเคราะห์ความเสี่ยงรวมทั้งหมด</button>
+          </div>
+        </form>
+
+        <div id="final-summary" class="mt-6 hidden rounded-3xl border border-slate-200 bg-white p-5 shadow-sm"></div>
+      </article>
+    </div>
+  </main>
+
+  <script>
+    // ข้อมูล VOCs 8 ตัวหลักจากงานวิจัย Jia et al. และ Gao et al.
+    const vocBiomarkers = [
+      {
+        id: 'propanol',
+        name: 'n-Propanol / Isopropanol',
+        range: [0.05, 1.20],
+        highThreshold: 0.65,
+        warningThreshold: 0.35,
+        description: 'แอลกอฮอล์ระเหยง่ายที่พบบ่อยในลมหายใจของผู้ป่วยมะเร็งปอด',
+      },
+      {
+        id: 'isoprene',
+        name: 'Isoprene',
+        range: [0.10, 1.40],
+        highThreshold: 0.75,
+        warningThreshold: 0.45,
+        description: 'ไฮโดรคาร์บอนหลักที่สะท้อนการทำงานของเมตาบอลิซึม',
+      },
+      {
+        id: 'acetone',
+        name: 'Acetone',
+        range: [0.40, 3.20],
+        highThreshold: 1.90,
+        warningThreshold: 1.10,
+        description: 'บ่งชี้ความแปรปรวนเมตาบอลิซึมของเซลล์และการเผาผลาญไขมัน',
+      },
+      {
+        id: 'pentane',
+        name: 'Pentane',
+        range: [0.10, 1.00],
+        highThreshold: 0.55,
+        warningThreshold: 0.30,
+        description: 'อัลคานที่ระบุภาวะความเครียดออกซิเดชันจาก CYP450',
+      },
+      {
+        id: 'hexanal',
+        name: 'Hexanal',
+        range: [0.01, 0.18],
+        highThreshold: 0.08,
+        warningThreshold: 0.04,
+        description: 'อัลดีไฮด์จากการปฏิกิริยา lipid peroxidation ของเซลล์',
+      },
+      {
+        id: 'toluene',
+        name: 'Toluene',
+        range: [0.05, 0.85],
+        highThreshold: 0.45,
+        warningThreshold: 0.25,
+        description: 'สารอะโรมาติกจากควันบุหรี่และมลพิษสิ่งแวดล้อม',
+      },
+      {
+        id: 'benzene',
+        name: 'Benzene',
+        range: [0.05, 1.30],
+        highThreshold: 0.70,
+        warningThreshold: 0.35,
+        description: 'สารกลุ่ม 1 ของ IARC ที่พบในควันบุหรี่และมลพิษ',
+      },
+      {
+        id: 'ethylbenzene',
+        name: 'Ethylbenzene',
+        range: [0.02, 0.50],
+        highThreshold: 0.28,
+        warningThreshold: 0.15,
+        description: 'บ่งชี้มลพิษทางอากาศและภาวะความเสี่ยงร่วม',
+      },
+    ];
+
+    const vocsGrid = document.getElementById('vocs-grid');
+    const analysisStatus = document.getElementById('analysis-status');
+    const unlockBox = document.getElementById('unlock-box');
+    const questionnaireSection = document.getElementById('questionnaire-section');
+    const questionnaireLock = document.getElementById('questionnaire-lock-overlay');
+    const goQuestionnaireButton = document.getElementById('go-questionnaire');
+    const startAnalysisButton = document.getElementById('start-analysis');
+    const speakHelpButton = document.getElementById('speak-help');
+    const submitButton = document.getElementById('submit-assessment');
+    const finalSummary = document.getElementById('final-summary');
+    const form = document.getElementById('risk-form');
+
+    let latestVocResults = [];
+
+    function randomFloat(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function getRiskTag(value, warningThreshold, highThreshold) {
+      if (value >= highThreshold) {
+        return { label: '🔴 เสี่ยงสูง', classes: 'bg-rose-50 text-rose-800 border-rose-200' };
+      }
+      if (value >= warningThreshold) {
+        return { label: '🟠 เริ่มสูง', classes: 'bg-amber-50 text-amber-800 border-amber-200' };
+      }
+      return { label: '🟢 ปกติ', classes: 'bg-emerald-50 text-emerald-800 border-emerald-200' };
+    }
+
+    function buildVocCard(voc) {
+      const risk = getRiskTag(voc.value, voc.warningThreshold, voc.highThreshold);
+      return `
+        <div class="rounded-[1.75rem] border ${risk.classes} border-opacity-60 p-5 flex flex-col justify-between shadow-sm transition hover:shadow-md">
+          <div class="flex items-start justify-between gap-3">
+            <div class="text-sm font-semibold text-slate-900">${voc.name}</div>
+            <div class="rounded-full border px-3 py-1 text-[11px] font-semibold ${risk.classes}">${risk.label}</div>
+          </div>
+          <div class="mt-6 text-center">
+            <div class="text-4xl font-bold text-slate-950">${voc.value.toFixed(2)}</div>
+            <div class="text-sm text-slate-600 mt-1">ppm</div>
+          </div>
+          <div class="mt-6 border-t border-slate-200 pt-4 text-xs text-slate-600 leading-relaxed">${voc.description}</div>
+        </div>
+      `;
+    }
+
+    function renderVocs() {
+      const cards = latestVocResults.map(buildVocCard).join('');
+      vocsGrid.innerHTML = cards;
+    }
+
+    function enableQuestionnaire() {
+      questionnaireSection.classList.remove('opacity-40', 'pointer-events-none');
+      questionnaireLock.classList.add('hidden');
+      unlockBox.classList.remove('hidden');
+      analysisStatus.textContent = 'วิเคราะห์ค่า VOCs เสร็จสิ้นแล้ว สามารถไปทำแบบสอบถามต่อได้';
+    }
+
+    function simulateVocAnalysis() {
+      const results = vocBiomarkers.map((item) => ({
+        ...item,
+        value: randomFloat(item.range[0], item.range[1]),
+      }));
+      latestVocResults = results;
+      renderVocs();
+      enableQuestionnaire();
+    }
+
+    function scrollToQuestionnaire() {
+      questionnaireSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function speakQuestionnaireIntro() {
+      if (!window.speechSynthesis) {
+        alert('อุปกรณ์ของคุณไม่รองรับ Web Speech API');
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const text = 'สวัสดีค่ะ ยินดีต้อนรับเข้าสู่ส่วนประเมินความเสี่ยงพฤติกรรมรอบตัวนะคะ แบบสอบถามชุดนี้จะช่วยประเมินข้อมูลเพิ่มเติมเกี่ยวกับประวัติพฤติกรรมการได้รับควันบุหรี่ สภาพแวดล้อมรอบตัวจากสถานที่ทำงาน และอาการทางกายภาพเบื้องต้นที่คุณพบเจอในช่วงนี้ค่ะ รบกวนเลือกคำตอบตามความเป็นจริงเพื่อผลลัพธ์จากเอไอที่ถูกต้องและแม่นยำที่สุดนะคะ';
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'th-TH';
+      utterance.rate = 0.93;
+      utterance.pitch = 1.05;
+      utterance.onend = () => speakHelpButton.textContent = '🔊 ฟังเสียงช่วยอ่าน (โทนเสียงอบอุ่น)';
+      utterance.onerror = () => speakHelpButton.textContent = '🔊 ฟังเสียงช่วยอ่าน (โทนเสียงอบอุ่น)';
+      speakHelpButton.textContent = '⏳ กำลังอ่าน...';
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function collectFormValues() {
+      const formData = new FormData(form);
+      return {
+        smoke: formData.get('smoke')?.toString() || '',
+        environment: formData.get('environment')?.toString() || '',
+        symptom: formData.get('symptom')?.toString() || '',
+      };
+    }
+
+    function calculateQuestionnaireScore(values) {
+      let score = 0;
+      if (values.smoke === 'current') score += 40;
+      if (values.smoke === 'former') score += 20;
+      if (values.environment === 'hazard') score += 25;
+      if (values.symptom === 'severe') score += 35;
+      if (values.symptom === 'mild') score += 15;
+      return score;
+    }
+
+    function getOverallRiskLevel(totalScore) {
+      if (totalScore >= 65) return { label: 'สูง', color: 'rose' };
+      if (totalScore >= 35) return { label: 'ปานกลาง', color: 'amber' };
+      return { label: 'ต่ำ', color: 'emerald' };
+    }
+
+    function handleSubmitAssessment() {
+      const values = collectFormValues();
+      if (!values.smoke || !values.environment || !values.symptom) {
+        alert('กรุณาตอบแบบสอบถามทุกข้อเพื่อรับผลวิเคราะห์ที่ครบถ้วน');
+        return;
+      }
+
+      const vocRiskPoints = latestVocResults.reduce((acc, item) => {
+        const risk = getRiskTag(item.value, item.warningThreshold, item.highThreshold);
+        if (risk.label.includes('เสี่ยงสูง')) return acc + 20;
+        if (risk.label.includes('เริ่มสูง')) return acc + 10;
+        return acc + 2;
+      }, 0);
+
+      const questionnairePoints = calculateQuestionnaireScore(values);
+      const totalScore = Math.min(100, vocRiskPoints + questionnairePoints);
+      const level = getOverallRiskLevel(totalScore);
+
+      finalSummary.classList.remove('hidden');
+      const badgeStyles = level.color === 'rose'
+        ? 'background-color:#fee2e2;color:#991b1b;'
+        : level.color === 'amber'
+          ? 'background-color:#fef3c7;color:#92400e;'
+          : 'background-color:#ecfdf5;color:#166534;';
+      finalSummary.innerHTML = `
+        <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5">
+          <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p class="text-xs uppercase tracking-[0.2em] text-slate-500">ผลการวิเคราะห์รวม</p>
+              <h3 class="text-xl font-bold text-slate-950">คะแนนความเสี่ยงรวม ${totalScore} / 100</h3>
+            </div>
+            <div class="rounded-3xl px-4 py-3 text-sm font-semibold" style="${badgeStyles}">ระดับความเสี่ยง: ${level.label}</div>
+          </div>
+          <div class="mt-5 grid gap-4 md:grid-cols-3">
+            <div class="rounded-3xl border border-slate-200 bg-white p-4">
+              <p class="text-xs text-slate-500">VOCs Risk Score</p>
+              <p class="mt-2 text-2xl font-bold text-slate-900">${vocRiskPoints}</p>
+            </div>
+            <div class="rounded-3xl border border-slate-200 bg-white p-4">
+              <p class="text-xs text-slate-500">แบบสอบถาม</p>
+              <p class="mt-2 text-2xl font-bold text-slate-900">${questionnairePoints}</p>
+            </div>
+            <div class="rounded-3xl border border-slate-200 bg-white p-4">
+              <p class="text-xs text-slate-500">รวมคะแนน</p>
+              <p class="mt-2 text-2xl font-bold text-slate-900">${totalScore}</p>
+            </div>
+          </div>
+          <div class="mt-5 text-sm text-slate-600 leading-7">
+            <p><strong>คำแนะนำเบื้องต้น:</strong> ${level.label === 'สูง' ? 'ควรปรึกษาแพทย์เพื่อตรวจคัดกรองเพิ่มเติม และหลีกเลี่ยงควันบุหรี่หรือมลภาวะทันที' : level.label === 'ปานกลาง' ? 'เฝ้าระวังอาการ รักษาการหายใจให้สะอาด และพิจารณาปรับสภาพแวดล้อมรอบตัว' : 'รักษาวิถีชีวิตปลอดบุหรี่ รับอากาศบริสุทธิ์ และตรวจติดตามสุขภาพอย่างสม่ำเสมอ'}</p>
+          </div>
+        </div>
+      `;
+      finalSummary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    startAnalysisButton.addEventListener('click', () => {
+      analysisStatus.textContent = 'กำลังสุ่มค่า VOCs...';
+      startAnalysisButton.disabled = true;
+      startAnalysisButton.classList.add('opacity-70', 'cursor-not-allowed');
+      setTimeout(() => {
+        simulateVocAnalysis();
+        startAnalysisButton.disabled = false;
+        startAnalysisButton.classList.remove('opacity-70', 'cursor-not-allowed');
+        startAnalysisButton.textContent = '🔄 สุ่มค่าอีกครั้ง';
+      }, 1200);
+    });
+
+    goQuestionnaireButton.addEventListener('click', () => {
+      scrollToQuestionnaire();
+    });
+
+    speakHelpButton.addEventListener('click', speakQuestionnaireIntro);
+    submitButton.addEventListener('click', handleSubmitAssessment);
+  </script>
+</body>
+</html>

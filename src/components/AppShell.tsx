@@ -1,13 +1,12 @@
 import { ReactNode } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Activity, LayoutDashboard, History, LogOut, UserCircle2, Sparkles } from "lucide-react";
+import { Activity, LayoutDashboard, History, LogOut, UserCircle2 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
   { to: "/dashboard", label: "หน้าหลัก", icon: LayoutDashboard },
   { to: "/assessment", label: "ประเมินความเสี่ยง", icon: Activity },
-  { to: "/health-analysis", label: "วิเคราะห์ AI", icon: Sparkles },
   { to: "/history", label: "ประวัติ", icon: History },
   { to: "/profile", label: "โปรไฟล์", icon: UserCircle2 },
 ];

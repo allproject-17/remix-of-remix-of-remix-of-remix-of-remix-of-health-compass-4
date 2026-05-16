@@ -5,20 +5,34 @@ export type SensorSpec = {
 };
 
 export const SENSORS: SensorSpec[] = [
-  { id: "Sensor_1", label: "TGS2600" },
-  { id: "Sensor_2", label: "TGS2602", isKey: true },
-  { id: "Sensor_3", label: "TGS2620", isKey: true },
-  { id: "Sensor_4", label: "MQ-2", isKey: true },
-  { id: "Sensor_5", label: "MQ-3" },
-  { id: "Sensor_6", label: "MQ-4" },
-  { id: "Sensor_7", label: "MQ-5" },
-  { id: "Sensor_8", label: "MQ-6" },
-  { id: "Sensor_9", label: "MQ-7" },
-  { id: "Sensor_10", label: "MQ-9" },
-  { id: "Sensor_11", label: "MQ135 / MC-135", isKey: true },
-  { id: "Sensor_12", label: "Alkane Sensor" },
-  // remaining sensors are temporal / combined-channel features (to reach 26 dims)
-  ...Array.from({ length: 14 }).map((_, i) => ({ id: `Sensor_${13 + i}`, label: `Combined_${13 + i}` })),
+  // Key biomarkers (research-backed lung cancer indicators)
+  { id: "VOC_1", label: "Acetone", isKey: true },
+  { id: "VOC_2", label: "Toluene", isKey: true },
+  { id: "VOC_3", label: "Benzene", isKey: true },
+  { id: "VOC_4", label: "Isoprene", isKey: true },
+  { id: "VOC_5", label: "Hexanal" },
+  { id: "VOC_6", label: "Pentane" },
+  // Common VOCs detected by sensor array
+  { id: "VOC_7", label: "Ammonia" },
+  { id: "VOC_8", label: "Hydrogen Sulfide (H₂S)" },
+  { id: "VOC_9", label: "Formaldehyde" },
+  { id: "VOC_10", label: "Methanol" },
+  { id: "VOC_11", label: "Ethanol" },
+  { id: "VOC_12", label: "Carbon Monoxide (CO)" },
+  { id: "VOC_13", label: "Xylene" },
+  { id: "VOC_14", label: "Hexane" },
+  { id: "VOC_15", label: "Propane" },
+  { id: "VOC_16", label: "Methane (CH₄)" },
+  { id: "VOC_17", label: "Ethane (C₂H₆)" },
+  { id: "VOC_18", label: "Hydrogen (H₂)" },
+  { id: "VOC_19", label: "Butane" },
+  { id: "VOC_20", label: "1,3-Butadiene" },
+  { id: "VOC_21", label: "Dimethyl Sulfide (DMS)" },
+  { id: "VOC_22", label: "2-Methylbutane" },
+  { id: "VOC_23", label: "Limonene" },
+  { id: "VOC_24", label: "m,p-Xylene" },
+  { id: "VOC_25", label: "o-Xylene" },
+  { id: "VOC_26", label: "Decane" },
 ];
 
 export type SensorReadings = Record<string, number>;

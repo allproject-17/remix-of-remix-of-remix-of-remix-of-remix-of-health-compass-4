@@ -58,7 +58,7 @@ const History = () => {
           </div>
           <div className="flex-1">
             <h1 className="font-display text-3xl font-bold">ประวัติสุขภาพ</h1>
-            <p className="text-muted-foreground text-sm">ติดตามผลการวิเคราะห์ AI ของคุณ</p>
+            <p className="text-muted-foreground text-sm">ติดตามผลการประเมินความเสี่ยงของคุณ</p>
           </div>
         </div>
 
@@ -66,7 +66,7 @@ const History = () => {
           <Card className="p-12 text-center border-dashed border-2">
             <Activity className="h-10 w-10 mx-auto text-muted-foreground mb-4" />
             <h3 className="text-xl font-bold">ยังไม่มีข้อมูลการประเมิน</h3>
-            <Link to="/health-analysis" className="mt-4 inline-block">
+            <Link to="/assessment" className="mt-4 inline-block">
               <Button>เริ่มประเมินตอนนี้</Button>
             </Link>
           </Card>

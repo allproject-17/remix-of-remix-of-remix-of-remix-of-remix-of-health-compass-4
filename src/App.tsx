@@ -29,7 +29,6 @@ const App = () => (
             <Route path="/profile" element={<ProtectedRoute requireProfile={false}><Profile /></ProtectedRoute>} />
             <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
             <Route path="/assessment" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
-            <Route path="/health-analysis" element={<ProtectedRoute><Assessment /></ProtectedRoute>} />
             <Route path="/result/:id" element={<ProtectedRoute><Result /></ProtectedRoute>} />
             <Route path="/history" element={<ProtectedRoute><History /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />

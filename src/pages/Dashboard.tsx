@@ -9,7 +9,6 @@ import { riskLevel, riskLevelLabel } from "@/lib/risk";
 
 const cards = [
   { to: "/assessment", title: "ประเมินความเสี่ยงสุขภาพ", desc: "เริ่มทำแบบประเมินทีละขั้นตอน", icon: Activity, gradient: "gradient-hero" },
-  { to: "/health-analysis", title: "วิเคราะห์ AI จากเครื่อง VOCs", desc: "อ่านค่าจากเครื่องและให้ AI วิเคราะห์", icon: Sparkles, gradient: "gradient-moderate" },
   { to: "/history", title: "ข้อมูลสุขภาพของฉัน", desc: "ดูผลการประเมินย้อนหลัง", icon: History, gradient: "gradient-low" },
 ];
 
